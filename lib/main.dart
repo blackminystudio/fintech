@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
+import 'login_page.dart';
+
 void main() {
   runApp(
     ScreenUtilInit(
@@ -19,20 +21,6 @@ class MyApp extends StatelessWidget {
         title: 'FintechApp',
         theme: MinyTheme.lightTheme,
         debugShowCheckedModeBanner: false,
-        home: const HomePage(),
-      );
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: Text(
-            'Hello Finance',
-            style: Theme.of(context).textStyle.bodyLarge,
-          ),
-        ),
+        home: const LoginPage(),
       );
 }
