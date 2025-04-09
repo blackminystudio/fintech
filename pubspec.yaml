@@ -4,24 +4,30 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.6.0
+  sdk: 3.6.0
 
 # --------- DEPENDENCIES ---------
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.8
+
+  cupertino_icons: 1.0.8
   miny_design_system:
     git:
       url: https://github.com/blackminystudio/miny-design-system.git
       ref: main
-  flutter_screenutil: ^5.9.3
+  flutter_screenutil: 5.9.3
+  flutter_svg: 2.0.17
 
 # --------- DEV DEPENDENCIES ---------
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: 5.0.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/app_logo.svg
+    - assets/images/splash_screen_logo.svg
+    - assets/images/googleicon.png
