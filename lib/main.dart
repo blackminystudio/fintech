@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import 'login_page.dart';
+import 'pages/number_page.dart';
 
 void main() {
   runApp(
@@ -21,6 +21,6 @@ class MyApp extends StatelessWidget {
         title: 'FintechApp',
         theme: MinyTheme.lightTheme,
         debugShowCheckedModeBanner: false,
-        home: const LoginPage(),
+        home: const NumberPage(),
       );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'loginpage_constants.dart';
+import '../constants/loginpage_constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
