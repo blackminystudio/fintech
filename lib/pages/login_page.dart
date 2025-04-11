@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import 'loginpage_constants.dart';
+import '../constants/loginpage_constants.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
