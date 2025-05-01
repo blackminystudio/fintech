@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
+import 'package:miny_design_system/packages/figma_squircle/src/smooth_border_radius.dart';
+import 'package:miny_design_system/packages/figma_squircle/src/smooth_rectangle_border.dart';
 
 import '../constants/onboardpage_constants.dart';
+import 'widgets/onboarding_title.dart';
+import 'widgets/progress_header.dart';
 
 class BasicInfoPage extends StatefulWidget {
   BasicInfoPage({super.key});
@@ -11,14 +15,9 @@ class BasicInfoPage extends StatefulWidget {
 }
 
 class _BasicInfoPageState extends State<BasicInfoPage> {
-  @override
-  void dispose() {
-    fullNameController.dispose();
-    super.dispose();
-  }
-
-  final TextEditingController fullNameController =
-      TextEditingController(text: OnboardpageConstants.name);
+  final TextEditingController fullNameController = TextEditingController(
+    text: OnboardpageConstants.name,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -30,31 +29,25 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
           children: [
             Expanded(
               child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: theme.sizing.height.s8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: theme.sizing.height.s5),
-                    _buildProgressHeader(),
-                    SizedBox(height: theme.sizing.height.s8),
-                    Text(
-                      OnboardpageConstants.basicInfoTitle,
-                      style: theme.textStyle.headingXxlarge.copyWith(
-                        color: theme.colors.textPrimary,
+                padding: EdgeInsets.symmetric(
+                  horizontal: theme.sizing.height.s8,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ProgressHeader(
+                        progressValue: 0.33,
+                        onTapSkip: () {},
+                        onTapBack: () {},
                       ),
-                    ),
-                    SizedBox(height: theme.sizing.height.s5),
-                    Text(
-                      OnboardpageConstants.basicInfoSubtitle,
-                      style: theme.textStyle.bodyMedium.copyWith(
-                        color: theme.colors.textSecondary,
+                      const OnboardingTitle(
+                        title: OnboardpageConstants.basicInfoTitle,
+                        subTitle: OnboardpageConstants.basicInfoSubtitle,
                       ),
-                    ),
-                    SizedBox(height: theme.sizing.height.s8),
-                    _buildInfoContentCard(),
-                    const Spacer(),
-                  ],
+                      _buildInfoContentCard(),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -64,6 +57,60 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    fullNameController.dispose();
+    super.dispose();
+  }
+
+  Container _buildBottomActionBar() {
+    final theme = Theme.of(context);
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: theme.colors.neutralLightBackground,
+        border: Border(
+          top: BorderSide(
+            color: theme.colors.neutralBorder,
+          ),
+        ),
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: theme.sizing.height.s5,
+        horizontal: theme.sizing.height.s8,
+      ),
+      child: MinyButton(
+        label: OnboardpageConstants.confirmButtonText,
+        onPressed: () {},
+      ),
+    );
+  }
+
+  Padding _buildInfoContent(ThemeData theme) => Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: theme.sizing.width.s7,
+          vertical: theme.sizing.width.s4,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              size: theme.sizing.height.s6,
+              OnboardpageConstants.infoIcon,
+              color: theme.colors.accentPurple,
+            ),
+            SizedBox(width: theme.sizing.width.s3),
+            Flexible(
+              child: Text(
+                OnboardpageConstants.basicInfoFooterNote,
+                style: theme.textStyle.bodyXxsmall.copyWith(
+                  color: theme.colors.accentPurple,
+                ),
+              ),
+            )
+          ],
+        ),
+      );
 
   Widget _buildInfoContentCard() {
     final theme = Theme.of(context);
@@ -140,12 +187,16 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       ),
       child: Row(
         children: [
+          // TODO: DS: Add MinyContainer with figma squircle
           Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                theme.borderradius.small,
-              ),
+            decoration: ShapeDecoration(
               color: theme.colors.neutralLightBackground,
+              shape: SmoothRectangleBorder(
+                borderRadius: SmoothBorderRadius(
+                  cornerRadius: theme.borderradius.small,
+                  cornerSmoothing: 1,
+                ),
+              ),
             ),
             padding: EdgeInsets.all(theme.sizing.height.s3),
             child: Icon(
@@ -190,110 +241,6 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Padding _buildInfoContent(ThemeData theme) => Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: theme.sizing.width.s7,
-          vertical: theme.sizing.width.s4,
-        ),
-        child: Row(
-          children: [
-            Icon(
-              size: theme.sizing.height.s6,
-              OnboardpageConstants.infoIcon,
-              color: theme.colors.accentPurple,
-            ),
-            SizedBox(width: theme.sizing.width.s3),
-            Flexible(
-              child: Text(
-                OnboardpageConstants.basicInfoFooterNote,
-                style: theme.textStyle.bodyXxsmall.copyWith(
-                  color: theme.colors.accentPurple,
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-
-  Row _buildProgressHeader() {
-    final theme = Theme.of(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: theme.colors.neutralBorder),
-              borderRadius: BorderRadius.circular(theme.borderradius.xLarge),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(theme.sizing.height.s3),
-              child: Icon(
-                size: theme.sizing.height.s6,
-                color: theme.colors.textPrimary,
-                Icons.arrow_back_ios_new,
-              ),
-            ),
-          ),
-        ),
-        Column(
-          children: [
-            Text(
-              OnboardpageConstants.progressText,
-              style: theme.textStyle.headingSmall.copyWith(
-                color: theme.colors.accentPurple,
-              ),
-            ),
-            SizedBox(height: theme.sizing.height.s3),
-            SizedBox(
-              width: theme.sizing.width.s50,
-              height: theme.spacing.height.s4,
-              child: LinearProgressIndicator(
-                value: 0.22,
-                color: theme.colors.accentPurple,
-                backgroundColor: theme.colors.neutralBorder,
-                borderRadius: BorderRadius.circular(theme.borderradius.xSmall),
-              ),
-            ),
-          ],
-        ),
-        GestureDetector(
-          onTap: () {},
-          child: Text(
-            OnboardpageConstants.skipText,
-            style: theme.textStyle.headingSmall.copyWith(
-              color: theme.colors.textPrimary,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Container _buildBottomActionBar() {
-    final theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: theme.colors.neutralLightBackground,
-        border: Border(
-          top: BorderSide(
-            color: theme.colors.neutralBorder,
-          ),
-        ),
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: theme.sizing.height.s5,
-        horizontal: theme.sizing.height.s8,
-      ),
-      child: MinyButton(
-        label: OnboardpageConstants.confirmButtonText,
-        onPressed: () {},
       ),
     );
   }

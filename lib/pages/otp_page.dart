@@ -1,14 +1,16 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../constants/onboardpage_constants.dart';
+import 'widgets/onboarding_title.dart';
+import 'widgets/progress_header.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({super.key});
-
   @override
   State<OtpPage> createState() => _OtpPageState();
 }
@@ -20,10 +22,49 @@ class _OtpPageState extends State<OtpPage> {
   String correctOtp = '788525';
   bool isResendAvailable = false;
   @override
-  void initState() {
-    super.initState();
-    startCountdown();
-    _setUpOtpListener();
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      backgroundColor: theme.colors.neutralLight,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: theme.sizing.height.s8,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ProgressHeader(
+                      progressValue: 0.11,
+                      onTapSkip: () {},
+                      onTapBack: () {},
+                    ),
+                    const OnboardingTitle(
+                      title: OnboardpageConstants.otpHeading,
+                      subTitle: OnboardpageConstants.otpSentText,
+                    ),
+                    _buildPincodeField(context),
+                    if (isOtpIncorrect)
+                      Text(
+                        OnboardpageConstants.otpError,
+                        style: theme.textStyle.headingSmall.copyWith(
+                          color: theme.colors.accentRed,
+                        ),
+                      ),
+                    SizedBox(height: theme.sizing.height.s4),
+                    _buildResendOtp(),
+                  ],
+                ),
+              ),
+            ),
+            _buildBottomActionBar(),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -32,14 +73,11 @@ class _OtpPageState extends State<OtpPage> {
     super.dispose();
   }
 
-  void _setUpOtpListener() {
-    otpController.addListener(() {
-      if (isOtpIncorrect) {
-        setState(() {
-          isOtpIncorrect = false;
-        });
-      }
-    });
+  @override
+  void initState() {
+    super.initState();
+    startCountdown();
+    _setUpOtpListener();
   }
 
   Future<void> startCountdown() async {
@@ -72,113 +110,26 @@ class _OtpPageState extends State<OtpPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Container _buildBottomActionBar() {
     final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colors.neutralLight,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: theme.sizing.height.s8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: theme.sizing.height.s5),
-                    _buildProgressHeader(),
-                    SizedBox(height: theme.sizing.height.s8),
-                    Text(
-                      OnboardpageConstants.otpHeading,
-                      style: theme.textStyle.headingXxlarge.copyWith(
-                        color: theme.colors.textPrimary,
-                      ),
-                    ),
-                    SizedBox(height: theme.sizing.height.s5),
-                    Text(
-                      OnboardpageConstants.otpSentText,
-                      style: theme.textStyle.bodyMedium.copyWith(
-                        color: theme.colors.textSecondary,
-                      ),
-                    ),
-                    SizedBox(height: theme.sizing.height.s8),
-                    _buildPincodeField(context),
-                    if (isOtpIncorrect)
-                      Text(
-                        OnboardpageConstants.otpError,
-                        style: theme.textStyle.headingSmall.copyWith(
-                          color: theme.colors.accentRed,
-                        ),
-                      ),
-                    SizedBox(height: theme.sizing.height.s4),
-                    _buildResendOtp(),
-                    const Spacer(),
-                  ],
-                ),
-              ),
-            ),
-            _buildBottomActionBar(),
-          ],
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: theme.colors.neutralLightBackground,
+        border: Border(
+          top: BorderSide(
+            color: theme.colors.neutralBorder,
+          ),
         ),
       ),
-    );
-  }
-
-  Row _buildProgressHeader() {
-    final theme = Theme.of(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: theme.colors.neutralBorder),
-              borderRadius: BorderRadius.circular(theme.borderradius.xLarge),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(theme.sizing.height.s3),
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: theme.sizing.height.s6,
-                color: theme.colors.textPrimary,
-              ),
-            ),
-          ),
-        ),
-        Column(
-          children: [
-            Text(
-              OnboardpageConstants.progressText,
-              style: theme.textStyle.headingSmall.copyWith(
-                color: theme.colors.accentPurple,
-              ),
-            ),
-            SizedBox(height: theme.sizing.height.s3),
-            SizedBox(
-              width: theme.sizing.width.s50,
-              height: theme.spacing.height.s4,
-              child: LinearProgressIndicator(
-                value: 0.22,
-                color: theme.colors.accentPurple,
-                backgroundColor: theme.colors.neutralBorder,
-                borderRadius: BorderRadius.circular(theme.borderradius.xSmall),
-              ),
-            ),
-          ],
-        ),
-        GestureDetector(
-          onTap: () {},
-          child: Text(
-            OnboardpageConstants.skipText,
-            style: theme.textStyle.headingSmall.copyWith(
-              color: theme.colors.textPrimary,
-            ),
-          ),
-        ),
-      ],
+      padding: EdgeInsets.symmetric(
+        vertical: theme.sizing.height.s5,
+        horizontal: theme.sizing.height.s8,
+      ),
+      child: MinyButton(
+        label: OnboardpageConstants.verifyButtonText,
+        onPressed: verifyOtp,
+      ),
     );
   }
 
@@ -251,26 +202,13 @@ class _OtpPageState extends State<OtpPage> {
     );
   }
 
-  Container _buildBottomActionBar() {
-    final theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: theme.colors.neutralLightBackground,
-        border: Border(
-          top: BorderSide(
-            color: theme.colors.neutralBorder,
-          ),
-        ),
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: theme.sizing.height.s5,
-        horizontal: theme.sizing.height.s8,
-      ),
-      child: MinyButton(
-        label: OnboardpageConstants.verifyButtonText,
-        onPressed: verifyOtp,
-      ),
-    );
+  void _setUpOtpListener() {
+    otpController.addListener(() {
+      if (isOtpIncorrect) {
+        setState(() {
+          isOtpIncorrect = false;
+        });
+      }
+    });
   }
 }
