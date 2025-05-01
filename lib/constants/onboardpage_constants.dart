@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class OnboardpageConstants {
   // LoginPage_Texts
-  static const String progressText = '11% completed';
+  static const String progressText = ' completed';
   static const String skipText = 'Skip';
   static const String enterMobileText = 'Enter your mobile\nnumber';
   static const String otpSubText = "We'll send you a quick OTP\nto verify.";

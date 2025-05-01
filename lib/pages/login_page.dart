@@ -15,11 +15,16 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: theme.sizing.height.s8),
+            padding: EdgeInsets.symmetric(
+              horizontal: theme.sizing.width.s8,
+            ),
             child: Column(
               children: [
-                SizedBox(height: theme.sizing.height.s36),
-                SvgPicture.asset(LoginpageConstants.appLogoPath),
+                SizedBox(height: theme.sizing.height.s20),
+                SvgPicture.asset(
+                  LoginpageConstants.appLogoPath,
+                  height: theme.sizing.height.s32,
+                ),
                 SizedBox(height: theme.sizing.height.s20),
                 Text(
                   LoginpageConstants.introducingText,
@@ -79,6 +84,7 @@ class LoginPage extends StatelessWidget {
                   label: LoginpageConstants.googleButtonLabel,
                   iconPath: LoginpageConstants.googleIconPath,
                 ),
+                SizedBox(height: theme.sizing.height.s10),
               ],
             ),
           ),
