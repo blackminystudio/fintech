@@ -4,6 +4,7 @@ import 'package:miny_design_system/packages/figma_squircle/src/smooth_border_rad
 import 'package:miny_design_system/packages/figma_squircle/src/smooth_rectangle_border.dart';
 
 import '../constants/onboardpage_constants.dart';
+import 'widgets/bottom_action_bar.dart';
 import 'widgets/onboarding_title.dart';
 import 'widgets/progress_header.dart';
 
@@ -51,7 +52,10 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 ),
               ),
             ),
-            _buildBottomActionBar(),
+            BottomActionBar(
+              label: OnboardpageConstants.confirmButtonText,
+              onPressed: () {},
+            ),
           ],
         ),
       ),
@@ -62,29 +66,6 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   void dispose() {
     fullNameController.dispose();
     super.dispose();
-  }
-
-  Container _buildBottomActionBar() {
-    final theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: theme.colors.neutralLightBackground,
-        border: Border(
-          top: BorderSide(
-            color: theme.colors.neutralBorder,
-          ),
-        ),
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: theme.sizing.height.s5,
-        horizontal: theme.sizing.height.s8,
-      ),
-      child: MinyButton(
-        label: OnboardpageConstants.confirmButtonText,
-        onPressed: () {},
-      ),
-    );
   }
 
   Padding _buildInfoContent(ThemeData theme) => Padding(
