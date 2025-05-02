@@ -42,7 +42,8 @@ class OnboardingTitle extends StatelessWidget {
         Text(title, style: titleTextStyle),
         SizedBox(height: theme.sizing.height.s5),
         Text(subTitle, style: subtitleTextStyle),
-        SizedBox(height: theme.sizing.height.s8),
+        // TODO: check the height
+        SizedBox(height: theme.sizing.height.s13),
       ],
     );
   }

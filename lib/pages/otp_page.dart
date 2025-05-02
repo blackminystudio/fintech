@@ -6,6 +6,7 @@ import 'package:miny_design_system/miny_design_system.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../constants/onboardpage_constants.dart';
+import 'widgets/bottom_action_bar.dart';
 import 'widgets/onboarding_title.dart';
 import 'widgets/progress_header.dart';
 
@@ -60,7 +61,10 @@ class _OtpPageState extends State<OtpPage> {
                 ),
               ),
             ),
-            _buildBottomActionBar(),
+            BottomActionBar(
+              label: OnboardpageConstants.submitOtp,
+              onPressed: verifyOtp,
+            ),
           ],
         ),
       ),
@@ -108,29 +112,6 @@ class _OtpPageState extends State<OtpPage> {
         isOtpIncorrect = true;
       });
     }
-  }
-
-  Container _buildBottomActionBar() {
-    final theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: theme.colors.neutralLightBackground,
-        border: Border(
-          top: BorderSide(
-            color: theme.colors.neutralBorder,
-          ),
-        ),
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: theme.sizing.height.s5,
-        horizontal: theme.sizing.height.s8,
-      ),
-      child: MinyButton(
-        label: OnboardpageConstants.verifyButtonText,
-        onPressed: verifyOtp,
-      ),
-    );
   }
 
   PinCodeTextField _buildPincodeField(BuildContext context) {
