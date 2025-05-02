@@ -67,8 +67,7 @@ class OnboardpageConstants {
   static const String income0to10k = '0 - 10k';
   static const String income10kto50k = '10k - 50k';
   static const String income50kto100k = '50k - 100k';
-  static const String income100kto500k_1 = '100k -500k';
-  static const String income100kto500k_2 = '100k -500k';
+  static const String income100kto500k = '100k -500k';
 
   // Employment Status Options
   static const String unemployed = 'Un-employed';
