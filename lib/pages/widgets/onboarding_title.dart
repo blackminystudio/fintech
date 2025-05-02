@@ -40,10 +40,9 @@ class OnboardingTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: titleTextStyle),
-        SizedBox(height: theme.sizing.height.s5),
+        SizedBox(height: theme.spacing.height.s20),
         Text(subTitle, style: subtitleTextStyle),
-        // TODO: check the height
-        SizedBox(height: theme.sizing.height.s13),
+        SizedBox(height: theme.spacing.height.s32),
       ],
     );
   }

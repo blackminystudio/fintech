@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:miny_design_system/miny_design_system.dart';
+import 'package:miny_design_system/packages/figma_squircle/figma_squircle.dart';
+
 import '../constants/onboardpage_constants.dart';
 import 'widgets/bottom_action_bar.dart';
 import 'widgets/onboarding_title.dart';
@@ -42,6 +45,7 @@ class _DobPageState extends State<DobPage> {
             SizedBox(
               height: theme.sizing.height.s64,
               child: CupertinoDatePicker(
+                dateOrder: DatePickerDateOrder.dmy,
                 mode: CupertinoDatePickerMode.date,
                 initialDateTime: tempDate,
                 maximumDate: DateTime.now(),
@@ -89,7 +93,7 @@ class _DobPageState extends State<DobPage> {
                       title: OnboardpageConstants.birthdayQuestion,
                       subTitle: OnboardpageConstants.birthdayNote,
                     ),
-                    SizedBox(height: theme.sizing.height.s16),
+                    SizedBox(height: theme.spacing.height.s32),
                     DateSelectorTile(
                       selectedDate: selectedDate,
                       onTap: () => _showDatePicker(context),
@@ -124,7 +128,7 @@ class DateSelectorTile extends StatelessWidget {
     final theme = Theme.of(context);
     final formattedDate = selectedDate == null
         ? OnboardpageConstants.dobLabel
-        : '${selectedDate!.day}-${selectedDate!.month}-${selectedDate!.year}';
+        : DateFormat('dd-MM-yyyy').format(selectedDate!);
 
     return GestureDetector(
       onTap: onTap,
@@ -133,9 +137,16 @@ class DateSelectorTile extends StatelessWidget {
           vertical: theme.sizing.height.s5,
           horizontal: theme.sizing.height.s5,
         ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(theme.borderradius.large),
-          border: Border.all(color: theme.colors.neutralBorder),
+        decoration: ShapeDecoration(
+          shape: SmoothRectangleBorder(
+            side: BorderSide(
+              color: theme.colors.neutralBorder,
+            ),
+            borderRadius: SmoothBorderRadius(
+              cornerRadius: theme.borderradius.large,
+              cornerSmoothing: 1,
+            ),
+          ),
         ),
         child: Row(
           children: [
