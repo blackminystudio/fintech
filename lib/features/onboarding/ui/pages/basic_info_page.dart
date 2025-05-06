@@ -3,10 +3,10 @@ import 'package:miny_design_system/miny_design_system.dart';
 import 'package:miny_design_system/packages/figma_squircle/src/smooth_border_radius.dart';
 import 'package:miny_design_system/packages/figma_squircle/src/smooth_rectangle_border.dart';
 
-import '../constants/onboardpage_constants.dart';
-import 'widgets/bottom_action_bar.dart';
-import 'widgets/onboarding_title.dart';
-import 'widgets/progress_header.dart';
+import '../../utilities/onboarding_constants.dart';
+import '../widgets/bottom_action_bar.dart';
+import '../widgets/onboarding_title.dart';
+import '../widgets/progress_header.dart';
 
 class BasicInfoPage extends StatefulWidget {
   BasicInfoPage({super.key});
@@ -17,7 +17,7 @@ class BasicInfoPage extends StatefulWidget {
 
 class _BasicInfoPageState extends State<BasicInfoPage> {
   final TextEditingController fullNameController = TextEditingController(
-    text: OnboardpageConstants.name,
+    text: OnboardingConstants.name,
   );
 
   @override
@@ -43,8 +43,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                         onTapBack: () {},
                       ),
                       const OnboardingTitle(
-                        title: OnboardpageConstants.basicInfoTitle,
-                        subTitle: OnboardpageConstants.basicInfoSubtitle,
+                        title: OnboardingConstants.basicInfoTitle,
+                        subTitle: OnboardingConstants.basicInfoSubtitle,
                       ),
                       _buildInfoContentCard(),
                     ],
@@ -53,7 +53,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
               ),
             ),
             BottomActionBar(
-              label: OnboardpageConstants.confirmButtonText,
+              label: OnboardingConstants.confirmButtonText,
               onPressed: () {},
             ),
           ],
@@ -77,13 +77,13 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
           children: [
             Icon(
               size: theme.sizing.height.s6,
-              OnboardpageConstants.infoIcon,
+              OnboardingConstants.infoIcon,
               color: theme.colors.accentPurple,
             ),
             SizedBox(width: theme.sizing.width.s3),
             Flexible(
               child: Text(
-                OnboardpageConstants.basicInfoFooterNote,
+                OnboardingConstants.basicInfoFooterNote,
                 style: theme.textStyle.bodyXxsmall.copyWith(
                   color: theme.colors.accentPurple,
                 ),
@@ -118,8 +118,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 _buildUserInfoCard(
                     isActive: true,
                     text: fullNameController.text,
-                    labelText: OnboardpageConstants.fullNameLabel,
-                    icon: OnboardpageConstants.fullNameIcon,
+                    labelText: OnboardingConstants.fullNameLabel,
+                    icon: OnboardingConstants.fullNameIcon,
                     controller: fullNameController),
                 SizedBox(height: theme.sizing.height.s7),
                 Divider(
@@ -129,9 +129,9 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 ),
                 SizedBox(height: theme.sizing.height.s7),
                 _buildUserInfoCard(
-                  text: OnboardpageConstants.email,
-                  icon: OnboardpageConstants.emailIcon,
-                  labelText: OnboardpageConstants.emailLabel,
+                  text: OnboardingConstants.email,
+                  icon: OnboardingConstants.emailIcon,
+                  labelText: OnboardingConstants.emailLabel,
                 ),
                 SizedBox(height: theme.sizing.height.s7),
                 Divider(
@@ -141,9 +141,9 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 ),
                 SizedBox(height: theme.sizing.height.s7),
                 _buildUserInfoCard(
-                  text: OnboardpageConstants.phoneNumber,
-                  labelText: OnboardpageConstants.phoneLabel,
-                  icon: OnboardpageConstants.phoneIcon,
+                  text: OnboardingConstants.phoneNumber,
+                  labelText: OnboardingConstants.phoneLabel,
+                  icon: OnboardingConstants.phoneIcon,
                 ),
               ],
             ),

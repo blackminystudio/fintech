@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../constants/onboardpage_constants.dart';
-import 'widgets/bottom_action_bar.dart';
-import 'widgets/onboarding_title.dart';
-import 'widgets/progress_header.dart';
+import '../../utilities/onboarding_constants.dart';
+import '../widgets/bottom_action_bar.dart';
+import '../widgets/onboarding_title.dart';
+import '../widgets/progress_header.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({super.key});
@@ -44,13 +44,13 @@ class _OtpPageState extends State<OtpPage> {
                       onTapBack: () {},
                     ),
                     const OnboardingTitle(
-                      title: OnboardpageConstants.otpHeading,
-                      subTitle: OnboardpageConstants.otpSentText,
+                      title: OnboardingConstants.otpHeading,
+                      subTitle: OnboardingConstants.otpSentText,
                     ),
                     _buildPincodeField(context),
                     if (isOtpIncorrect)
                       Text(
-                        OnboardpageConstants.otpError,
+                        OnboardingConstants.otpError,
                         style: theme.textStyle.headingSmall.copyWith(
                           color: theme.colors.accentRed,
                         ),
@@ -62,7 +62,7 @@ class _OtpPageState extends State<OtpPage> {
               ),
             ),
             BottomActionBar(
-              label: OnboardpageConstants.submitOtp,
+              label: OnboardingConstants.submitOtp,
               onPressed: verifyOtp,
             ),
           ],
@@ -163,8 +163,8 @@ class _OtpPageState extends State<OtpPage> {
             children: [
               TextSpan(
                 text: isResendAvailable
-                    ? OnboardpageConstants.resendOtp
-                    : OnboardpageConstants.resendIn,
+                    ? OnboardingConstants.resendOtp
+                    : OnboardingConstants.resendIn,
                 style: theme.textStyle.bodyMedium.copyWith(
                   color: isResendAvailable
                       ? theme.colors.accentPurple

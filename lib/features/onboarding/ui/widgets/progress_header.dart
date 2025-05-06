@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../constants/onboardpage_constants.dart';
+import '../../utilities/onboarding_constants.dart';
 
 class ProgressHeader extends StatelessWidget {
   final double progressValue;
@@ -45,7 +45,7 @@ class ProgressHeader extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    '$progressText% ${OnboardpageConstants.progressText}',
+                    '$progressText% ${OnboardingConstants.progressText}',
                     style: theme.textStyle.headingSmall.copyWith(
                       color: theme.colors.accentPurple,
                     ),
@@ -69,7 +69,7 @@ class ProgressHeader extends StatelessWidget {
               GestureDetector(
                 onTap: onTapSkip,
                 child: Text(
-                  OnboardpageConstants.skipText,
+                  OnboardingConstants.skipText,
                   style: theme.textStyle.headingSmall.copyWith(
                     color: theme.colors.textPrimary,
                   ),

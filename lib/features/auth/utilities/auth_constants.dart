@@ -1,4 +1,4 @@
-class LoginpageConstants {
+class AuthConstants {
   // Image paths
   static const String appLogoPath = 'assets/images/app_logo.svg';
   static const String googleIconPath = 'assets/images/googleicon.png';

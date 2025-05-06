@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class OnboardpageConstants {
+class OnboardingConstants {
   // LoginPage_Texts
   static const String progressText = ' completed';
   static const String skipText = 'Skip';

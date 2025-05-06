@@ -4,10 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 import 'package:miny_design_system/packages/figma_squircle/figma_squircle.dart';
 
-import '../constants/onboardpage_constants.dart';
-import 'widgets/bottom_action_bar.dart';
-import 'widgets/onboarding_title.dart';
-import 'widgets/progress_header.dart';
+import '../../utilities/onboarding_constants.dart';
+import '../widgets/bottom_action_bar.dart';
+import '../widgets/onboarding_title.dart';
+import '../widgets/progress_header.dart';
 
 class DobPage extends StatefulWidget {
   const DobPage({super.key});
@@ -56,7 +56,7 @@ class _DobPageState extends State<DobPage> {
             ),
             SizedBox(height: theme.spacing.height.s4),
             MinyButton(
-              label: OnboardpageConstants.okayButtonText,
+              label: OnboardingConstants.okayButtonText,
               onPressed: () {
                 setState(() {
                   selectedDate = tempDate;
@@ -90,8 +90,8 @@ class _DobPageState extends State<DobPage> {
                       onTapBack: () {},
                     ),
                     const OnboardingTitle(
-                      title: OnboardpageConstants.birthdayQuestion,
-                      subTitle: OnboardpageConstants.birthdayNote,
+                      title: OnboardingConstants.birthdayQuestion,
+                      subTitle: OnboardingConstants.birthdayNote,
                     ),
                     SizedBox(height: theme.spacing.height.s32),
                     DateSelectorTile(
@@ -103,7 +103,7 @@ class _DobPageState extends State<DobPage> {
               ),
             ),
             BottomActionBar(
-              label: OnboardpageConstants.continueButtonText,
+              label: OnboardingConstants.continueButtonText,
               onPressed: () {},
             ),
           ],
@@ -127,7 +127,7 @@ class DateSelectorTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final formattedDate = selectedDate == null
-        ? OnboardpageConstants.dobLabel
+        ? OnboardingConstants.dobLabel
         : DateFormat('dd-MM-yyyy').format(selectedDate!);
 
     return GestureDetector(
@@ -157,7 +157,7 @@ class DateSelectorTile extends StatelessWidget {
                 color: theme.colors.neutralLightBackground,
               ),
               child: Icon(
-                OnboardpageConstants.calenderIcon,
+                OnboardingConstants.calenderIcon,
                 size: theme.sizing.height.s6,
                 color: theme.colors.textPrimary,
               ),
