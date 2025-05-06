@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../constants/loginpage_constants.dart';
+import '../../utilities/auth_constants.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -22,19 +22,19 @@ class LoginPage extends StatelessWidget {
               children: [
                 SizedBox(height: theme.sizing.height.s20),
                 SvgPicture.asset(
-                  LoginpageConstants.appLogoPath,
+                  AuthConstants.appLogoPath,
                   height: theme.sizing.height.s32,
                 ),
                 SizedBox(height: theme.sizing.height.s20),
                 Text(
-                  LoginpageConstants.introducingText,
+                  AuthConstants.introducingText,
                   style: theme.textStyle.bodyXsmall.copyWith(
                     color: theme.colors.neutralBackground,
                   ),
                 ),
                 SizedBox(height: theme.sizing.height.s6),
                 Text(
-                  LoginpageConstants.headingText,
+                  AuthConstants.headingText,
                   textAlign: TextAlign.center,
                   style: theme.textStyle.bodyXxlarge.copyWith(
                     color: theme.colors.neutralBackground,
@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: theme.sizing.height.s6),
                 Text(
-                  LoginpageConstants.subText,
+                  AuthConstants.subText,
                   textAlign: TextAlign.center,
                   style: theme.textStyle.bodyMedium.copyWith(
                     color: theme.colors.textSecondary,
@@ -51,25 +51,25 @@ class LoginPage extends StatelessWidget {
                 const Spacer(),
                 Text.rich(
                   TextSpan(
-                    text: LoginpageConstants.termsPrefix,
+                    text: AuthConstants.termsPrefix,
                     style: theme.textStyle.bodyXsmall.copyWith(
                       color: theme.colors.textSecondary,
                     ),
                     children: [
                       TextSpan(
-                        text: LoginpageConstants.termsText,
+                        text: AuthConstants.termsText,
                         style: theme.textStyle.headingXsmall.copyWith(
                           color: theme.colors.neutralBackground,
                         ),
                       ),
                       TextSpan(
-                        text: LoginpageConstants.andText,
+                        text: AuthConstants.andText,
                         style: theme.textStyle.bodyXsmall.copyWith(
                           color: theme.colors.textSecondary,
                         ),
                       ),
                       TextSpan(
-                        text: LoginpageConstants.privacyPolicyText,
+                        text: AuthConstants.privacyPolicyText,
                         style: theme.textStyle.headingXsmall.copyWith(
                           color: theme.colors.neutralBackground,
                         ),
@@ -81,8 +81,8 @@ class LoginPage extends StatelessWidget {
                 MinyButton(
                   enableIcon: true,
                   onPressed: () {},
-                  label: LoginpageConstants.googleButtonLabel,
-                  iconPath: LoginpageConstants.googleIconPath,
+                  label: AuthConstants.googleButtonLabel,
+                  iconPath: AuthConstants.googleIconPath,
                 ),
                 SizedBox(height: theme.sizing.height.s10),
               ],

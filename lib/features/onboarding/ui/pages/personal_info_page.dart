@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
-import '../constants/onboardpage_constants.dart';
-import 'widgets/bottom_action_bar.dart';
-import 'widgets/onboarding_title.dart';
-import 'widgets/progress_header.dart';
+
+import '../../utilities/onboarding_constants.dart';
+import '../widgets/bottom_action_bar.dart';
+import '../widgets/onboarding_title.dart';
+import '../widgets/progress_header.dart';
 
 class PersonalInfoPage extends StatefulWidget {
   const PersonalInfoPage({super.key});
@@ -41,25 +42,25 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                       ),
                       const OnboardingTitle(
                         onboardingPageType: OnboardingPageType.small,
-                        title: OnboardpageConstants.personalInfoTitle,
-                        subTitle: OnboardpageConstants.personalInfoNote,
+                        title: OnboardingConstants.personalInfoTitle,
+                        subTitle: OnboardingConstants.personalInfoNote,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            OnboardpageConstants.cityLabel,
+                            OnboardingConstants.cityLabel,
                             style: theme.textStyle.headingXxsmall.copyWith(
                               color: theme.colors.textSecondarylight,
                             ),
                           ),
                           SizedBox(height: theme.sizing.height.s3),
                           const MinyTextField(
-                            hintText: OnboardpageConstants.enterCityText,
+                            hintText: OnboardingConstants.enterCityText,
                           ),
                           SizedBox(height: theme.sizing.height.s10),
                           Text(
-                            OnboardpageConstants.genderLabel,
+                            OnboardingConstants.genderLabel,
                             style: theme.textStyle.headingXxsmall.copyWith(
                               color: theme.colors.textSecondarylight,
                             ),
@@ -70,37 +71,36 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                             runSpacing: theme.spacing.height.s12,
                             children: [
                               ChoiceChip(
-                                label: const Text(OnboardpageConstants.male),
+                                label: const Text(OnboardingConstants.male),
                                 selected:
-                                    selectedGender == OnboardpageConstants.male,
+                                    selectedGender == OnboardingConstants.male,
+                                onSelected: (value) {
+                                  setState(() {
+                                    selectedGender =
+                                        value ? OnboardingConstants.male : null;
+                                  });
+                                },
+                              ),
+                              ChoiceChip(
+                                label: const Text(OnboardingConstants.female),
+                                selected: selectedGender ==
+                                    OnboardingConstants.female,
                                 onSelected: (value) {
                                   setState(() {
                                     selectedGender = value
-                                        ? OnboardpageConstants.male
+                                        ? OnboardingConstants.female
                                         : null;
                                   });
                                 },
                               ),
                               ChoiceChip(
-                                label: const Text(OnboardpageConstants.female),
-                                selected: selectedGender ==
-                                    OnboardpageConstants.female,
+                                label: const Text(OnboardingConstants.other),
+                                selected:
+                                    selectedGender == OnboardingConstants.other,
                                 onSelected: (value) {
                                   setState(() {
                                     selectedGender = value
-                                        ? OnboardpageConstants.female
-                                        : null;
-                                  });
-                                },
-                              ),
-                              ChoiceChip(
-                                label: const Text(OnboardpageConstants.other),
-                                selected: selectedGender ==
-                                    OnboardpageConstants.other,
-                                onSelected: (value) {
-                                  setState(() {
-                                    selectedGender = value
-                                        ? OnboardpageConstants.other
+                                        ? OnboardingConstants.other
                                         : null;
                                   });
                                 },
@@ -109,7 +109,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                           ),
                           SizedBox(height: theme.sizing.height.s10),
                           Text(
-                            OnboardpageConstants.maritalStatusLabel,
+                            OnboardingConstants.maritalStatusLabel,
                             style: theme.textStyle.headingXxsmall.copyWith(
                               color: theme.colors.textSecondarylight,
                             ),
@@ -119,25 +119,25 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ChoiceChip(
-                                label: const Text(OnboardpageConstants.married),
+                                label: const Text(OnboardingConstants.married),
                                 selected: selectedMaritalStatus ==
-                                    OnboardpageConstants.married,
+                                    OnboardingConstants.married,
                                 onSelected: (value) {
                                   setState(() {
                                     selectedMaritalStatus = value
-                                        ? OnboardpageConstants.married
+                                        ? OnboardingConstants.married
                                         : null;
                                   });
                                 },
                               ),
                               ChoiceChip(
-                                label: const Text(OnboardpageConstants.single),
+                                label: const Text(OnboardingConstants.single),
                                 selected: selectedMaritalStatus ==
-                                    OnboardpageConstants.single,
+                                    OnboardingConstants.single,
                                 onSelected: (value) {
                                   setState(() {
                                     selectedMaritalStatus = value
-                                        ? OnboardpageConstants.single
+                                        ? OnboardingConstants.single
                                         : null;
                                   });
                                 },
@@ -153,7 +153,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
             ),
             BottomActionBar(
               onPressed: () {},
-              label: OnboardpageConstants.continueButtonText,
+              label: OnboardingConstants.continueButtonText,
             ),
           ],
         ),

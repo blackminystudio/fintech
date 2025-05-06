@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../constants/onboardpage_constants.dart';
-import 'widgets/bottom_action_bar.dart';
-import 'widgets/onboarding_title.dart';
-import 'widgets/progress_header.dart';
+import '../../utilities/onboarding_constants.dart';
+import '../widgets/bottom_action_bar.dart';
+import '../widgets/onboarding_title.dart';
+import '../widgets/progress_header.dart';
 
 class FinancialInfoPage extends StatefulWidget {
   const FinancialInfoPage({super.key});
@@ -18,19 +18,19 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
   String? selectedEmploymentStatus;
 
   final incomeOptions = [
-    OnboardpageConstants.income0to10k,
-    OnboardpageConstants.income10kto50k,
-    OnboardpageConstants.income50kto100k,
-    OnboardpageConstants.income100kto500k,
+    OnboardingConstants.income0to10k,
+    OnboardingConstants.income10kto50k,
+    OnboardingConstants.income50kto100k,
+    OnboardingConstants.income100kto500k,
   ];
 
   final employmentOptions = [
-    OnboardpageConstants.unemployed,
-    OnboardpageConstants.student1,
-    OnboardpageConstants.professional,
-    OnboardpageConstants.privateJob,
-    OnboardpageConstants.governmentJob,
-    OnboardpageConstants.retired,
+    OnboardingConstants.unemployed,
+    OnboardingConstants.student1,
+    OnboardingConstants.professional,
+    OnboardingConstants.privateJob,
+    OnboardingConstants.governmentJob,
+    OnboardingConstants.retired,
   ];
 
   @override
@@ -56,12 +56,12 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
                         onTapBack: () {},
                       ),
                       const OnboardingTitle(
-                        title: OnboardpageConstants.financialInfoTitle,
-                        subTitle: OnboardpageConstants.personalInfoNote,
+                        title: OnboardingConstants.financialInfoTitle,
+                        subTitle: OnboardingConstants.personalInfoNote,
                       ),
                       ..._buildChipsSection(
                         theme,
-                        label: OnboardpageConstants.monthlyIncomeLabel,
+                        label: OnboardingConstants.monthlyIncomeLabel,
                         options: incomeOptions,
                         selectedValue: selectedIncome,
                         onSelected: (value) => setState(
@@ -71,7 +71,7 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
                       SizedBox(height: theme.sizing.height.s10),
                       ..._buildChipsSection(
                         theme,
-                        label: OnboardpageConstants.employmentStatusLabel,
+                        label: OnboardingConstants.employmentStatusLabel,
                         options: employmentOptions,
                         selectedValue: selectedEmploymentStatus,
                         onSelected: (value) => setState(
@@ -84,7 +84,7 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
               ),
             ),
             BottomActionBar(
-              label: OnboardpageConstants.confirmButtonText,
+              label: OnboardingConstants.confirmButtonText,
               onPressed: () {},
             ),
           ],

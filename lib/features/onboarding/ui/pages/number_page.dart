@@ -4,10 +4,10 @@ import 'package:miny_design_system/miny_design_system.dart';
 import 'package:miny_design_system/packages/figma_squircle/src/smooth_border_radius.dart';
 import 'package:miny_design_system/packages/figma_squircle/src/smooth_rectangle_border.dart';
 
-import '../constants/onboardpage_constants.dart';
-import 'widgets/bottom_action_bar.dart';
-import 'widgets/onboarding_title.dart';
-import 'widgets/progress_header.dart';
+import '../../utilities/onboarding_constants.dart';
+import '../widgets/bottom_action_bar.dart';
+import '../widgets/onboarding_title.dart';
+import '../widgets/progress_header.dart';
 
 class NumberPage extends StatefulWidget {
   const NumberPage({super.key});
@@ -44,14 +44,14 @@ class _NumberPageState extends State<NumberPage> {
                       onTapBack: () {},
                     ),
                     const OnboardingTitle(
-                      title: OnboardpageConstants.enterMobileText,
-                      subTitle: OnboardpageConstants.otpSubText,
+                      title: OnboardingConstants.enterMobileText,
+                      subTitle: OnboardingConstants.otpSubText,
                     ),
                     _buildPhoneNumberField(),
                     SizedBox(height: theme.spacing.height.s4),
                     if (_isSubmitted && !_isValid)
                       Text(
-                        OnboardpageConstants.mobileValidationError,
+                        OnboardingConstants.mobileValidationError,
                         style: theme.textStyle.headingSmall.copyWith(
                           // TODO: DS: Add Token "WarningRed" (#EE4E4E);
                           color: theme.colors.accentRed,
@@ -62,7 +62,7 @@ class _NumberPageState extends State<NumberPage> {
               ),
             ),
             BottomActionBar(
-              label: OnboardpageConstants.verifyButtonText,
+              label: OnboardingConstants.verifyButtonText,
               onPressed: _validateMobileNumber,
             ),
           ],
@@ -109,7 +109,7 @@ class _NumberPageState extends State<NumberPage> {
         child: Row(
           children: [
             Text(
-              OnboardpageConstants.countryCode,
+              OnboardingConstants.countryCode,
               style: theme.textStyle.bodyMedium.copyWith(
                 color: theme.colors.textSecondarylight,
               ),

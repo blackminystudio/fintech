@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import 'pages/dob_page.dart';
+import 'features/onboarding/ui/pages/dob_page.dart';
 
 void main() {
   runApp(
