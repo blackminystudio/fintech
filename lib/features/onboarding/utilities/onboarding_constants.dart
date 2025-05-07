@@ -18,6 +18,7 @@ class OnboardingConstants {
   static const String resendOtp = 'Resend OTP';
   static const String resendIn = 'Resend in ';
   static const String submitOtp = 'Submit OTP';
+  static const String otpValidationError = 'OTP should be 6 digits';
 
   // BasicInfoPage_Texts
   static const String name = 'Satyabrata Nayak';

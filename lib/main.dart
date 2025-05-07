@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import 'features/onboarding/ui/pages/dob_page.dart';
+import 'features/onboarding/ui/pages/wrapper.dart';
 
 void main() {
   runApp(
@@ -21,6 +21,6 @@ class MyApp extends StatelessWidget {
         title: 'FintechApp',
         theme: MinyTheme.lightTheme,
         debugShowCheckedModeBanner: false,
-        home: const DobPage(),
+        home: const Wrapper(),
       );
 }

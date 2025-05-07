@@ -2,15 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:miny_design_system/miny_design_system.dart';
-import 'package:miny_design_system/packages/figma_squircle/figma_squircle.dart';
 
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
-import '../widgets/progress_header.dart';
 
 class DobPage extends StatefulWidget {
-  const DobPage({super.key});
+  // TODO: this need to be nonnull
+  final Function(DateTime? dob) onTap;
+
+  const DobPage({
+    super.key,
+    required this.onTap,
+  });
 
   @override
   State<DobPage> createState() => _DobPageState();
@@ -37,7 +41,7 @@ class _DobPageState extends State<DobPage> {
   Widget _buildDatePickerSheet(ThemeData theme, DateTime tempDate) => Padding(
         padding: EdgeInsets.symmetric(
           horizontal: theme.sizing.width.s7,
-          vertical: theme.sizing.width.s10,
+          vertical: theme.spacing.width.s40,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -72,43 +76,35 @@ class _DobPageState extends State<DobPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      backgroundColor: theme.colors.neutralLight,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: theme.sizing.height.s8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProgressHeader(
-                      progressValue: 0.77,
-                      onTapSkip: () {},
-                      onTapBack: () {},
-                    ),
-                    const OnboardingTitle(
-                      title: OnboardingConstants.birthdayQuestion,
-                      subTitle: OnboardingConstants.birthdayNote,
-                    ),
-                    SizedBox(height: theme.spacing.height.s32),
-                    DateSelectorTile(
-                      selectedDate: selectedDate,
-                      onTap: () => _showDatePicker(context),
-                    ),
-                  ],
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: theme.sizing.height.s8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const OnboardingTitle(
+                  title: OnboardingConstants.birthdayQuestion,
+                  subTitle: OnboardingConstants.birthdayNote,
                 ),
-              ),
+                SizedBox(height: theme.spacing.height.s32),
+                DateSelectorTile(
+                  selectedDate: selectedDate,
+                  onTap: () => _showDatePicker(context),
+                ),
+              ],
             ),
-            BottomActionBar(
-              label: OnboardingConstants.continueButtonText,
-              onPressed: () {},
-            ),
-          ],
+          ),
         ),
-      ),
+        BottomActionBar(
+          // TODO:
+          /// Errors:
+          /// "Select your date of birth"
+          label: OnboardingConstants.continueButtonText,
+          onPressed: () => widget.onTap.call(selectedDate),
+        ),
+      ],
     );
   }
 }
@@ -134,8 +130,8 @@ class DateSelectorTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(
-          vertical: theme.sizing.height.s5,
-          horizontal: theme.sizing.height.s5,
+          vertical: theme.spacing.height.s20,
+          horizontal: theme.spacing.height.s20,
         ),
         decoration: ShapeDecoration(
           shape: SmoothRectangleBorder(
@@ -151,7 +147,7 @@ class DateSelectorTile extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(theme.borderradius.normal),
+              padding: EdgeInsets.all(theme.spacing.height.s10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(theme.borderradius.small),
                 color: theme.colors.neutralLightBackground,
