@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:miny_design_system/miny_design_system.dart';
@@ -8,108 +6,93 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
-import '../widgets/progress_header.dart';
+import '../widgets/resend_otp.dart';
 
 class OtpPage extends StatefulWidget {
-  const OtpPage({super.key});
+  final String correctOtp;
+  final VoidCallback onTap;
+  final VoidCallback onResendOtp;
+  const OtpPage({
+    super.key,
+    required this.correctOtp,
+    required this.onTap,
+    required this.onResendOtp,
+  });
   @override
   State<OtpPage> createState() => _OtpPageState();
 }
 
 class _OtpPageState extends State<OtpPage> {
   TextEditingController otpController = TextEditingController();
-  int countdown = 30;
+  String? errorMessage;
+
   bool isOtpIncorrect = false;
-  String correctOtp = '788525';
-  bool isResendAvailable = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colors.neutralLight,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: theme.sizing.height.s8,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProgressHeader(
-                      progressValue: 0.11,
-                      onTapSkip: () {},
-                      onTapBack: () {},
-                    ),
-                    const OnboardingTitle(
-                      title: OnboardingConstants.otpHeading,
-                      subTitle: OnboardingConstants.otpSentText,
-                    ),
-                    _buildPincodeField(context),
-                    if (isOtpIncorrect)
-                      Text(
-                        OnboardingConstants.otpError,
-                        style: theme.textStyle.headingSmall.copyWith(
-                          color: theme.colors.accentRed,
-                        ),
-                      ),
-                    SizedBox(height: theme.sizing.height.s4),
-                    _buildResendOtp(),
-                  ],
-                ),
-              ),
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: theme.spacing.height.s32,
             ),
-            BottomActionBar(
-              label: OnboardingConstants.submitOtp,
-              onPressed: verifyOtp,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const OnboardingTitle(
+                  title: OnboardingConstants.otpHeading,
+                  subTitle: OnboardingConstants.otpSentText,
+                ),
+                _buildPincodeField(context),
+                if (isOtpIncorrect && errorMessage != null)
+                  Text(
+                    errorMessage!,
+                    style: theme.textStyle.headingSmall.copyWith(
+                      color: theme.colors.accentRed,
+                    ),
+                  ),
+                SizedBox(height: theme.sizing.height.s4),
+                ResendOtpWidget(
+                  countDown: 5,
+                  onResend: widget.onResendOtp,
+                )
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        BottomActionBar(
+          label: OnboardingConstants.submitOtp,
+          onPressed: () {
+            verifyOtp();
+            widget.onTap();
+          },
+        ),
+      ],
     );
   }
 
-  @override
-  void dispose() {
-    otpController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    startCountdown();
-    _setUpOtpListener();
-  }
-
-  Future<void> startCountdown() async {
-    setState(() {
-      isResendAvailable = false;
-      countdown = 30;
-    });
-
-    while (countdown > 0) {
-      setState(() {
-        countdown--;
-      });
-
-      await Future.delayed(const Duration(seconds: 1));
-    }
-    setState(() {
-      isResendAvailable = true;
-    });
-  }
-
   void verifyOtp() {
-    if (otpController.text == correctOtp) {
+    final enteredOtp = otpController.text.trim();
+
+    if (enteredOtp.length < 6) {
+      setState(() {
+        isOtpIncorrect = true;
+        errorMessage = OnboardingConstants.otpValidationError;
+      });
+      return;
+    }
+
+    if (enteredOtp == widget.correctOtp) {
       setState(() {
         isOtpIncorrect = false;
+        errorMessage = null;
       });
     } else {
       setState(() {
         isOtpIncorrect = true;
+        errorMessage = OnboardingConstants.otpError;
       });
     }
   }
@@ -136,60 +119,17 @@ class _OtpPageState extends State<OtpPage> {
         selectedColor: theme.colors.neutralBorder,
       ),
       keyboardType: TextInputType.number,
-      onChanged: (value) {},
+      onChanged: (value) {
+        if (value.length == 6 && isOtpIncorrect) {
+          setState(() {
+            isOtpIncorrect = false;
+            errorMessage = null;
+          });
+        }
+      },
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
     );
-  }
-
-  GestureDetector _buildResendOtp() {
-    final theme = Theme.of(context);
-    return GestureDetector(
-      onTap: isResendAvailable ? startCountdown : null,
-      child: Container(
-        decoration: isResendAvailable
-            ? BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    width: theme.spacing.height.s2,
-                    color: theme.colors.accentPurple,
-                  ),
-                ),
-              )
-            : null,
-        child: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: isResendAvailable
-                    ? OnboardingConstants.resendOtp
-                    : OnboardingConstants.resendIn,
-                style: theme.textStyle.bodyMedium.copyWith(
-                  color: isResendAvailable
-                      ? theme.colors.accentPurple
-                      : theme.colors.textSecondary,
-                ),
-              ),
-              if (!isResendAvailable)
-                TextSpan(
-                  text: '${countdown}s',
-                  style: theme.textStyle.bodyMedium,
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _setUpOtpListener() {
-    otpController.addListener(() {
-      if (isOtpIncorrect) {
-        setState(() {
-          isOtpIncorrect = false;
-        });
-      }
-    });
   }
 }

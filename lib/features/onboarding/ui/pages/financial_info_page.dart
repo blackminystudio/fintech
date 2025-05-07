@@ -4,10 +4,11 @@ import 'package:miny_design_system/miny_design_system.dart';
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
-import '../widgets/progress_header.dart';
 
 class FinancialInfoPage extends StatefulWidget {
-  const FinancialInfoPage({super.key});
+  final Function(String? income, String? employment) onTap;
+
+  const FinancialInfoPage({super.key, required this.onTap});
 
   @override
   State<FinancialInfoPage> createState() => _FinancialInfoPageState();
@@ -36,60 +37,53 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colors.neutralLight,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: theme.sizing.height.s8,
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ProgressHeader(
-                        progressValue: 0.11,
-                        onTapSkip: () {},
-                        onTapBack: () {},
-                      ),
-                      const OnboardingTitle(
-                        title: OnboardingConstants.financialInfoTitle,
-                        subTitle: OnboardingConstants.personalInfoNote,
-                      ),
-                      ..._buildChipsSection(
-                        theme,
-                        label: OnboardingConstants.monthlyIncomeLabel,
-                        options: incomeOptions,
-                        selectedValue: selectedIncome,
-                        onSelected: (value) => setState(
-                          () => selectedIncome = value,
-                        ),
-                      ),
-                      SizedBox(height: theme.sizing.height.s10),
-                      ..._buildChipsSection(
-                        theme,
-                        label: OnboardingConstants.employmentStatusLabel,
-                        options: employmentOptions,
-                        selectedValue: selectedEmploymentStatus,
-                        onSelected: (value) => setState(
-                          () => selectedEmploymentStatus = value,
-                        ),
-                      ),
-                    ],
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: theme.spacing.height.s32,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const OnboardingTitle(
+                    title: OnboardingConstants.financialInfoTitle,
+                    subTitle: OnboardingConstants.personalInfoNote,
                   ),
-                ),
+                  ..._buildChipsSection(
+                    theme,
+                    label: OnboardingConstants.monthlyIncomeLabel,
+                    options: incomeOptions,
+                    selectedValue: selectedIncome,
+                    onSelected: (value) => setState(
+                      () => selectedIncome = value,
+                    ),
+                  ),
+                  SizedBox(height: theme.sizing.height.s10),
+                  ..._buildChipsSection(
+                    theme,
+                    label: OnboardingConstants.employmentStatusLabel,
+                    options: employmentOptions,
+                    selectedValue: selectedEmploymentStatus,
+                    onSelected: (value) => setState(
+                      () => selectedEmploymentStatus = value,
+                    ),
+                  ),
+                ],
               ),
             ),
-            BottomActionBar(
-              label: OnboardingConstants.confirmButtonText,
-              onPressed: () {},
-            ),
-          ],
+          ),
         ),
-      ),
+        BottomActionBar(
+          label: OnboardingConstants.confirmButtonText,
+          onPressed: () => widget.onTap.call(
+            selectedIncome,
+            selectedEmploymentStatus,
+          ),
+        ),
+      ],
     );
   }
 
@@ -109,8 +103,8 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
         ),
         SizedBox(height: theme.sizing.height.s4),
         Wrap(
-          spacing: theme.sizing.width.s3,
-          runSpacing: theme.sizing.height.s3,
+          spacing: theme.spacing.width.s12,
+          runSpacing: theme.spacing.height.s12,
           children: options
               .map(
                 (option) => ChoiceChip(

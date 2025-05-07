@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
-import 'package:miny_design_system/packages/figma_squircle/src/smooth_border_radius.dart';
-import 'package:miny_design_system/packages/figma_squircle/src/smooth_rectangle_border.dart';
+import 'package:miny_design_system/src/cards/miny_container.dart';
 
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
-import '../widgets/progress_header.dart';
 
 class BasicInfoPage extends StatefulWidget {
-  BasicInfoPage({super.key});
+  final Function(String name) onTap;
+
+  const BasicInfoPage({super.key, required this.onTap});
 
   @override
   State<BasicInfoPage> createState() => _BasicInfoPageState();
 }
 
 class _BasicInfoPageState extends State<BasicInfoPage> {
+  String? _fullNameErrorText;
+
   final TextEditingController fullNameController = TextEditingController(
     text: OnboardingConstants.name,
   );
@@ -23,42 +25,39 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colors.neutralLight,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: theme.sizing.height.s8,
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ProgressHeader(
-                        progressValue: 0.33,
-                        onTapSkip: () {},
-                        onTapBack: () {},
-                      ),
-                      const OnboardingTitle(
-                        title: OnboardingConstants.basicInfoTitle,
-                        subTitle: OnboardingConstants.basicInfoSubtitle,
-                      ),
-                      _buildInfoContentCard(),
-                    ],
-                  ),
-                ),
-              ),
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: theme.spacing.height.s32,
             ),
-            BottomActionBar(
-              label: OnboardingConstants.confirmButtonText,
-              onPressed: () {},
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const OnboardingTitle(
+                  title: OnboardingConstants.basicInfoTitle,
+                  subTitle: OnboardingConstants.basicInfoSubtitle,
+                ),
+                _buildInfoContentCard(),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        BottomActionBar(
+          label: OnboardingConstants.confirmButtonText,
+          onPressed: () {
+            setState(() {
+              if (fullNameController.text.trim().isEmpty) {
+                _fullNameErrorText = "Name can't be empty";
+              } else {
+                widget.onTap.call(fullNameController.text);
+                _fullNameErrorText = null;
+              }
+            });
+          },
+        ),
+      ],
     );
   }
 
@@ -116,11 +115,12 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
             child: Column(
               children: [
                 _buildUserInfoCard(
-                    isActive: true,
-                    text: fullNameController.text,
-                    labelText: OnboardingConstants.fullNameLabel,
-                    icon: OnboardingConstants.fullNameIcon,
-                    controller: fullNameController),
+                  isActive: true,
+                  text: fullNameController.text,
+                  labelText: OnboardingConstants.fullNameLabel,
+                  icon: OnboardingConstants.fullNameIcon,
+                  controller: fullNameController,
+                ),
                 SizedBox(height: theme.sizing.height.s7),
                 Divider(
                   thickness: theme.spacing.height.s2,
@@ -168,23 +168,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       ),
       child: Row(
         children: [
-          // TODO: DS: Add MinyContainer with figma squircle
-          Container(
-            decoration: ShapeDecoration(
-              color: theme.colors.neutralLightBackground,
-              shape: SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius(
-                  cornerRadius: theme.borderradius.small,
-                  cornerSmoothing: 1,
-                ),
-              ),
-            ),
-            padding: EdgeInsets.all(theme.sizing.height.s3),
-            child: Icon(
-              icon,
-              size: theme.sizing.height.s5,
-            ),
-          ),
+          MinyContainer(child: Icon(icon, size: theme.sizing.height.s5)),
           SizedBox(width: theme.sizing.width.s4),
           Expanded(
             child: Column(
@@ -204,10 +188,15 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                         style: theme.textStyle.headingMedium.copyWith(
                           color: theme.colors.textPrimary,
                         ),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          errorStyle: theme.textStyle.headingSmall.copyWith(
+                            // TODO: DS: Add Token "WarningRed" (#EE4E4E);
+                            color: theme.colors.accentRed,
+                          ),
                           border: InputBorder.none,
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
+                          errorText: isActive ? _fullNameErrorText : null,
                         ),
                       )
                     : Text(
