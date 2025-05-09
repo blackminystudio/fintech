@@ -35,6 +35,7 @@ class _NumberPageState extends State<NumberPage> {
 
   void _handleMobileChange() {
     if (isCurrentlyValid) {
+      FocusScope.of(context).unfocus();
       setState(() {
         _isValid = isCurrentlyValid;
       });
