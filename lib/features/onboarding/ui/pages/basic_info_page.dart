@@ -47,6 +47,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         BottomActionBar(
           label: OnboardingConstants.confirmButtonText,
           onPressed: () {
+            FocusScope.of(context).unfocus();
             setState(() {
               if (fullNameController.text.trim().isEmpty) {
                 _fullNameErrorText = "Name can't be empty";

@@ -82,6 +82,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
         BottomActionBar(
           onPressed: () {
             widget.onTap.call(selectedGender, selectedMaritalStatus);
+            FocusScope.of(context).unfocus();
           },
           label: OnboardingConstants.continueButtonText,
         ),
