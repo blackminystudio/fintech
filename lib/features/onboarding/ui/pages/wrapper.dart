@@ -19,7 +19,20 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+  int pageIndex = 0;
   final PageController pageController = PageController();
+  @override
+  void initState() {
+    super.initState();
+    pageController.addListener(() {
+      final index = pageController.page?.round();
+      if (index != null && index != pageIndex) {
+        setState(() {
+          pageIndex = index;
+        });
+      }
+    });
+  }
 
   void goToNextPage() {
     pageController.nextPage(
@@ -35,63 +48,77 @@ class _WrapperState extends State<Wrapper> {
     );
   }
 
+  void _onPopInvokedWithResult(bool didPop, dynamic result) {
+    if (didPop) return;
+
+    if (pageIndex > 0) {
+      goToPreviousPage();
+    } else {
+      Navigator.of(context).maybePop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colors.neutralLight,
-      body: SafeArea(
-        child: Column(
-          children: [
-            ProgressHeader(
-              progressValue: 0.33,
-              onTapSkip: () {},
-              onTapBack: goToPreviousPage,
-            ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  NumberPage(
-                    onTap: (number) {
-                      log('Logger: OTP Send To this number $number');
-                      goToNextPage();
-                    },
-                  ),
-                  OtpPage(
-                    onTap: goToNextPage,
-                    onResendOtp: () {
-                      log('Logger: RESEND');
-                    },
-                    correctOtp: '123412',
-                  ),
-                  BasicInfoPage(
-                    onTap: (name) {
-                      log('Logger: $name');
-                      goToNextPage();
-                    },
-                  ),
-                  PersonalInfoPage(
-                    onTap: (gender, maritalStatus) {
-                      log('Logger: $gender, $maritalStatus');
-                      goToNextPage();
-                    },
-                  ),
-                  DobPage(
-                    onTap: (dob) {
-                      goToNextPage();
-                    },
-                  ),
-                  FinancialInfoPage(
-                    onTap: (income, employment) {
-                      log('Logger: $income, $employment');
-                    },
-                  ),
-                ],
+    return PopScope(
+      canPop: pageIndex == 0,
+      onPopInvokedWithResult: _onPopInvokedWithResult,
+      child: Scaffold(
+        backgroundColor: theme.colors.neutralLight,
+        body: SafeArea(
+          child: Column(
+            children: [
+              ProgressHeader(
+                progressValue: 0.33,
+                onTapSkip: () {},
+                onTapBack: goToPreviousPage,
               ),
-            ),
-          ],
+              Expanded(
+                child: PageView(
+                  controller: pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    NumberPage(
+                      onTap: (number) {
+                        log('Logger: OTP Send To this number $number');
+                        goToNextPage();
+                      },
+                    ),
+                    OtpPage(
+                      onTap: goToNextPage,
+                      onResendOtp: () {
+                        log('Logger: RESEND');
+                      },
+                      correctOtp: '123412',
+                    ),
+                    BasicInfoPage(
+                      onTap: (name) {
+                        log('Logger: $name');
+                        goToNextPage();
+                      },
+                    ),
+                    PersonalInfoPage(
+                      onTap: (gender, maritalStatus) {
+                        log('Logger: $gender, $maritalStatus');
+                        goToNextPage();
+                      },
+                    ),
+                    DobPage(
+                      onTap: (dob) {
+                        goToNextPage();
+                      },
+                    ),
+                    FinancialInfoPage(
+                      onTap: (income, employment) {
+                        log('Logger: $income, $employment');
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
