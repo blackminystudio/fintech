@@ -33,6 +33,13 @@ class _NumberPageState extends State<NumberPage> {
     _mobileController.addListener(_handleMobileChange);
   }
 
+  void _onTapVerify() {
+    _validateMobileNumber();
+    if (_isValid) {
+      widget.onTap.call(_mobileController.text);
+    }
+  }
+
   void _handleMobileChange() {
     if (isCurrentlyValid) {
       FocusScope.of(context).unfocus();
@@ -87,12 +94,7 @@ class _NumberPageState extends State<NumberPage> {
         ),
         BottomActionBar(
           label: OnboardingConstants.verifyButtonText,
-          onPressed: () {
-            _validateMobileNumber();
-            if (_isValid) {
-              widget.onTap.call(_mobileController.text);
-            }
-          },
+          onTap: _onTapVerify,
         ),
       ],
     );
