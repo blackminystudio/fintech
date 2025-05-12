@@ -4,16 +4,16 @@ class OnboardingConstants {
   // LoginPage_Texts
   static const String progressText = ' completed';
   static const String skipText = 'Skip';
-  static const String enterMobileText = 'Enter your mobile\nnumber';
-  static const String otpSubText = "We'll send you a quick OTP\nto verify.";
+  static const String enterMobileText = 'Enter your mobile number';
+  static const String otpSubText = "We'll send you an OTP to verify.";
   static const String verifyButtonText = 'Verify mobile number';
   static const String mobileValidationError =
       'Your mobile number should be of 10 digits';
   static const String countryCode = '+91';
 
 // OtpPage_Text
-  static const String otpHeading = 'OTP Please?';
-  static const String otpSentText = 'We’ve sent it to +91 8328818988';
+  static const String otpHeading = 'OTP please?';
+  static const String otpSentText = 'We\'ve sent it to +91 8328818988.';
   static const String otpError = 'OTP incorrect, try again?';
   static const String resendOtp = 'Resend OTP';
   static const String resendIn = 'Resend in ';
@@ -29,7 +29,7 @@ class OnboardingConstants {
   static const String phoneNumber = '8328818988';
   static const String basicInfoTitle = 'Confirm your basic info';
   static const String basicInfoSubtitle =
-      'Your name and emailId are the identifier for friends who using this app so check correctly';
+      'Your name and email help friends find you — make sure they\'re correct.';
   static const String basicInfoFooterNote =
       'This is where you will receive all important communications.';
   static const String confirmButtonText = 'Confirm';
@@ -37,7 +37,7 @@ class OnboardingConstants {
   // Personal Information Texts
   static const String personalInfoTitle = 'Personal Information';
   static const String personalInfoNote =
-      'Your information is not necessary for us, you are free to ignore this section';
+      'No pressure! This section is for overachievers who love filling out forms!';
   static const String enterCityText = 'Enter your city';
   static const String genderLabel = 'GENDER';
   static const String maritalStatusLabel = 'MARITAL STATUS';
@@ -53,14 +53,15 @@ class OnboardingConstants {
   static const String married = 'Married';
 
   // Birthday Info
-  static const String birthdayQuestion = 'When is your\nBirthday?';
+  static const String birthdayQuestion = 'When is your birthday?';
   static const String birthdayNote =
-      'We again don’t need your birthday, but we can wish you on your next birthday.';
+      'We\'re not nosy, promise — but your birthday could land you a surprise!';
   static const String dobLabel = 'Date of Birth';
   static const String okayButtonText = 'Okay';
 
 // Financial Info
   static const String financialInfoTitle = 'Financial Information';
+  static const String financialNote = 'Not interviewing you — it\'s skippable!';
   static const String monthlyIncomeLabel = 'MONTHLY INCOME';
   static const String employmentStatusLabel = 'EMPLOYMENT STATUS';
 
