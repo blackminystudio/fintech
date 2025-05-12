@@ -9,7 +9,7 @@ void main() {
       ScreenUtilInit(
         designSize: const Size(440, 956),
         minTextAdapt: true,
-        builder: (context, _) => const MyApp(),
+        builder: (context, _) => const FintechApp(),
       ),
     );
 
