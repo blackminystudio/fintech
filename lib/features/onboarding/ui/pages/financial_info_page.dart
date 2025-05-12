@@ -50,7 +50,7 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
                 children: [
                   const OnboardingTitle(
                     title: OnboardingConstants.financialInfoTitle,
-                    subTitle: OnboardingConstants.personalInfoNote,
+                    subTitle: OnboardingConstants.financialNote,
                   ),
                   ..._buildChipsSection(
                     theme,
