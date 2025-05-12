@@ -17,6 +17,18 @@ class BasicInfoPage extends StatefulWidget {
 
 class _BasicInfoPageState extends State<BasicInfoPage> {
   String? _fullNameErrorText;
+  void _onTapconfirm() {
+    FocusScope.of(context).unfocus();
+
+    setState(() {
+      if (fullNameController.text.trim().isEmpty) {
+        _fullNameErrorText = OnboardingConstants.nameEmpty;
+      } else {
+        widget.onTap.call(fullNameController.text);
+        _fullNameErrorText = null;
+      }
+    });
+  }
 
   final TextEditingController fullNameController = TextEditingController(
     text: OnboardingConstants.name,
@@ -46,17 +58,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         ),
         BottomActionBar(
           label: OnboardingConstants.confirmButtonText,
-          onPressed: () {
-            FocusScope.of(context).unfocus();
-            setState(() {
-              if (fullNameController.text.trim().isEmpty) {
-                _fullNameErrorText = "Name can't be empty";
-              } else {
-                widget.onTap.call(fullNameController.text);
-                _fullNameErrorText = null;
-              }
-            });
-          },
+          onTap: _onTapconfirm,
         ),
       ],
     );
