@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
-import 'package:miny_design_system/src/cards/miny_container.dart';
 
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';

@@ -19,8 +19,9 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+  double progressValue = 0.00;
   int pageIndex = 0;
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(initialPage: 3);
   @override
   void initState() {
     super.initState();
@@ -58,6 +59,12 @@ class _WrapperState extends State<Wrapper> {
     }
   }
 
+  void updateProgressValue(double value) {
+    setState(() {
+      progressValue = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -70,7 +77,7 @@ class _WrapperState extends State<Wrapper> {
           child: Column(
             children: [
               ProgressHeader(
-                progressValue: 0.33,
+                progressValue: progressValue,
                 onTapSkip: () {},
                 onTapBack: goToPreviousPage,
               ),
@@ -83,19 +90,22 @@ class _WrapperState extends State<Wrapper> {
                       onTap: (number) {
                         log('Logger: OTP Send To this number $number');
                         goToNextPage();
+                        updateProgressValue(0.11);
                       },
                     ),
                     OtpPage(
+                      correctOtp: '123412',
                       onTap: goToNextPage,
                       onResendOtp: () {
                         log('Logger: RESEND');
+                        updateProgressValue(0.22);
                       },
-                      correctOtp: '123412',
                     ),
                     BasicInfoPage(
                       onTap: (name) {
                         log('Logger: $name');
                         goToNextPage();
+                        progressValue = 0.30;
                       },
                     ),
                     PersonalInfoPage(
