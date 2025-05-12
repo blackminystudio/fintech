@@ -21,6 +21,7 @@ class OnboardingConstants {
   static const String otpValidationError = 'OTP should be 6 digits';
 
   // BasicInfoPage_Texts
+  static const String nameEmpty = "Name can't be empty";
   static const String name = 'Satyabrata Nayak';
   static const String fullNameLabel = 'Full Name';
   static const String emailLabel = 'Email Address';

@@ -25,8 +25,20 @@ class OtpPage extends StatefulWidget {
 class _OtpPageState extends State<OtpPage> {
   TextEditingController otpController = TextEditingController();
   String? errorMessage;
-
   bool isOtpIncorrect = false;
+  void _onTapSubmit() {
+    verifyOtp();
+    widget.onTap();
+  }
+
+  void _handleOtpChange(String value) {
+    if (value.length == 6 && isOtpIncorrect) {
+      setState(() {
+        isOtpIncorrect = false;
+        errorMessage = null;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +76,7 @@ class _OtpPageState extends State<OtpPage> {
         ),
         BottomActionBar(
           label: OnboardingConstants.submitOtp,
-          onPressed: () {
-            verifyOtp();
-            widget.onTap();
-          },
+          onTap: _onTapSubmit,
         ),
       ],
     );
@@ -119,14 +128,7 @@ class _OtpPageState extends State<OtpPage> {
         selectedColor: theme.colors.neutralBorder,
       ),
       keyboardType: TextInputType.number,
-      onChanged: (value) {
-        if (value.length == 6 && isOtpIncorrect) {
-          setState(() {
-            isOtpIncorrect = false;
-            errorMessage = null;
-          });
-        }
-      },
+      onChanged: _handleOtpChange,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],

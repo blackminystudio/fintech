@@ -17,6 +17,16 @@ class FinancialInfoPage extends StatefulWidget {
 class _FinancialInfoPageState extends State<FinancialInfoPage> {
   String? selectedIncome;
   String? selectedEmploymentStatus;
+  bool get isSelectionComplete =>
+      selectedIncome != null && selectedEmploymentStatus != null;
+  void _onTapConfirm() {
+    {
+      widget.onTap.call(
+        selectedIncome,
+        selectedEmploymentStatus,
+      );
+    }
+  }
 
   final incomeOptions = [
     OnboardingConstants.income0to10k,
@@ -78,10 +88,7 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
         ),
         BottomActionBar(
           label: OnboardingConstants.confirmButtonText,
-          onPressed: () => widget.onTap.call(
-            selectedIncome,
-            selectedEmploymentStatus,
-          ),
+          onTap: isSelectionComplete ? _onTapConfirm : null,
         ),
       ],
     );

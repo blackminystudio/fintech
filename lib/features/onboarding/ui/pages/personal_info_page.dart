@@ -16,9 +16,13 @@ class PersonalInfoPage extends StatefulWidget {
 
 class _PersonalInfoPageState extends State<PersonalInfoPage> {
   // TODO: City must be dropdown
-  TextEditingController cityController = TextEditingController();
+  // TODO: DS: Add controller in MinyTextfiled
   String? selectedGender;
   String? selectedMaritalStatus;
+  void _onTapOkey() {
+    widget.onTap.call(selectedGender, selectedMaritalStatus);
+    FocusScope.of(context).unfocus();
+  }
 
   final genderOptions = [
     OnboardingConstants.male,
@@ -30,6 +34,9 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
     OnboardingConstants.married,
     OnboardingConstants.single,
   ];
+
+  bool get isFormValid =>
+      selectedGender != null && selectedMaritalStatus != null;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +71,9 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   label: OnboardingConstants.genderLabel,
                   options: genderOptions,
                   selectedValue: selectedGender,
-                  onSelected: (value) => setState(() => selectedGender = value),
+                  onSelected: (value) => setState(
+                    () => selectedGender = value,
+                  ),
                 ),
                 SizedBox(height: theme.sizing.height.s10),
                 ..._buildChipsSection(
@@ -72,18 +81,16 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   label: OnboardingConstants.maritalStatusLabel,
                   options: maritalOptions,
                   selectedValue: selectedMaritalStatus,
-                  onSelected: (value) =>
-                      setState(() => selectedMaritalStatus = value),
+                  onSelected: (value) => setState(
+                    () => selectedMaritalStatus = value,
+                  ),
                 ),
               ],
             ),
           ),
         ),
         BottomActionBar(
-          onPressed: () {
-            widget.onTap.call(selectedGender, selectedMaritalStatus);
-            FocusScope.of(context).unfocus();
-          },
+          onTap: isFormValid ? _onTapOkey : null,
           label: OnboardingConstants.continueButtonText,
         ),
       ],

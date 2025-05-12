@@ -8,7 +8,7 @@ import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
 
 class DobPage extends StatefulWidget {
-  // TODO: this need to be nonnull
+  // TODO: this need to be non null
   final Function(DateTime? dob) onTap;
 
   const DobPage({
@@ -22,10 +22,17 @@ class DobPage extends StatefulWidget {
 
 class _DobPageState extends State<DobPage> {
   DateTime? selectedDate;
+  DateTime tempDate = DateTime(2000);
+  void _onTapOkay() {
+    setState(() {
+      selectedDate = tempDate;
+    });
+    Navigator.pop(context);
+  }
 
   void _showDatePicker(BuildContext context) {
     final theme = Theme.of(context);
-    final tempDate = selectedDate ?? DateTime(2000);
+    tempDate = selectedDate ?? DateTime(2000);
 
     showModalBottomSheet(
       context: context,
@@ -34,11 +41,14 @@ class _DobPageState extends State<DobPage> {
         borderRadius:
             BorderRadius.all(Radius.circular(theme.borderradius.large)),
       ),
-      builder: (context) => _buildDatePickerSheet(theme, tempDate),
+      builder: (context) => _buildDatePickerSheet(theme),
     );
   }
 
-  Widget _buildDatePickerSheet(ThemeData theme, DateTime tempDate) => Padding(
+  Widget _buildDatePickerSheet(
+    ThemeData theme,
+  ) =>
+      Padding(
         padding: EdgeInsets.symmetric(
           horizontal: theme.sizing.width.s7,
           vertical: theme.spacing.width.s40,
@@ -61,12 +71,7 @@ class _DobPageState extends State<DobPage> {
             SizedBox(height: theme.spacing.height.s4),
             MinyButton(
               label: OnboardingConstants.okayButtonText,
-              onPressed: () {
-                setState(() {
-                  selectedDate = tempDate;
-                });
-                Navigator.pop(context);
-              },
+              onPressed: _onTapOkay,
             ),
           ],
         ),
@@ -102,7 +107,9 @@ class _DobPageState extends State<DobPage> {
           /// Errors:
           /// "Select your date of birth"
           label: OnboardingConstants.continueButtonText,
-          onPressed: () => widget.onTap.call(selectedDate),
+          onTap: selectedDate != null
+              ? () => widget.onTap.call(selectedDate)
+              : null,
         ),
       ],
     );

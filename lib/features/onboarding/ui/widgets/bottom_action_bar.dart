@@ -3,11 +3,11 @@ import 'package:miny_design_system/miny_design_system.dart';
 
 class BottomActionBar extends StatelessWidget {
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onTap;
   const BottomActionBar({
     super.key,
+    this.onTap,
     required this.label,
-    required this.onPressed,
   });
 
   @override
@@ -29,7 +29,7 @@ class BottomActionBar extends StatelessWidget {
       ),
       child: MinyButton(
         label: label,
-        onPressed: onPressed,
+        onPressed: onTap,
       ),
     );
   }
