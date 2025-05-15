@@ -11,7 +11,7 @@ class ExpandableSearchField extends StatefulWidget {
   const ExpandableSearchField({
     super.key,
     required this.allItems,
-    this.onSelected,
+    required this.onSelected,
     this.selected,
   });
 
