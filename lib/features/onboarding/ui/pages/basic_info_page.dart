@@ -196,6 +196,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                             color: theme.colors.accentRed,
                           ),
                           border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
                           errorText: isActive ? _fullNameErrorText : null,

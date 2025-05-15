@@ -45,7 +45,6 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
   @override
   void didUpdateWidget(covariant ExpandableSearchField old) {
     super.didUpdateWidget(old);
-    // if parent resets the selected city, update the text
     if (widget.selected != old.selected) {
       _controller.text = widget.selected ?? '';
       _isItemSelected = widget.selected != null;
@@ -69,67 +68,93 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
         border: Border.all(color: theme.colors.neutralBorder),
         borderRadius: BorderRadius.circular(theme.borderradius.normal),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: _controller,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: theme.spacing.width.s32,
-                vertical: theme.spacing.height.s20,
-              ),
-              hintText: OnboardingConstants.enterCityText,
-              hintStyle: theme.textStyle.bodyMedium.copyWith(
-                color: theme.colors.textSecondarylight,
-              ),
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-            style: theme.textStyle.bodyMedium.copyWith(
-              color: theme.colors.textPrimary,
-            ),
-          ),
-          if (showDropdown) ...[
-            Divider(
-              height: theme.spacing.height.s1,
-              color: theme.colors.neutralBorder,
-            ),
-            ClipRRect(
-              borderRadius: showDropdown
-                  ? BorderRadius.vertical(
-                      bottom: Radius.circular(theme.borderradius.normal),
-                    )
-                  : BorderRadius.zero,
-              child: SizedBox(
-                height: containerHeight.toDouble(),
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: theme.spacing.width.s16,
-                  ),
-                  itemCount: itemCount,
-                  itemBuilder: (context, index) => ListTile(
-                    title: Text(
-                      filteredItems[index],
-                      style: theme.textStyle.bodyMedium.copyWith(
-                        color: theme.colors.textPrimary,
-                      ),
-                    ),
-                    onTap: () {
-                      final city = filteredItems[index];
-                      _controller.text = city;
-                      widget.onSelected(city);
-                      FocusScope.of(context).unfocus();
-                      _isItemSelected = true;
-                      setState(() {});
-                    },
-                  ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(theme.borderradius.normal),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                hintText: OnboardingConstants.enterCityText,
+                hintStyle: theme.textStyle.bodyMedium.copyWith(
+                  color: theme.colors.textSecondarylight,
                 ),
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+              ),
+              style: theme.textStyle.bodyMedium.copyWith(
+                color: theme.colors.textPrimary,
               ),
             ),
-          ]
-        ],
+            if (showDropdown)
+              ..._buildExpandedWidgetLIst(
+                theme,
+                showDropdown,
+                containerHeight,
+                itemCount,
+                itemHeight,
+              )
+          ],
+        ),
       ),
     );
   }
+
+  List<Widget> _buildExpandedWidgetLIst(
+    ThemeData theme,
+    bool showDropdown,
+    num containerHeight,
+    int itemCount,
+    double itemHeight,
+  ) =>
+      [
+        Divider(
+          height: theme.sizing.height.quarter,
+          color: theme.colors.neutralBorder,
+        ),
+        ClipRRect(
+          child: Material(
+            color: theme.colors.neutralLight,
+            child: SizedBox(
+              height: containerHeight.toDouble(),
+              child: ListView.builder(
+                itemCount: itemCount,
+                itemBuilder: (context, index) => _buildListTile(
+                  itemHeight,
+                  index,
+                  theme,
+                  context,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ];
+
+  ListTile _buildListTile(
+    double itemHeight,
+    int index,
+    ThemeData theme,
+    BuildContext context,
+  ) =>
+      ListTile(
+        minTileHeight: itemHeight,
+        title: Text(
+          filteredItems[index],
+          style: theme.textStyle.bodyMedium.copyWith(
+            color: theme.colors.textPrimary,
+          ),
+        ),
+        onTap: () {
+          final city = filteredItems[index];
+          _controller.text = city;
+          widget.onSelected(city);
+          FocusScope.of(context).unfocus();
+          _isItemSelected = true;
+          setState(() {});
+        },
+      );
 }
