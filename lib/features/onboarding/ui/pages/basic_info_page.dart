@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
-import 'package:miny_design_system/src/cards/miny_container.dart';
 
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
@@ -197,6 +196,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                             color: theme.colors.accentRed,
                           ),
                           border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
                           errorText: isActive ? _fullNameErrorText : null,
