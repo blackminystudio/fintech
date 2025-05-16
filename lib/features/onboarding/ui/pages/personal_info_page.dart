@@ -22,7 +22,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
   String? selectedMaritalStatus;
 
   final List<String> cityList = [
-    'Bhubneswer, Odisha',
+    'Bhubaneswar, Odisha',
     'BA, Odisha',
     'BB, Odisha',
     'BC, Odisha',
@@ -64,7 +64,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
       selectedGender != null &&
       selectedMaritalStatus != null;
 
-  void _onTapOkey() {
+  void _onTapOkay() {
     widget.onTap.call(selectedGender, selectedMaritalStatus);
     FocusScope.of(context).unfocus();
   }
@@ -115,8 +115,9 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   label: OnboardingConstants.maritalStatusLabel,
                   options: maritalOptions,
                   selectedValue: selectedMaritalStatus,
-                  onSelected: (value) =>
-                      setState(() => selectedMaritalStatus = value),
+                  onSelected: (value) => setState(
+                    () => selectedMaritalStatus = value,
+                  ),
                 ),
                 SizedBox(height: theme.sizing.height.s10),
               ],
@@ -124,7 +125,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
           ),
         ),
         BottomActionBar(
-          onTap: isFormValid ? _onTapOkey : null,
+          onTap: isFormValid ? _onTapOkay : null,
           label: OnboardingConstants.continueButtonText,
         ),
       ],
