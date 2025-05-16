@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:miny_design_system/miny_design_system.dart';
-import 'package:miny_design_system/src/cards/miny_container.dart';
 
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
@@ -142,6 +141,8 @@ class _NumberPageState extends State<NumberPage> {
                   isCollapsed: true,
                   isDense: true,
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                 ),
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,

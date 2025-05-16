@@ -3,6 +3,7 @@ import 'package:miny_design_system/miny_design_system.dart';
 
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
+import '../widgets/expandable_search.dart';
 import '../widgets/onboarding_title.dart';
 
 class PersonalInfoPage extends StatefulWidget {
@@ -15,14 +16,29 @@ class PersonalInfoPage extends StatefulWidget {
 }
 
 class _PersonalInfoPageState extends State<PersonalInfoPage> {
-  // TODO: City must be dropdown
-  // TODO: DS: Add controller in MinyTextfiled
+  TextEditingController cityController = TextEditingController();
+  String? selectedCity;
   String? selectedGender;
   String? selectedMaritalStatus;
-  void _onTapOkey() {
-    widget.onTap.call(selectedGender, selectedMaritalStatus);
-    FocusScope.of(context).unfocus();
-  }
+
+  final List<String> cityList = [
+    'Bhubaneswar, Odisha',
+    'BA, Odisha',
+    'BB, Odisha',
+    'BC, Odisha',
+    'BA, Odisha',
+    'BB, Odisha',
+    'BC, Odisha',
+    'BA, Odisha',
+    'BB, Odisha',
+    'BC, Odisha',
+    'Cuttack',
+    'Khordha',
+    'Kolkata',
+    'Chennai',
+    'Hyderabad',
+    'Pune',
+  ];
 
   final genderOptions = [
     OnboardingConstants.male,
@@ -35,8 +51,23 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
     OnboardingConstants.single,
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    cityController.addListener(() {
+      setState(() {});
+    });
+  }
+
   bool get isFormValid =>
-      selectedGender != null && selectedMaritalStatus != null;
+      selectedCity != null &&
+      selectedGender != null &&
+      selectedMaritalStatus != null;
+
+  void _onTapOkay() {
+    widget.onTap.call(selectedGender, selectedMaritalStatus);
+    FocusScope.of(context).unfocus();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +93,13 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   ),
                 ),
                 SizedBox(height: theme.sizing.height.s3),
-                const MinyTextField(
-                  hintText: OnboardingConstants.enterCityText,
+                ExpandableSearchField(
+                  allItems: cityList,
+                  onSelected: (value) {
+                    setState(() {
+                      selectedCity = value;
+                    });
+                  },
                 ),
                 SizedBox(height: theme.sizing.height.s10),
                 ..._buildChipsSection(
@@ -71,9 +107,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   label: OnboardingConstants.genderLabel,
                   options: genderOptions,
                   selectedValue: selectedGender,
-                  onSelected: (value) => setState(
-                    () => selectedGender = value,
-                  ),
+                  onSelected: (value) => setState(() => selectedGender = value),
                 ),
                 SizedBox(height: theme.sizing.height.s10),
                 ..._buildChipsSection(
@@ -85,12 +119,13 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                     () => selectedMaritalStatus = value,
                   ),
                 ),
+                SizedBox(height: theme.sizing.height.s10),
               ],
             ),
           ),
         ),
         BottomActionBar(
-          onTap: isFormValid ? _onTapOkey : null,
+          onTap: isFormValid ? _onTapOkay : null,
           label: OnboardingConstants.continueButtonText,
         ),
       ],
