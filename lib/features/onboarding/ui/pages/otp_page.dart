@@ -12,11 +12,13 @@ class OtpPage extends StatefulWidget {
   final String correctOtp;
   final VoidCallback onTap;
   final VoidCallback onResendOtp;
+  final String number;
   const OtpPage({
     super.key,
     required this.correctOtp,
     required this.onTap,
     required this.onResendOtp,
+    required this.number,
   });
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -24,6 +26,7 @@ class OtpPage extends StatefulWidget {
 
 class _OtpPageState extends State<OtpPage> {
   TextEditingController otpController = TextEditingController();
+
   String? errorMessage;
   bool isOtpIncorrect = false;
   void _onTapSubmit() {
@@ -43,6 +46,7 @@ class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final subTitle = '${OnboardingConstants.otpSentText}${widget.number}.';
     return Column(
       children: [
         Expanded(
@@ -53,9 +57,9 @@ class _OtpPageState extends State<OtpPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const OnboardingTitle(
+                OnboardingTitle(
                   title: OnboardingConstants.otpHeading,
-                  subTitle: OnboardingConstants.otpSentText,
+                  subTitle: subTitle,
                 ),
                 _buildPincodeField(context),
                 if (isOtpIncorrect && errorMessage != null)

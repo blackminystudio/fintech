@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
+import '../../utilities/onboarding_constants.dart';
 import '../widgets/progress_header.dart';
 import 'basic_info_page.dart';
 import 'dob_page.dart';
@@ -21,6 +22,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   double progressValue = 0.11;
   int pageIndex = 0;
+  String number = '';
   final PageController pageController = PageController();
   @override
   void initState() {
@@ -92,10 +94,12 @@ class _WrapperState extends State<Wrapper> {
                     NumberPage(
                       onTap: (number) {
                         log('Logger: OTP Send To this number $number');
+                        this.number = number;
                         goToNextPage();
                       },
                     ),
                     OtpPage(
+                      number: number,
                       correctOtp: '123412',
                       onTap: goToNextPage,
                       onResendOtp: () {
@@ -103,6 +107,8 @@ class _WrapperState extends State<Wrapper> {
                       },
                     ),
                     BasicInfoPage(
+                      email: OnboardingConstants.email,
+                      number: number,
                       onTap: (name) {
                         log('Logger: $name');
                         goToNextPage();
