@@ -13,7 +13,7 @@ class OnboardingConstants {
 
 // OtpPage_Text
   static const String otpHeading = 'OTP please?';
-  static const String otpSentText = 'We\'ve sent it to +91 8328818988.';
+  static const String otpSentText = 'We\'ve sent it to +91 ';
   static const String otpError = 'OTP incorrect, try again?';
   static const String resendOtp = 'Resend OTP';
   static const String resendIn = 'Resend in ';
@@ -27,7 +27,6 @@ class OnboardingConstants {
   static const String emailLabel = 'Email Address';
   static const String email = 'satyabrat...@gmail.com';
   static const String phoneLabel = 'Mobile Number';
-  static const String phoneNumber = '8328818988';
   static const String basicInfoTitle = 'Confirm your basic info';
   static const String basicInfoSubtitle =
       'Your name and email help friends find you — make sure they\'re correct.';
