@@ -24,6 +24,9 @@ class _WrapperState extends State<Wrapper> {
   final PageController pageController = PageController();
   @override
   void initState() {
+    Future.delayed(Duration.zero, () {
+      FocusScope.of(context).unfocus();
+    });
     super.initState();
     pageController.addListener(() {
       final index = pageController.page?.round();
@@ -106,6 +109,16 @@ class _WrapperState extends State<Wrapper> {
                       },
                     ),
                     PersonalInfoPage(
+                      cityList: [
+                        'New York',
+                        'Los Angeles',
+                        'Chicago',
+                        'Québec',
+                        'Düsseldorf',
+                        'akksfkjdkfkdsjfkdkfjkdsjjfkjsdkfjksdjfkdsjfksdjkfjs',
+                        'Houston',
+                        'Phoenix',
+                      ],
                       onTap: (gender, maritalStatus) {
                         log('Logger: $gender, $maritalStatus');
                         goToNextPage();
