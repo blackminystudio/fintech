@@ -5,7 +5,6 @@ import '../../../features/home/ui/pages/home_page.dart';
 import '../../features/onboarding/ui/pages/onboarding_page.dart';
 
 enum AppRoute {
-  splash,
   login,
   onboarding,
   home,
