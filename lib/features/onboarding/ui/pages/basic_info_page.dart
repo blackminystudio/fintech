@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
 import '../../utilities/onboarding_constants.dart';
@@ -7,8 +8,15 @@ import '../widgets/onboarding_title.dart';
 
 class BasicInfoPage extends StatefulWidget {
   final Function(String name) onTap;
+  final String number;
+  final String email;
 
-  const BasicInfoPage({super.key, required this.onTap});
+  const BasicInfoPage({
+    super.key,
+    required this.onTap,
+    required this.number,
+    required this.email,
+  });
 
   @override
   State<BasicInfoPage> createState() => _BasicInfoPageState();
@@ -51,6 +59,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                   subTitle: OnboardingConstants.basicInfoSubtitle,
                 ),
                 _buildInfoContentCard(),
+                SizedBox(height: theme.spacing.height.s40),
               ],
             ),
           ),
@@ -131,7 +140,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 ),
                 SizedBox(height: theme.sizing.height.s7),
                 _buildUserInfoCard(
-                  text: OnboardingConstants.email,
+                  text: widget.email,
                   icon: OnboardingConstants.emailIcon,
                   labelText: OnboardingConstants.emailLabel,
                 ),
@@ -143,7 +152,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 ),
                 SizedBox(height: theme.sizing.height.s7),
                 _buildUserInfoCard(
-                  text: OnboardingConstants.phoneNumber,
+                  text: widget.number,
                   labelText: OnboardingConstants.phoneLabel,
                   icon: OnboardingConstants.phoneIcon,
                 ),
@@ -186,6 +195,11 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 SizedBox(width: theme.sizing.width.s4),
                 isActive
                     ? TextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp('[a-zA-Z ]'),
+                          ),
+                        ],
                         controller: controller,
                         style: theme.textStyle.headingMedium.copyWith(
                           color: theme.colors.textPrimary,
