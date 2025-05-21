@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../../../core/utilities/extenstions.dart';
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
@@ -26,21 +27,26 @@ class OtpPage extends StatefulWidget {
 
 class _OtpPageState extends State<OtpPage> {
   TextEditingController otpController = TextEditingController();
-
   String? errorMessage;
-  bool isOtpIncorrect = false;
+
   void _onTapSubmit() {
-    verifyOtp();
-    widget.onTap();
+    if (verifyOtp()) {
+      widget.onTap();
+    }
   }
 
-  void _handleOtpChange(String value) {
-    if (value.length == 6 && isOtpIncorrect) {
-      setState(() {
-        isOtpIncorrect = false;
+  bool verifyOtp() {
+    final enteredOtp = otpController.text;
+    setState(() {
+      if (enteredOtp.length < 6) {
+        errorMessage = OnboardingConstants.otpValidationError;
+      } else if (enteredOtp != widget.correctOtp) {
+        errorMessage = OnboardingConstants.otpError;
+      } else {
         errorMessage = null;
-      });
-    }
+      }
+    });
+    return errorMessage == null;
   }
 
   @override
@@ -62,7 +68,7 @@ class _OtpPageState extends State<OtpPage> {
                   subTitle: subTitle,
                 ),
                 _buildPincodeField(context),
-                if (isOtpIncorrect && errorMessage != null)
+                if (errorMessage.isNotNullOrEmpty)
                   Text(
                     errorMessage!,
                     style: theme.textStyle.headingSmall.copyWith(
@@ -71,6 +77,7 @@ class _OtpPageState extends State<OtpPage> {
                   ),
                 SizedBox(height: theme.sizing.height.s4),
                 ResendOtpWidget(
+                  // TODO: resend is set to 5 for DEV only
                   countDown: 5,
                   onResend: widget.onResendOtp,
                 )
@@ -84,30 +91,6 @@ class _OtpPageState extends State<OtpPage> {
         ),
       ],
     );
-  }
-
-  void verifyOtp() {
-    final enteredOtp = otpController.text.trim();
-
-    if (enteredOtp.length < 6) {
-      setState(() {
-        isOtpIncorrect = true;
-        errorMessage = OnboardingConstants.otpValidationError;
-      });
-      return;
-    }
-
-    if (enteredOtp == widget.correctOtp) {
-      setState(() {
-        isOtpIncorrect = false;
-        errorMessage = null;
-      });
-    } else {
-      setState(() {
-        isOtpIncorrect = true;
-        errorMessage = OnboardingConstants.otpError;
-      });
-    }
   }
 
   PinCodeTextField _buildPincodeField(BuildContext context) {
@@ -125,14 +108,13 @@ class _OtpPageState extends State<OtpPage> {
         activeFillColor: theme.colors.neutralBorder,
         inactiveFillColor: theme.colors.neutralBorder,
         selectedFillColor: theme.colors.neutralBorder,
-        activeColor: isOtpIncorrect
+        activeColor: errorMessage.isNotNullOrEmpty
             ? theme.colors.accentRed
             : theme.colors.neutralBorder,
         inactiveColor: theme.colors.neutralBorder,
         selectedColor: theme.colors.neutralBorder,
       ),
       keyboardType: TextInputType.number,
-      onChanged: _handleOtpChange,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
