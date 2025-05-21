@@ -87,4 +87,7 @@ class OnboardingConstants {
   static const IconData backIcon = Icons.arrow_back_ios_new;
   static const IconData infoIcon = Icons.error_outline;
   static const IconData calenderIcon = Icons.calendar_month;
+
+// ExpandableSearchField
+  static const String cityAvailable = 'No cities available';
 }

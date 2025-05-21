@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
 import '../../utilities/onboarding_constants.dart';
@@ -7,12 +8,18 @@ class ExpandableSearchField extends StatefulWidget {
   final List<String> allItems;
   final String? selected;
   final ValueChanged<String> onSelected;
+  final ValueChanged<String>? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focusNode;
 
   const ExpandableSearchField({
     super.key,
     required this.allItems,
     required this.onSelected,
     this.selected,
+    this.inputFormatters,
+    this.onChanged,
+    this.focusNode,
   });
 
   @override
@@ -33,7 +40,7 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
   }
 
   void _filterItems() {
-    final query = _controller.text.toLowerCase();
+    final query = _controller.text.toLowerCase().trim();
     setState(() {
       _isItemSelected = false;
       filteredItems = widget.allItems
@@ -57,10 +64,12 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
     final itemHeight = theme.sizing.height.s14;
     final itemCount = filteredItems.length;
     final maxHeight = itemHeight * 4;
-    final showDropdown =
-        _controller.text.isNotEmpty && itemCount > 0 && !_isItemSelected;
-    final containerHeight =
-        showDropdown ? (itemCount > 4 ? maxHeight : itemCount * itemHeight) : 0;
+    final showDropdown = _controller.text.isNotEmpty && !_isItemSelected;
+    final calculateHeight = itemCount > 0
+        ? (itemCount > 4 ? maxHeight : itemCount * itemHeight)
+        : itemHeight;
+    final containerHeight = showDropdown ? calculateHeight : 0.0;
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
@@ -76,6 +85,11 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
+              focusNode: widget.focusNode,
+              inputFormatters: widget.inputFormatters ??
+                  [
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z, ]')),
+                  ],
               controller: _controller,
               decoration: InputDecoration(
                 hintText: OnboardingConstants.enterCityText,
@@ -88,6 +102,9 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
               style: theme.textStyle.bodyMedium.copyWith(
                 color: theme.colors.textPrimary,
               ),
+              onChanged: (value) {
+                widget.onChanged?.call(value);
+              },
             ),
             if (showDropdown)
               ..._buildExpandedWidgetLIst(
@@ -120,19 +137,31 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
             color: theme.colors.neutralLight,
             child: SizedBox(
               height: containerHeight.toDouble(),
-              child: ListView.builder(
-                itemCount: itemCount,
-                itemBuilder: (context, index) => _buildListTile(
-                  itemHeight,
-                  index,
-                  theme,
-                  context,
-                ),
-              ),
+              child: itemCount > 0
+                  ? ListView.builder(
+                      itemCount: itemCount,
+                      itemBuilder: (context, index) => _buildListTile(
+                        itemHeight,
+                        index,
+                        theme,
+                        context,
+                      ),
+                    )
+                  : _buildNoItemsTile(itemHeight, theme),
             ),
           ),
         ),
       ];
+
+  Widget _buildNoItemsTile(double itemHeight, ThemeData theme) => ListTile(
+        minTileHeight: itemHeight,
+        title: Text(
+          OnboardingConstants.cityAvailable,
+          style: theme.textStyle.bodyMedium.copyWith(
+            color: theme.colors.textSecondary,
+          ),
+        ),
+      );
 
   ListTile _buildListTile(
     double itemHeight,
