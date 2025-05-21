@@ -1,12 +1,7 @@
 analyzer:
   language:
     strict-casts: true
-  exclude:
-    [
-      /*/**.g.dart,
-      plugin/google_maps/**,
-      plugin/launch_darkly/neu_launchdarkly_common_client/**,
-    ]
+  exclude: [/*/**.g.dart, plugin/google_maps/**]
 
 linter:
   rules:
@@ -126,3 +121,9 @@ linter:
     - void_checks
     - use_super_parameters
     - depend_on_referenced_packages
+    - prefer_const_constructors_in_immutables
+    - always_put_required_named_parameters_first
+    - prefer_final_in_for_each
+    - prefer_final_parameters
+    - sort_constructors_first
+    - sort_unnamed_constructors_first
