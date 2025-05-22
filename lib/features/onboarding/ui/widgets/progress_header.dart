@@ -52,12 +52,19 @@ class ProgressHeader extends StatelessWidget {
               SizedBox(
                 width: theme.sizing.width.s50,
                 height: theme.spacing.height.s4,
-                child: LinearProgressIndicator(
-                  value: progressValue,
-                  color: theme.colors.accentPurple,
-                  backgroundColor: theme.colors.neutralBorder,
-                  borderRadius: BorderRadius.circular(
-                    theme.borderradius.xSmall,
+                child: TweenAnimationBuilder(
+                  duration: const Duration(milliseconds: 500),
+                  tween: Tween(
+                    begin: 0.0,
+                    end: progressValue,
+                  ),
+                  builder: (context, value, _) => LinearProgressIndicator(
+                    value: value,
+                    color: theme.colors.accentPurple,
+                    backgroundColor: theme.colors.neutralBorder,
+                    borderRadius: BorderRadius.circular(
+                      theme.borderradius.xSmall,
+                    ),
                   ),
                 ),
               ),
