@@ -209,12 +209,14 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                             // TODO: DS: Add Token "WarningRed" (#EE4E4E);
                             color: theme.colors.accentRed,
                           ),
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
                           errorText: isActive ? _fullNameErrorText : null,
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          focusedErrorBorder: InputBorder.none,
                         ),
                       )
                     : Text(
