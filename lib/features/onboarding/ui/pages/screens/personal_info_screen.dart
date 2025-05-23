@@ -81,6 +81,9 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
     setState(() {
       selectedCity = value;
     });
+    store.updateCopyUserInfo(
+      city: selectedCity,
+    );
   }
 
   void _onSearchChanged(value) {
@@ -93,12 +96,18 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
     setState(() {
       selectedMaritalStatus = value;
     });
+    store.updateCopyUserInfo(
+      maritalStatus: selectedMaritalStatus,
+    );
   }
 
   void _onSelectedGender(String? value) {
     setState(() {
       selectedGender = value;
     });
+    store.updateCopyUserInfo(
+      gender: selectedGender,
+    );
   }
 
   @override

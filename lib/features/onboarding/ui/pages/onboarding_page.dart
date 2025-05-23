@@ -17,7 +17,6 @@ const cityList = [
   'Chicago',
   'Québec',
   'Düsseldorf',
-  'akksfkjdkfkdsjfkdkfjkdsjjfkjsdkfjksdjfkdsjfksdjkfjs',
   'Houston',
   'Phoenix',
 ];
@@ -30,16 +29,17 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  double progressValue = 0.11;
-  String number = '';
+  late PageController pageController;
   int pageIndex = 0;
-  final PageController pageController = PageController();
+
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
-      FocusScope.of(context).unfocus();
-    });
     super.initState();
+    pageController = PageController();
+    _handlePageListener();
+  }
+
+  void _handlePageListener() {
     pageController.addListener(() {
       final index = pageController.page?.round();
       if (index != null && index != pageIndex) {
@@ -52,14 +52,14 @@ class _WrapperState extends State<Wrapper> {
 
   void goToNextPage() {
     pageController.nextPage(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
 
   void goToPreviousPage() {
     pageController.previousPage(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
@@ -72,12 +72,6 @@ class _WrapperState extends State<Wrapper> {
     } else {
       Navigator.of(context).maybePop();
     }
-  }
-
-  void updateProgressValue(double value) {
-    setState(() {
-      progressValue = value;
-    });
   }
 
   @override

@@ -26,7 +26,6 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
   @override
   void initState() {
     super.initState();
-    // view
     store = ref.read(userProfileProvider.notifier);
     final info = ref.read(userProfileProvider).info;
     selectedIncome = info?.monthlyIncome;
@@ -34,7 +33,6 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
   }
 
   void _onTapConfirm() {
-    // update
     store.updateCopyUserInfo(
       monthlyIncome: selectedIncome,
       employmentStatus: selectedEmploymentStatus,
@@ -42,7 +40,24 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
     if (isSelectionComplete) {
       widget.onTap.call();
     }
-    return;
+  }
+
+  void _onSelectIncome(String? value) {
+    setState(() {
+      selectedIncome = value;
+    });
+    store.updateCopyUserInfo(
+      monthlyIncome: value,
+    );
+  }
+
+  void _onSelectEmployeeStatus(String? value) {
+    setState(() {
+      selectedEmploymentStatus = value;
+    });
+    store.updateCopyUserInfo(
+      employmentStatus: value,
+    );
   }
 
   final incomeOptions = [
@@ -84,9 +99,7 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
                     label: OnboardingConstants.monthlyIncomeLabel,
                     options: incomeOptions,
                     selectedValue: selectedIncome,
-                    onSelected: (value) => setState(
-                      () => selectedIncome = value,
-                    ),
+                    onSelected: _onSelectIncome,
                   ),
                   SizedBox(height: theme.sizing.height.s10),
                   ..._buildChipsSection(
@@ -94,9 +107,7 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
                     label: OnboardingConstants.employmentStatusLabel,
                     options: employmentOptions,
                     selectedValue: selectedEmploymentStatus,
-                    onSelected: (value) => setState(
-                      () => selectedEmploymentStatus = value,
-                    ),
+                    onSelected: _onSelectEmployeeStatus,
                   ),
                 ],
               ),
@@ -105,7 +116,7 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
         ),
         BottomActionBar(
           label: OnboardingConstants.confirmButtonText,
-          onTap: _onTapConfirm,
+          onTap: isSelectionComplete ? _onTapConfirm : null,
         ),
       ],
     );
