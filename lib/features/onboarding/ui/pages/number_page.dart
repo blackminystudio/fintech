@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
+import '../../store/onboarding_store.dart';
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
@@ -17,7 +18,7 @@ import '../widgets/onboarding_title.dart';
 // | User corrects to 10 digits after error
 
 class NumberPage extends ConsumerStatefulWidget {
-  final Function(String number) onTap;
+  final VoidCallback onTap;
   const NumberPage({
     super.key,
     required this.onTap,
@@ -31,6 +32,17 @@ class _NumberPageState extends ConsumerState<NumberPage> {
   final TextEditingController _mobileController = TextEditingController();
   bool _showError = false;
   bool get _isValidNow => _mobileController.text.length == 10;
+  late UserProfileStore store;
+
+  @override
+  void initState() {
+    super.initState();
+    store = ref.read(userProfileProvider.notifier);
+    final mobile = ref.read(userProfileProvider).info?.mobileNumber;
+    if (mobile != null) {
+      _mobileController.text = mobile;
+    }
+  }
 
   @override
   void dispose() {
@@ -43,7 +55,8 @@ class _NumberPageState extends ConsumerState<NumberPage> {
       _showError = !_isValidNow;
     });
     if (_isValidNow) {
-      widget.onTap.call(_mobileController.text);
+      widget.onTap.call();
+      store.updateMobileNumber(_mobileController.text);
     }
   }
 
@@ -62,6 +75,13 @@ class _NumberPageState extends ConsumerState<NumberPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final user = ref.watch(userProfileProvider);
+    final currentValue = user.info?.mobileNumber;
+    if (currentValue != null && _mobileController.text != currentValue) {
+      _mobileController
+        ..text = currentValue
+        ..selection = TextSelection.collapsed(offset: currentValue.length);
+    }
     return Column(
       children: [
         Expanded(

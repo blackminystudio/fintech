@@ -8,7 +8,7 @@ import '../widgets/onboarding_title.dart';
 
 class PersonalInfoPage extends StatefulWidget {
   final List<String> cityList;
-  final Function(String? gender, String? maritalStatus) onTap;
+  final VoidCallback onTap;
 
   const PersonalInfoPage({
     super.key,
@@ -53,7 +53,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage>
       selectedMaritalStatus != null;
 
   void _onTapContinue() {
-    widget.onTap.call(selectedGender, selectedMaritalStatus);
+    widget.onTap.call();
     FocusScope.of(context).unfocus();
   }
 
