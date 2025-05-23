@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class UserProfile {
   final String? uid;
   final AuthData? auth;
@@ -100,8 +98,6 @@ class UserInfo {
     ];
 
     final filled = fields.where((field) => field != null).length;
-    log('Logger: fields: $filled / ${fields.length}');
-    log('Logger: Income: $monthlyIncome / EmpStatus $employmentStatus');
     return filled / fields.length;
   }
 

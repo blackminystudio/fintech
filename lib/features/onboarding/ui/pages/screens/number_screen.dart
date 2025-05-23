@@ -59,6 +59,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
       widget.onTap.call();
       store.updateCopyUserInfo(mobileNumber: _mobileController.text);
     }
+    FocusScope.of(context).unfocus();
   }
 
   void _handleTextChange(String value) {

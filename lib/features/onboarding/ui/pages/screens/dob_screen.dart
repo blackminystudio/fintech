@@ -23,7 +23,7 @@ class DobScreen extends ConsumerStatefulWidget {
 
 class _DobPageState extends ConsumerState<DobScreen> {
   DateTime? selectedDate;
-  DateTime tempDate = DateTime(2000);
+  DateTime userSelectionDate = DateTime(2000);
   late UserProfileStore store;
 
   @override
@@ -36,29 +36,29 @@ class _DobPageState extends ConsumerState<DobScreen> {
 
   void _onTapOkay() {
     setState(() {
-      selectedDate = tempDate;
+      selectedDate = userSelectionDate;
     });
+    store.updateCopyUserInfo(dateOfBirth: selectedDate);
     Navigator.pop(context);
   }
 
   void _onTapContinue() {
-    if (selectedDate != null) {
-      widget.onTap.call();
-      store.updateCopyUserInfo(dateOfBirth: selectedDate);
-    }
-    return;
+    widget.onTap.call();
+    store.updateCopyUserInfo(dateOfBirth: selectedDate);
   }
 
   void _showDatePicker(BuildContext context) {
     final theme = Theme.of(context);
-    tempDate = selectedDate ?? DateTime(2000);
+    userSelectionDate = selectedDate ?? DateTime(2000);
 
     showModalBottomSheet(
       context: context,
       backgroundColor: theme.colors.neutralLight,
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.all(Radius.circular(theme.borderradius.large)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(theme.borderradius.large),
+          topRight: Radius.circular(theme.borderradius.large),
+        ),
       ),
       builder: (context) => _buildDatePickerSheet(theme),
     );
@@ -80,10 +80,10 @@ class _DobPageState extends ConsumerState<DobScreen> {
               child: CupertinoDatePicker(
                 dateOrder: DatePickerDateOrder.dmy,
                 mode: CupertinoDatePickerMode.date,
-                initialDateTime: tempDate,
+                initialDateTime: userSelectionDate,
                 maximumDate: DateTime.now(),
                 onDateTimeChanged: (DateTime newDate) {
-                  tempDate = newDate;
+                  userSelectionDate = newDate;
                 },
               ),
             ),
@@ -126,7 +126,7 @@ class _DobPageState extends ConsumerState<DobScreen> {
           /// Errors:
           /// "Select your date of birth"
           label: OnboardingConstants.continueButtonText,
-          onTap: _onTapContinue,
+          onTap: (selectedDate != null) ? _onTapContinue : null,
         ),
       ],
     );
