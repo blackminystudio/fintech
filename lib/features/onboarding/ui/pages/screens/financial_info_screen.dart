@@ -28,16 +28,16 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
     super.initState();
     // view
     store = ref.read(userProfileProvider.notifier);
-    final profile = ref.read(userProfileProvider).info;
-    selectedIncome = profile?.monthlyIncome;
-    selectedEmploymentStatus = profile?.maritalStatus;
+    final info = ref.read(userProfileProvider).info;
+    selectedIncome = info?.monthlyIncome;
+    selectedEmploymentStatus = info?.employmentStatus;
   }
 
   void _onTapConfirm() {
     // update
-    store.updatePartialUserInfo(
+    store.updateCopyUserInfo(
       monthlyIncome: selectedIncome,
-      maritalStatus: selectedEmploymentStatus,
+      employmentStatus: selectedEmploymentStatus,
     );
     if (isSelectionComplete) {
       widget.onTap.call();

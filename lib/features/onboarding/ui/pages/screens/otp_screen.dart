@@ -52,7 +52,7 @@ class _OtpPageState extends ConsumerState<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final number = ref.watch(userProfileProvider).info?.mobileNumber;
+    final number = ref.read(userProfileProvider).info?.mobileNumber;
     final subTitle = '${OnboardingConstants.otpSentText}$number.';
     return Column(
       children: [

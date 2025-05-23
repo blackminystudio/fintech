@@ -33,7 +33,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
       if (name.isEmpty) {
         _errorText = OnboardingConstants.nameEmpty;
       } else {
-        store.updateName(name);
+        store.updateCopyUserInfo(fullName: name);
         widget.onTap.call();
         _errorText = null;
       }
