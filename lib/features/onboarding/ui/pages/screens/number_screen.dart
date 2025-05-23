@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../store/onboarding_store.dart';
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../store/onboarding_store.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/onboarding_title.dart';
 
 // | QA Scenario
 // | ------------------------------------------------
@@ -17,18 +17,18 @@ import '../widgets/onboarding_title.dart';
 // | User taps "Verify" again with <10 digits
 // | User corrects to 10 digits after error
 
-class NumberPage extends ConsumerStatefulWidget {
+class NumberScreen extends ConsumerStatefulWidget {
   final VoidCallback onTap;
-  const NumberPage({
+  const NumberScreen({
     super.key,
     required this.onTap,
   });
 
   @override
-  ConsumerState<NumberPage> createState() => _NumberPageState();
+  ConsumerState<NumberScreen> createState() => _NumberPageState();
 }
 
-class _NumberPageState extends ConsumerState<NumberPage> {
+class _NumberPageState extends ConsumerState<NumberScreen> {
   final TextEditingController _mobileController = TextEditingController();
   bool _showError = false;
   bool get _isValidNow => _mobileController.text.length == 10;

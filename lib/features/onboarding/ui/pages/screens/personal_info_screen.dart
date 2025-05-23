@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/expandable_search.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/expandable_search.dart';
+import '../../widgets/onboarding_title.dart';
 
-class PersonalInfoPage extends StatefulWidget {
+class PersonalInfoScreen extends StatefulWidget {
   final List<String> cityList;
   final VoidCallback onTap;
 
-  const PersonalInfoPage({
+  const PersonalInfoScreen({
     super.key,
     required this.onTap,
     required this.cityList,
   });
 
   @override
-  State<PersonalInfoPage> createState() => _PersonalInfoPageState();
+  State<PersonalInfoScreen> createState() => _PersonalInfoPageState();
 }
 
-class _PersonalInfoPageState extends State<PersonalInfoPage>
+class _PersonalInfoPageState extends State<PersonalInfoScreen>
     with WidgetsBindingObserver {
   TextEditingController cityController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
