@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
+import '../../../store/onboarding_store.dart';
 import '../../../utilities/onboarding_constants.dart';
 import '../../widgets/bottom_action_bar.dart';
 import '../../widgets/onboarding_title.dart';
 
-class DobScreen extends StatefulWidget {
+class DobScreen extends ConsumerStatefulWidget {
   final VoidCallback onTap;
 
   const DobScreen({
@@ -16,17 +18,37 @@ class DobScreen extends StatefulWidget {
   });
 
   @override
-  State<DobScreen> createState() => _DobPageState();
+  ConsumerState<DobScreen> createState() => _DobPageState();
 }
 
-class _DobPageState extends State<DobScreen> {
+class _DobPageState extends ConsumerState<DobScreen> {
   DateTime? selectedDate;
   DateTime tempDate = DateTime(2000);
+  late UserProfileStore store;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // view
+    store = ref.read(userProfileProvider.notifier);
+    final profile = ref.read(userProfileProvider).info;
+    selectedDate = profile?.dateOfBirth;
+  }
+
   void _onTapOkay() {
     setState(() {
       selectedDate = tempDate;
     });
     Navigator.pop(context);
+  }
+
+  void _onTapContinue() {
+    if (selectedDate != null) {
+      widget.onTap.call();
+      store.updatePartialUserInfo(dateOfBirth: selectedDate);
+    }
+    return;
   }
 
   void _showDatePicker(BuildContext context) {
@@ -106,7 +128,7 @@ class _DobPageState extends State<DobScreen> {
           /// Errors:
           /// "Select your date of birth"
           label: OnboardingConstants.continueButtonText,
-          onTap: selectedDate != null ? () => widget.onTap.call() : null,
+          onTap: _onTapContinue,
         ),
       ],
     );
