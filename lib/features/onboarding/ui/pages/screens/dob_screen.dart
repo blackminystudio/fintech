@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/onboarding_title.dart';
 
-class DobPage extends StatefulWidget {
+class DobScreen extends StatefulWidget {
   final VoidCallback onTap;
 
-  const DobPage({
+  const DobScreen({
     super.key,
     required this.onTap,
   });
 
   @override
-  State<DobPage> createState() => _DobPageState();
+  State<DobScreen> createState() => _DobPageState();
 }
 
-class _DobPageState extends State<DobPage> {
+class _DobPageState extends State<DobScreen> {
   DateTime? selectedDate;
   DateTime tempDate = DateTime(2000);
   void _onTapOkay() {

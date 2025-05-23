@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import 'features/onboarding/ui/pages/wrapper.dart';
+import 'features/onboarding/ui/pages/onboarding_page.dart';
 
 void main() {
   runApp(

@@ -4,28 +4,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../../../core/utilities/extenstions.dart';
-import '../../store/onboarding_store.dart';
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/onboarding_title.dart';
-import '../widgets/resend_otp.dart';
+import '../../../../../core/utilities/extenstions.dart';
+import '../../../store/onboarding_store.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/onboarding_title.dart';
+import '../../widgets/resend_otp.dart';
 
-class OtpPage extends ConsumerStatefulWidget {
+class OtpScreen extends ConsumerStatefulWidget {
   final String correctOtp;
   final VoidCallback onTap;
   final VoidCallback onResendOtp;
-  const OtpPage({
+  const OtpScreen({
     super.key,
     required this.correctOtp,
     required this.onTap,
     required this.onResendOtp,
   });
   @override
-  ConsumerState<OtpPage> createState() => _OtpPageState();
+  ConsumerState<OtpScreen> createState() => _OtpPageState();
 }
 
-class _OtpPageState extends ConsumerState<OtpPage> {
+class _OtpPageState extends ConsumerState<OtpScreen> {
   TextEditingController otpController = TextEditingController();
   String? errorMessage;
 

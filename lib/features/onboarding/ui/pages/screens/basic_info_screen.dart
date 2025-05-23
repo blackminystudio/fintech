@@ -3,25 +3,25 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../store/onboarding_store.dart';
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/miny_divider.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../store/onboarding_store.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/miny_divider.dart';
+import '../../widgets/onboarding_title.dart';
 
-class BasicInfoPage extends ConsumerStatefulWidget {
+class BasicInfoScreen extends ConsumerStatefulWidget {
   final VoidCallback onTap;
 
-  const BasicInfoPage({
+  const BasicInfoScreen({
     super.key,
     required this.onTap,
   });
 
   @override
-  ConsumerState<BasicInfoPage> createState() => _BasicInfoPageState();
+  ConsumerState<BasicInfoScreen> createState() => _BasicInfoPageState();
 }
 
-class _BasicInfoPageState extends ConsumerState<BasicInfoPage> {
+class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
   String? _errorText;
   late UserProfileStore store;
   late TextEditingController fullNameController;

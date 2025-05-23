@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/onboarding_title.dart';
 
-class FinancialInfoPage extends StatefulWidget {
+class FinancialInfoScreen extends StatefulWidget {
   final VoidCallback onTap;
 
-  const FinancialInfoPage({super.key, required this.onTap});
+  const FinancialInfoScreen({super.key, required this.onTap});
 
   @override
-  State<FinancialInfoPage> createState() => _FinancialInfoPageState();
+  State<FinancialInfoScreen> createState() => _FinancialInfoPageState();
 }
 
-class _FinancialInfoPageState extends State<FinancialInfoPage> {
+class _FinancialInfoPageState extends State<FinancialInfoScreen> {
   String? selectedIncome;
   String? selectedEmploymentStatus;
   bool get isSelectionComplete =>

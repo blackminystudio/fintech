@@ -4,12 +4,12 @@ import 'package:miny_design_system/miny_design_system.dart';
 
 import '../../store/onboarding_store.dart';
 import '../widgets/progress_header.dart';
-import 'basic_info_page.dart';
-import 'dob_page.dart';
-import 'financial_info_page.dart';
-import 'number_page.dart';
-import 'otp_page.dart';
-import 'personal_info_page.dart';
+import 'screens/basic_info_screen.dart';
+import 'screens/dob_screen.dart';
+import 'screens/financial_info_screen.dart';
+import 'screens/number_screen.dart';
+import 'screens/otp_screen.dart';
+import 'screens/personal_info_screen.dart';
 
 const cityList = [
   'New York',
@@ -104,19 +104,19 @@ class _WrapperState extends State<Wrapper> {
                   controller: pageController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    NumberPage(onTap: goToNextPage),
-                    OtpPage(
+                    NumberScreen(onTap: goToNextPage),
+                    OtpScreen(
                       correctOtp: '123412',
                       onResendOtp: () {},
                       onTap: goToNextPage,
                     ),
-                    BasicInfoPage(onTap: goToNextPage),
-                    PersonalInfoPage(
+                    BasicInfoScreen(onTap: goToNextPage),
+                    PersonalInfoScreen(
                       cityList: cityList,
                       onTap: goToNextPage,
                     ),
-                    DobPage(onTap: goToNextPage),
-                    FinancialInfoPage(onTap: () {}),
+                    DobScreen(onTap: goToNextPage),
+                    FinancialInfoScreen(onTap: () {}),
                   ],
                 ),
               ),
