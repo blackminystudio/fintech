@@ -31,7 +31,8 @@ class NumberScreen extends ConsumerStatefulWidget {
 class _NumberPageState extends ConsumerState<NumberScreen> {
   final TextEditingController _mobileController = TextEditingController();
   bool _showError = false;
-  bool get _isValidNow => _mobileController.text.length == 10;
+  final mobileNumber = 10;
+  bool get _isValidNow => _mobileController.text.length == mobileNumber;
   late UserProfileStore store;
 
   @override
@@ -56,7 +57,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
     });
     if (_isValidNow) {
       widget.onTap.call();
-      store.updateMobileNumber(_mobileController.text);
+      store.updateCopyUserInfo(mobileNumber: _mobileController.text);
     }
   }
 
@@ -75,13 +76,6 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final user = ref.watch(userProfileProvider);
-    final currentValue = user.info?.mobileNumber;
-    if (currentValue != null && _mobileController.text != currentValue) {
-      _mobileController
-        ..text = currentValue
-        ..selection = TextSelection.collapsed(offset: currentValue.length);
-    }
     return Column(
       children: [
         Expanded(
@@ -174,7 +168,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
                 onChanged: _handleTextChange,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(10),
+                  LengthLimitingTextInputFormatter(mobileNumber),
                 ],
               ),
             ),

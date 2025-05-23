@@ -9,23 +9,6 @@ final userProfileProvider =
 
 class UserProfileStore extends StateNotifier<UserProfile> {
   UserProfileStore() : super(const UserProfile());
-
-  // Onboarding Updates
-  void updateMobileNumber(String mobile) {
-    final newInfo = (state.info ?? const UserInfo()).copyWith(
-      mobileNumber: mobile,
-    );
-    state = state.copyWith(info: newInfo);
-  }
-
-  void updateName(String name) {
-    final newInfo = (state.info ?? const UserInfo()).copyWith(
-      fullName: name,
-    );
-    state = state.copyWith(info: newInfo);
-  }
-
-  //Other
   void setAuthData(AuthData auth) {
     state = UserProfile(uid: state.uid, auth: auth, info: state.info);
   }
@@ -38,7 +21,7 @@ class UserProfileStore extends StateNotifier<UserProfile> {
     );
   }
 
-  void updatePartialUserInfo({
+  void updateCopyUserInfo({
     String? mobileNumber,
     String? fullName,
     String? city,

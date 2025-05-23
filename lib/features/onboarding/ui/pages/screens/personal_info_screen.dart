@@ -33,6 +33,11 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
   String? selectedGender;
   String? selectedMaritalStatus;
 
+  bool get _isFormValid =>
+      selectedCity != null &&
+      selectedGender != null &&
+      selectedMaritalStatus != null;
+
   final genderOptions = [
     OnboardingConstants.male,
     OnboardingConstants.female,
@@ -46,28 +51,24 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
   @override
   void initState() {
     super.initState();
+    // Add WidgetsBinding observer to handle layout updates,
+    // especially for city selector focus and height adjustments.
     WidgetsBinding.instance.addObserver(this);
-    store = ref.read(userProfileProvider.notifier);
-    final profile = ref.read(userProfileProvider).info;
 
-    // view
-    selectedCity = profile?.city;
-    selectedGender = profile?.gender;
-    selectedMaritalStatus = profile?.maritalStatus;
+    // Store Initialisation
+    final info = ref.read(userProfileProvider).info;
+    store = ref.read(userProfileProvider.notifier);
+    selectedCity = info?.city;
+    selectedGender = info?.gender;
+    selectedMaritalStatus = info?.maritalStatus;
 
     if (selectedCity != null) {
       _cityController.text = selectedCity!;
     }
   }
 
-  bool get _isFormValid =>
-      selectedCity != null &&
-      selectedGender != null &&
-      selectedMaritalStatus != null;
-
   void _onTapContinue() {
-    // update
-    store.updatePartialUserInfo(
+    store.updateCopyUserInfo(
       city: selectedCity,
       gender: selectedGender,
       maritalStatus: selectedMaritalStatus,
@@ -109,8 +110,8 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
     super.dispose();
   }
 
-  // Used for keyboard visibility detection
   @override
+  // Used for keyboard visibility detection
   void didChangeMetrics() {
     final bottomInset = View.of(context).viewInsets.bottom;
     final newKeyboardVisible = bottomInset > 0;
@@ -131,11 +132,6 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final user = ref.watch(userProfileProvider);
-    final currentValue = user.info?.city;
-    if (currentValue != null && _cityController.text != currentValue) {
-      _cityController.text = currentValue;
-    }
     return Column(
       children: [
         Expanded(

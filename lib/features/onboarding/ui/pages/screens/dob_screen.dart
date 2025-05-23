@@ -29,11 +29,9 @@ class _DobPageState extends ConsumerState<DobScreen> {
   @override
   void initState() {
     super.initState();
-
-    // view
     store = ref.read(userProfileProvider.notifier);
-    final profile = ref.read(userProfileProvider).info;
-    selectedDate = profile?.dateOfBirth;
+    final info = ref.read(userProfileProvider).info;
+    selectedDate = info?.dateOfBirth;
   }
 
   void _onTapOkay() {
@@ -46,7 +44,7 @@ class _DobPageState extends ConsumerState<DobScreen> {
   void _onTapContinue() {
     if (selectedDate != null) {
       widget.onTap.call();
-      store.updatePartialUserInfo(dateOfBirth: selectedDate);
+      store.updateCopyUserInfo(dateOfBirth: selectedDate);
     }
     return;
   }
