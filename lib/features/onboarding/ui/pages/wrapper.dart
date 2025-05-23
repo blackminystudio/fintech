@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../utilities/onboarding_constants.dart';
+import '../../store/onboarding_store.dart';
 import '../widgets/progress_header.dart';
 import 'basic_info_page.dart';
 import 'dob_page.dart';
@@ -11,6 +10,17 @@ import 'financial_info_page.dart';
 import 'number_page.dart';
 import 'otp_page.dart';
 import 'personal_info_page.dart';
+
+const cityList = [
+  'New York',
+  'Los Angeles',
+  'Chicago',
+  'Québec',
+  'Düsseldorf',
+  'akksfkjdkfkdsjfkdkfjkdsjjfkjsdkfjksdjfkdsjfksdjkfjs',
+  'Houston',
+  'Phoenix',
+];
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -81,65 +91,32 @@ class _WrapperState extends State<Wrapper> {
         body: SafeArea(
           child: Column(
             children: [
-              ProgressHeader(
-                progressValue: progressValue,
-                onTapSkip: () {},
-                onTapBack: goToPreviousPage,
-              ),
+              Consumer(builder: (context, ref, _) {
+                final info = ref.watch(userProfileProvider).info;
+                return ProgressHeader(
+                  progressValue: info?.getPercentage() ?? 0.0,
+                  onTapSkip: () {},
+                  onTapBack: goToPreviousPage,
+                );
+              }),
               Expanded(
                 child: PageView(
                   controller: pageController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    NumberPage(
-                      onTap: (number) {
-                        this.number = number;
-                        log('Logger: OTP Send To this number $number');
-                        goToNextPage();
-                      },
-                    ),
+                    NumberPage(onTap: goToNextPage),
                     OtpPage(
-                      number: number,
                       correctOtp: '123412',
+                      onResendOtp: () {},
                       onTap: goToNextPage,
-                      onResendOtp: () {
-                        log('Logger: RESEND');
-                      },
                     ),
-                    BasicInfoPage(
-                      email: OnboardingConstants.email,
-                      number: number,
-                      onTap: (name) {
-                        log('Logger: $name');
-                        goToNextPage();
-                      },
-                    ),
+                    BasicInfoPage(onTap: goToNextPage),
                     PersonalInfoPage(
-                      cityList: [
-                        'New York',
-                        'Los Angeles',
-                        'Chicago',
-                        'Québec',
-                        'Düsseldorf',
-                        'akksfkjdkfkdsjfkdkfjkdsjjfkjsdkfjksdjfkdsjfksdjkfjs',
-                        'Houston',
-                        'Phoenix',
-                      ],
-                      onTap: (gender, maritalStatus) {
-                        log('Logger: $gender, $maritalStatus');
-                        goToNextPage();
-                      },
+                      cityList: cityList,
+                      onTap: goToNextPage,
                     ),
-                    DobPage(
-                      onTap: (dob) {
-                        goToNextPage();
-                      },
-                    ),
-                    FinancialInfoPage(
-                      onTap: (income, employment) {
-                        log('Logger: $income, $employment');
-                      },
-                    ),
+                    DobPage(onTap: goToNextPage),
+                    FinancialInfoPage(onTap: () {}),
                   ],
                 ),
               ),

@@ -1,45 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
+import '../../store/onboarding_store.dart';
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
+import '../widgets/miny_divider.dart';
 import '../widgets/onboarding_title.dart';
 
-class BasicInfoPage extends StatefulWidget {
-  final Function(String name) onTap;
-  final String number;
-  final String email;
+class BasicInfoPage extends ConsumerStatefulWidget {
+  final VoidCallback onTap;
 
   const BasicInfoPage({
     super.key,
     required this.onTap,
-    required this.number,
-    required this.email,
   });
 
   @override
-  State<BasicInfoPage> createState() => _BasicInfoPageState();
+  ConsumerState<BasicInfoPage> createState() => _BasicInfoPageState();
 }
 
-class _BasicInfoPageState extends State<BasicInfoPage> {
-  String? _fullNameErrorText;
+class _BasicInfoPageState extends ConsumerState<BasicInfoPage> {
+  String? _errorText;
+  late UserProfileStore store;
+  late TextEditingController fullNameController;
+
   void _onTapconfirm() {
     FocusScope.of(context).unfocus();
-
+    final name = fullNameController.text.trim();
     setState(() {
-      if (fullNameController.text.trim().isEmpty) {
-        _fullNameErrorText = OnboardingConstants.nameEmpty;
+      if (name.isEmpty) {
+        _errorText = OnboardingConstants.nameEmpty;
       } else {
-        widget.onTap.call(fullNameController.text);
-        _fullNameErrorText = null;
+        store.updateName(name);
+        widget.onTap.call();
+        _errorText = null;
       }
     });
   }
 
-  final TextEditingController fullNameController = TextEditingController(
-    text: OnboardingConstants.name,
-  );
+  @override
+  void initState() {
+    super.initState();
+    store = ref.read(userProfileProvider.notifier);
+    fullNameController = TextEditingController(
+      text: ref.read(userProfileProvider).info?.fullName,
+    );
+  }
+
+  @override
+  void dispose() {
+    fullNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,39 +86,9 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     );
   }
 
-  @override
-  void dispose() {
-    fullNameController.dispose();
-    super.dispose();
-  }
-
-  Padding _buildInfoContent(ThemeData theme) => Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: theme.sizing.width.s7,
-          vertical: theme.sizing.width.s4,
-        ),
-        child: Row(
-          children: [
-            Icon(
-              size: theme.sizing.height.s6,
-              OnboardingConstants.infoIcon,
-              color: theme.colors.accentPurple,
-            ),
-            SizedBox(width: theme.sizing.width.s3),
-            Flexible(
-              child: Text(
-                OnboardingConstants.basicInfoFooterNote,
-                style: theme.textStyle.bodyXxsmall.copyWith(
-                  color: theme.colors.accentPurple,
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-
   Widget _buildInfoContentCard() {
     final theme = Theme.of(context);
+    final user = ref.watch(userProfileProvider);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(theme.borderradius.large),
@@ -127,32 +111,24 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
               children: [
                 _buildUserInfoCard(
                   isActive: true,
-                  text: fullNameController.text,
+                  text: user.info?.fullName ?? '',
                   labelText: OnboardingConstants.fullNameLabel,
                   icon: OnboardingConstants.fullNameIcon,
                   controller: fullNameController,
                 ),
                 SizedBox(height: theme.sizing.height.s7),
-                Divider(
-                  thickness: theme.spacing.height.s2,
-                  height: theme.spacing.height.s0,
-                  color: theme.colors.neutralLightBackground,
-                ),
+                const MinyDivider(),
                 SizedBox(height: theme.sizing.height.s7),
                 _buildUserInfoCard(
-                  text: widget.email,
+                  text: user.auth?.email ?? '',
                   icon: OnboardingConstants.emailIcon,
                   labelText: OnboardingConstants.emailLabel,
                 ),
                 SizedBox(height: theme.sizing.height.s7),
-                Divider(
-                  thickness: theme.spacing.height.s2,
-                  height: theme.spacing.height.s0,
-                  color: theme.colors.neutralLightBackground,
-                ),
+                const MinyDivider(),
                 SizedBox(height: theme.sizing.height.s7),
                 _buildUserInfoCard(
-                  text: widget.number,
+                  text: user.info?.mobileNumber ?? '',
                   labelText: OnboardingConstants.phoneLabel,
                   icon: OnboardingConstants.phoneIcon,
                 ),
@@ -211,7 +187,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                           ),
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
-                          errorText: isActive ? _fullNameErrorText : null,
+                          errorText: isActive ? _errorText : null,
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -234,4 +210,29 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       ),
     );
   }
+
+  Padding _buildInfoContent(ThemeData theme) => Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: theme.sizing.width.s7,
+          vertical: theme.sizing.width.s4,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              size: theme.sizing.height.s6,
+              OnboardingConstants.infoIcon,
+              color: theme.colors.accentPurple,
+            ),
+            SizedBox(width: theme.sizing.width.s3),
+            Flexible(
+              child: Text(
+                OnboardingConstants.basicInfoFooterNote,
+                style: theme.textStyle.bodyXxsmall.copyWith(
+                  color: theme.colors.accentPurple,
+                ),
+              ),
+            )
+          ],
+        ),
+      );
 }

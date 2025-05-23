@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../core/utilities/extenstions.dart';
+import '../../store/onboarding_store.dart';
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
 import '../widgets/resend_otp.dart';
 
-class OtpPage extends StatefulWidget {
+class OtpPage extends ConsumerStatefulWidget {
   final String correctOtp;
   final VoidCallback onTap;
   final VoidCallback onResendOtp;
-  final String number;
   const OtpPage({
     super.key,
     required this.correctOtp,
     required this.onTap,
     required this.onResendOtp,
-    required this.number,
   });
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  ConsumerState<OtpPage> createState() => _OtpPageState();
 }
 
-class _OtpPageState extends State<OtpPage> {
+class _OtpPageState extends ConsumerState<OtpPage> {
   TextEditingController otpController = TextEditingController();
   String? errorMessage;
 
@@ -52,7 +52,8 @@ class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final subTitle = '${OnboardingConstants.otpSentText}${widget.number}.';
+    final number = ref.watch(userProfileProvider).info?.mobileNumber;
+    final subTitle = '${OnboardingConstants.otpSentText}$number.';
     return Column(
       children: [
         Expanded(

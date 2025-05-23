@@ -12,11 +12,17 @@ class UserProfileStore extends StateNotifier<UserProfile> {
 
   // Onboarding Updates
   void updateMobileNumber(String mobile) {
-    state = state.copyWith(info: state.info?.copyWith(mobileNumber: mobile));
+    final newInfo = (state.info ?? const UserInfo()).copyWith(
+      mobileNumber: mobile,
+    );
+    state = state.copyWith(info: newInfo);
   }
 
   void updateName(String name) {
-    state = state.copyWith(info: state.info?.copyWith(fullName: name));
+    final newInfo = (state.info ?? const UserInfo()).copyWith(
+      fullName: name,
+    );
+    state = state.copyWith(info: newInfo);
   }
 
   //Other

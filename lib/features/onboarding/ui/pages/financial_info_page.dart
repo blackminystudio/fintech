@@ -6,7 +6,7 @@ import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
 
 class FinancialInfoPage extends StatefulWidget {
-  final Function(String? income, String? employment) onTap;
+  final VoidCallback onTap;
 
   const FinancialInfoPage({super.key, required this.onTap});
 
@@ -21,10 +21,7 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
       selectedIncome != null && selectedEmploymentStatus != null;
   void _onTapConfirm() {
     {
-      widget.onTap.call(
-        selectedIncome,
-        selectedEmploymentStatus,
-      );
+      widget.onTap.call();
     }
   }
 

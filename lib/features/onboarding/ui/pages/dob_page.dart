@@ -8,8 +8,7 @@ import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
 
 class DobPage extends StatefulWidget {
-  // TODO: this need to be non null
-  final Function(DateTime? dob) onTap;
+  final VoidCallback onTap;
 
   const DobPage({
     super.key,
@@ -107,9 +106,7 @@ class _DobPageState extends State<DobPage> {
           /// Errors:
           /// "Select your date of birth"
           label: OnboardingConstants.continueButtonText,
-          onTap: selectedDate != null
-              ? () => widget.onTap.call(selectedDate)
-              : null,
+          onTap: selectedDate != null ? () => widget.onTap.call() : null,
         ),
       ],
     );
