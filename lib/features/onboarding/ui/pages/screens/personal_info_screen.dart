@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
+import '../../../store/onboarding_store.dart';
 import '../../../utilities/onboarding_constants.dart';
 import '../../widgets/bottom_action_bar.dart';
 import '../../widgets/expandable_search.dart';
 import '../../widgets/onboarding_title.dart';
 
-class PersonalInfoScreen extends StatefulWidget {
+class PersonalInfoScreen extends ConsumerStatefulWidget {
   final List<String> cityList;
   final VoidCallback onTap;
 
@@ -17,16 +19,16 @@ class PersonalInfoScreen extends StatefulWidget {
   });
 
   @override
-  State<PersonalInfoScreen> createState() => _PersonalInfoPageState();
+  ConsumerState<PersonalInfoScreen> createState() => _PersonalInfoPageState();
 }
 
-class _PersonalInfoPageState extends State<PersonalInfoScreen>
+class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
     with WidgetsBindingObserver {
-  TextEditingController cityController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final FocusNode _cityFocusNode = FocusNode();
   bool _keyboardVisible = false;
-
+  late UserProfileStore store;
   String? selectedCity;
   String? selectedGender;
   String? selectedMaritalStatus;
@@ -45,6 +47,17 @@ class _PersonalInfoPageState extends State<PersonalInfoScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    store = ref.read(userProfileProvider.notifier);
+    final profile = ref.read(userProfileProvider).info;
+
+    // view
+    selectedCity = profile?.city;
+    selectedGender = profile?.gender;
+    selectedMaritalStatus = profile?.maritalStatus;
+
+    if (selectedCity != null) {
+      _cityController.text = selectedCity!;
+    }
   }
 
   bool get _isFormValid =>
@@ -53,8 +66,14 @@ class _PersonalInfoPageState extends State<PersonalInfoScreen>
       selectedMaritalStatus != null;
 
   void _onTapContinue() {
-    widget.onTap.call();
+    // update
+    store.updatePartialUserInfo(
+      city: selectedCity,
+      gender: selectedGender,
+      maritalStatus: selectedMaritalStatus,
+    );
     FocusScope.of(context).unfocus();
+    widget.onTap.call();
   }
 
   void _onSearchSelected(String? value) {
@@ -85,7 +104,7 @@ class _PersonalInfoPageState extends State<PersonalInfoScreen>
   void dispose() {
     _scrollController.dispose();
     _cityFocusNode.dispose();
-    cityController.dispose();
+    _cityController.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -112,7 +131,11 @@ class _PersonalInfoPageState extends State<PersonalInfoScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final user = ref.watch(userProfileProvider);
+    final currentValue = user.info?.city;
+    if (currentValue != null && _cityController.text != currentValue) {
+      _cityController.text = currentValue;
+    }
     return Column(
       children: [
         Expanded(
@@ -137,6 +160,7 @@ class _PersonalInfoPageState extends State<PersonalInfoScreen>
                 ),
                 SizedBox(height: theme.sizing.height.s3),
                 ExpandableSearchField(
+                  controller: _cityController,
                   allItems: widget.cityList,
                   focusNode: _cityFocusNode,
                   onSelected: _onSearchSelected,

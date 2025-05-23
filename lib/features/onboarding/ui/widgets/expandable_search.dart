@@ -11,6 +11,7 @@ class ExpandableSearchField extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focusNode;
+  final TextEditingController? controller;
 
   const ExpandableSearchField({
     super.key,
@@ -20,6 +21,7 @@ class ExpandableSearchField extends StatefulWidget {
     this.inputFormatters,
     this.onChanged,
     this.focusNode,
+    this.controller,
   });
 
   @override
