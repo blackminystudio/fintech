@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
 import '../../utilities/onboarding_constants.dart';
 import '../widgets/bottom_action_bar.dart';
 import '../widgets/onboarding_title.dart';
 
-class NumberPage extends StatefulWidget {
+// | QA Scenario
+// | ------------------------------------------------
+// | User types <10 digits
+// | User taps "Verify" with <10 digits
+// | User types 10 digits and taps "Verify"
+// | User deletes back to <10 after successful verify
+// | User taps "Verify" again with <10 digits
+// | User corrects to 10 digits after error
+
+class NumberPage extends ConsumerStatefulWidget {
   final Function(String number) onTap;
   const NumberPage({
     super.key,
@@ -14,50 +24,39 @@ class NumberPage extends StatefulWidget {
   });
 
   @override
-  State<NumberPage> createState() => _NumberPageState();
+  ConsumerState<NumberPage> createState() => _NumberPageState();
 }
 
-class _NumberPageState extends State<NumberPage> {
+class _NumberPageState extends ConsumerState<NumberPage> {
   final TextEditingController _mobileController = TextEditingController();
-  bool _isValid = true;
-  int mobileNumberLength = 10;
-
-  bool get isCurrentlyValid =>
-      _mobileController.text.length == mobileNumberLength;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _mobileController.addListener(_handleMobileChange);
-  }
-
-  void _onTapVerify() {
-    _validateMobileNumber();
-    if (_isValid) {
-      widget.onTap.call(_mobileController.text);
-    }
-  }
-
-  void _handleMobileChange() {
-    if (isCurrentlyValid) {
-      FocusScope.of(context).unfocus();
-      setState(() {
-        _isValid = isCurrentlyValid;
-      });
-    }
-  }
-
-  void _validateMobileNumber() {
-    setState(() {
-      _isValid = isCurrentlyValid;
-    });
-  }
+  bool _showError = false;
+  bool get _isValidNow => _mobileController.text.length == 10;
 
   @override
   void dispose() {
     _mobileController.dispose();
     super.dispose();
+  }
+
+  void _onTapVerify() {
+    setState(() {
+      _showError = !_isValidNow;
+    });
+    if (_isValidNow) {
+      widget.onTap.call(_mobileController.text);
+    }
+  }
+
+  void _handleTextChange(String value) {
+    if (_isValidNow) {
+      if (_showError) {
+        setState(() {
+          _showError = false;
+        });
+      }
+      // Outside of setstate to avoid rebuild
+      FocusScope.of(context).unfocus();
+    }
   }
 
   @override
@@ -78,15 +77,7 @@ class _NumberPageState extends State<NumberPage> {
                   subTitle: OnboardingConstants.otpSubText,
                 ),
                 _buildPhoneNumberField(),
-                SizedBox(height: theme.spacing.height.s4),
-                if (!_isValid)
-                  Text(
-                    OnboardingConstants.mobileValidationError,
-                    style: theme.textStyle.headingSmall.copyWith(
-                      // TODO: DS: Add Token "WarningRed" (#EE4E4E);
-                      color: theme.colors.accentRed,
-                    ),
-                  ),
+                ..._buildErrorText()
               ],
             ),
           ),
@@ -99,6 +90,21 @@ class _NumberPageState extends State<NumberPage> {
     );
   }
 
+  List<Widget> _buildErrorText() {
+    if (!_showError) return [const SizedBox.shrink()];
+    final theme = Theme.of(context);
+    return [
+      SizedBox(height: theme.spacing.height.s12),
+      Text(
+        OnboardingConstants.mobileValidationError,
+        style: theme.textStyle.headingSmall.copyWith(
+          // TODO: DS: Add Token "WarningRed" (#EE4E4E);
+          color: theme.colors.accentRed,
+        ),
+      )
+    ];
+  }
+
   Widget _buildPhoneNumberField() {
     final theme = Theme.of(context);
     return MinyContainer(
@@ -108,7 +114,7 @@ class _NumberPageState extends State<NumberPage> {
       backgroundColor: theme.colors.neutralLight,
       borderSide: BorderSide(
         width: theme.spacing.width.s2,
-        color: !_isValid ? theme.colors.accentRed : theme.colors.neutralBorder,
+        color: _showError ? theme.colors.accentRed : theme.colors.neutralBorder,
       ),
       borderRadius: theme.borderradius.normal,
       child: IntrinsicHeight(
@@ -134,6 +140,7 @@ class _NumberPageState extends State<NumberPage> {
                   color: theme.colors.textPrimary,
                 ),
                 scrollPadding: const EdgeInsets.all(0),
+                textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
                     vertical: theme.spacing.height.s20,
@@ -144,6 +151,7 @@ class _NumberPageState extends State<NumberPage> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
+                onChanged: _handleTextChange,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(10),
