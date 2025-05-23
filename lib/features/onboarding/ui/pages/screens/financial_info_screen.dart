@@ -1,28 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
+import '../../../store/onboarding_store.dart';
 import '../../../utilities/onboarding_constants.dart';
 import '../../widgets/bottom_action_bar.dart';
 import '../../widgets/onboarding_title.dart';
 
-class FinancialInfoScreen extends StatefulWidget {
+class FinancialInfoScreen extends ConsumerStatefulWidget {
   final VoidCallback onTap;
 
   const FinancialInfoScreen({super.key, required this.onTap});
 
   @override
-  State<FinancialInfoScreen> createState() => _FinancialInfoPageState();
+  ConsumerState<FinancialInfoScreen> createState() => _FinancialInfoPageState();
 }
 
-class _FinancialInfoPageState extends State<FinancialInfoScreen> {
+class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
+  late UserProfileStore store;
   String? selectedIncome;
   String? selectedEmploymentStatus;
   bool get isSelectionComplete =>
       selectedIncome != null && selectedEmploymentStatus != null;
+
+  @override
+  void initState() {
+    super.initState();
+    // view
+    store = ref.read(userProfileProvider.notifier);
+    final profile = ref.read(userProfileProvider).info;
+    selectedIncome = profile?.monthlyIncome;
+    selectedEmploymentStatus = profile?.maritalStatus;
+  }
+
   void _onTapConfirm() {
-    {
+    // update
+    store.updatePartialUserInfo(
+      monthlyIncome: selectedIncome,
+      maritalStatus: selectedEmploymentStatus,
+    );
+    if (isSelectionComplete) {
       widget.onTap.call();
     }
+    return;
   }
 
   final incomeOptions = [
@@ -85,7 +105,7 @@ class _FinancialInfoPageState extends State<FinancialInfoScreen> {
         ),
         BottomActionBar(
           label: OnboardingConstants.confirmButtonText,
-          onTap: isSelectionComplete ? _onTapConfirm : null,
+          onTap: _onTapConfirm,
         ),
       ],
     );
