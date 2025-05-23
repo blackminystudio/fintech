@@ -1,15 +1,26 @@
 class UserProfile {
-  final String uid;
-  final AuthData auth;
+  final String? uid;
+  final AuthData? auth;
   final UserInfo? info;
 
   const UserProfile({
-    required this.uid,
-    required this.auth,
+    this.uid,
+    this.auth,
     this.info,
   });
 
   bool get isInfoComplete => info?.isComplete ?? false;
+
+  UserProfile copyWith({
+    String? uid,
+    AuthData? auth,
+    UserInfo? info,
+  }) =>
+      UserProfile(
+        uid: uid ?? this.uid,
+        auth: auth ?? this.auth,
+        info: info ?? this.info,
+      );
 }
 
 class AuthData {
@@ -35,7 +46,7 @@ class UserInfo {
   final String? gender;
   final String? maritalStatus;
   final DateTime? dateOfBirth;
-  final double? monthlyIncome;
+  final String? monthlyIncome;
   final String? employmentStatus;
   final DateTime? lastUpdated;
 
@@ -50,6 +61,45 @@ class UserInfo {
     this.employmentStatus,
     this.lastUpdated,
   });
+
+  UserInfo copyWith({
+    String? mobileNumber,
+    String? fullName,
+    String? city,
+    String? gender,
+    String? maritalStatus,
+    DateTime? dateOfBirth,
+    String? monthlyIncome,
+    String? employmentStatus,
+    DateTime? lastUpdated,
+  }) =>
+      UserInfo(
+        mobileNumber: mobileNumber ?? this.mobileNumber,
+        fullName: fullName ?? this.fullName,
+        city: city ?? this.city,
+        gender: gender ?? this.gender,
+        maritalStatus: maritalStatus ?? this.maritalStatus,
+        dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+        monthlyIncome: monthlyIncome ?? this.monthlyIncome,
+        employmentStatus: employmentStatus ?? this.employmentStatus,
+        lastUpdated: lastUpdated ?? this.lastUpdated,
+      );
+
+  double getPercentage() {
+    final fields = [
+      mobileNumber,
+      fullName,
+      city,
+      gender,
+      maritalStatus,
+      dateOfBirth,
+      monthlyIncome,
+      employmentStatus,
+    ];
+
+    final filled = fields.where((field) => field != null).length;
+    return filled / fields.length;
+  }
 
   bool get isComplete =>
       mobileNumber != null &&

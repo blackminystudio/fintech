@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
@@ -9,7 +10,7 @@ void main() {
     ScreenUtilInit(
       designSize: const Size(440, 956),
       minTextAdapt: true,
-      builder: (context, _) => const MyApp(),
+      builder: (context, _) => const ProviderScope(child: MyApp()),
     ),
   );
 }
