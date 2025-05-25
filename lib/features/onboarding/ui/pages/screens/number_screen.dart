@@ -83,7 +83,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
         Expanded(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(
-              horizontal: theme.spacing.height.s32,
+              horizontal: theme.spacing.width.s32,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +129,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
       ),
       backgroundColor: theme.colors.neutralLight,
       borderSide: BorderSide(
-        width: theme.spacing.width.s2,
+        width: theme.sizing.width.half,
         color: _showError ? theme.colors.accentRed : theme.colors.neutralBorder,
       ),
       borderRadius: theme.borderradius.normal,
@@ -142,12 +142,12 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
                 color: theme.colors.textSecondarylight,
               ),
             ),
-            SizedBox(width: theme.sizing.height.s3),
+            SizedBox(width: theme.spacing.width.s12),
             Container(
-              width: theme.spacing.width.s2,
+              width: theme.sizing.width.half,
               color: theme.colors.neutralBorder,
             ),
-            SizedBox(width: theme.sizing.height.s3),
+            SizedBox(width: theme.spacing.width.s12),
             Expanded(
               child: TextField(
                 controller: _mobileController,

@@ -32,7 +32,7 @@ class ProgressHeader extends StatelessWidget {
                   theme.borderradius.xLarge,
                 ),
               ),
-              padding: EdgeInsets.all(theme.sizing.height.s3),
+              padding: EdgeInsets.all(theme.spacing.height.s12),
               child: Icon(
                 Icons.arrow_back_ios_new,
                 size: theme.sizing.height.s6,
@@ -48,10 +48,9 @@ class ProgressHeader extends StatelessWidget {
                   color: theme.colors.accentPurple,
                 ),
               ),
-              SizedBox(height: theme.sizing.height.s3),
+              SizedBox(height: theme.spacing.height.s12),
               SizedBox(
                 width: theme.sizing.width.s50,
-                height: theme.spacing.height.s4,
                 child: TweenAnimationBuilder(
                   duration: const Duration(milliseconds: 500),
                   tween: Tween(
@@ -59,6 +58,7 @@ class ProgressHeader extends StatelessWidget {
                     end: progressValue,
                   ),
                   builder: (context, value, _) => LinearProgressIndicator(
+                    minHeight: theme.spacing.height.s4,
                     value: value,
                     color: theme.colors.accentPurple,
                     backgroundColor: theme.colors.neutralBorder,

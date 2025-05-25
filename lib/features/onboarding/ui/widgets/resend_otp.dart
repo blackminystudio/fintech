@@ -81,7 +81,7 @@ class ResendOtpWidgetState extends State<ResendOtpWidget> {
             ? BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    width: theme.spacing.height.s2,
+                    width: theme.sizing.height.half,
                     color: theme.colors.accentPurple,
                   ),
                 ),
