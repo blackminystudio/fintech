@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
             children: [
               SizedBox(height: theme.sizing.height.s20),
               SvgPicture.asset(
-                AuthConstants.appLogoPath,
+                ImagePath.appLogoPath,
                 height: theme.sizing.height.s32,
               ),
               SizedBox(height: theme.sizing.height.s20),
@@ -81,7 +81,7 @@ class LoginPage extends StatelessWidget {
                 enableIcon: true,
                 onPressed: () {},
                 label: AuthConstants.googleButtonLabel,
-                iconPath: AuthConstants.googleIconPath,
+                iconPath: ImagePath.googleIconPath,
               ),
               SizedBox(height: theme.sizing.height.s10),
             ],
