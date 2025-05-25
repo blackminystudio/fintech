@@ -37,7 +37,8 @@ class OnboardingConstants {
   // Personal Information Texts
   static const String personalInfoTitle = 'Personal Information';
   static const String personalInfoNote =
-      'No pressure! This section is for overachievers who love filling out forms!';
+      'No pressure! This section is for overachievers '
+      'who love filling out forms!';
   static const String enterCityText = 'Enter your city';
   static const String genderLabel = 'GENDER';
   static const String maritalStatusLabel = 'MARITAL STATUS';

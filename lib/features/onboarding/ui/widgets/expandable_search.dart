@@ -6,22 +6,21 @@ import '../../../../core/utilities/extenstions.dart';
 import '../../utilities/onboarding_constants.dart';
 
 class ExpandableSearchField extends StatefulWidget {
+  const ExpandableSearchField({
+    required this.allItems,
+    required this.onSelected,
+    required this.controller,
+    super.key,
+    this.focusNode,
+    this.onChanged,
+    this.inputFormatters,
+  });
   final List<String> allItems;
   final ValueChanged<String> onSelected;
   final TextEditingController controller;
   final FocusNode? focusNode;
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
-
-  const ExpandableSearchField({
-    super.key,
-    required this.allItems,
-    required this.onSelected,
-    required this.controller,
-    this.focusNode,
-    this.onChanged,
-    this.inputFormatters,
-  });
 
   @override
   State<ExpandableSearchField> createState() => _ExpandableSearchFieldState();

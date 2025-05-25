@@ -8,9 +8,8 @@ import '../../widgets/bottom_action_bar.dart';
 import '../../widgets/onboarding_title.dart';
 
 class FinancialInfoScreen extends ConsumerStatefulWidget {
+  const FinancialInfoScreen({required this.onTap, super.key});
   final VoidCallback onTap;
-
-  const FinancialInfoScreen({super.key, required this.onTap});
 
   @override
   ConsumerState<FinancialInfoScreen> createState() => _FinancialInfoPageState();

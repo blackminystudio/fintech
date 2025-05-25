@@ -10,12 +10,11 @@ import '../../widgets/bottom_action_bar.dart';
 import '../../widgets/onboarding_title.dart';
 
 class DobScreen extends ConsumerStatefulWidget {
-  final VoidCallback onTap;
-
   const DobScreen({
-    super.key,
     required this.onTap,
+    super.key,
   });
+  final VoidCallback onTap;
 
   @override
   ConsumerState<DobScreen> createState() => _DobPageState();
@@ -131,14 +130,13 @@ class _DobPageState extends ConsumerState<DobScreen> {
 }
 
 class DateSelectorTile extends StatelessWidget {
-  final DateTime? selectedDate;
-  final VoidCallback onTap;
-
   const DateSelectorTile({
-    super.key,
     required this.selectedDate,
     required this.onTap,
+    super.key,
   });
+  final DateTime? selectedDate;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
