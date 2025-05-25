@@ -6,14 +6,13 @@ import 'package:miny_design_system/miny_design_system.dart';
 import '../../utilities/onboarding_constants.dart';
 
 class ResendOtpWidget extends StatefulWidget {
-  final int countDown;
-  final VoidCallback onResend;
-
   const ResendOtpWidget({
     required this.onResend,
     super.key,
     this.countDown = 30,
   });
+  final int countDown;
+  final VoidCallback onResend;
 
   @override
   State<ResendOtpWidget> createState() => ResendOtpWidgetState();

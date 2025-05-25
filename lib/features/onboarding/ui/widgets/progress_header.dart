@@ -4,15 +4,15 @@ import 'package:miny_design_system/miny_design_system.dart';
 import '../../utilities/onboarding_constants.dart';
 
 class ProgressHeader extends StatelessWidget {
-  final double progressValue;
-  final VoidCallback onTapSkip;
-  final VoidCallback onTapBack;
   const ProgressHeader({
-    super.key,
     required this.progressValue,
     required this.onTapSkip,
     required this.onTapBack,
+    super.key,
   });
+  final double progressValue;
+  final VoidCallback onTapSkip;
+  final VoidCallback onTapBack;
 
   @override
   Widget build(BuildContext context) {

@@ -9,14 +9,13 @@ import '../../widgets/expandable_search.dart';
 import '../../widgets/onboarding_title.dart';
 
 class PersonalInfoScreen extends ConsumerStatefulWidget {
-  final List<String> cityList;
-  final VoidCallback onTap;
-
   const PersonalInfoScreen({
-    super.key,
     required this.onTap,
     required this.cityList,
+    super.key,
   });
+  final List<String> cityList;
+  final VoidCallback onTap;
 
   @override
   ConsumerState<PersonalInfoScreen> createState() => _PersonalInfoPageState();

@@ -1,13 +1,12 @@
 class UserProfile {
-  final String? uid;
-  final AuthData? auth;
-  final UserInfo? info;
-
   const UserProfile({
     this.uid,
     this.auth,
     this.info,
   });
+  final String? uid;
+  final AuthData? auth;
+  final UserInfo? info;
 
   bool get isInfoComplete => info?.isComplete ?? false;
 
@@ -24,32 +23,21 @@ class UserProfile {
 }
 
 class AuthData {
+  const AuthData({
+    required this.email,
+    required this.createdAt,
+    required this.lastLoginAt,
+    this.displayName,
+    this.photoUrl,
+  });
   final String email;
   final String? displayName;
   final String? photoUrl;
   final DateTime createdAt;
   final DateTime lastLoginAt;
-
-  const AuthData({
-    required this.email,
-    this.displayName,
-    this.photoUrl,
-    required this.createdAt,
-    required this.lastLoginAt,
-  });
 }
 
 class UserInfo {
-  final String? mobileNumber;
-  final String? fullName;
-  final String? city;
-  final String? gender;
-  final String? maritalStatus;
-  final DateTime? dateOfBirth;
-  final String? monthlyIncome;
-  final String? employmentStatus;
-  final DateTime? lastUpdated;
-
   const UserInfo({
     this.mobileNumber,
     this.fullName,
@@ -61,6 +49,15 @@ class UserInfo {
     this.employmentStatus,
     this.lastUpdated,
   });
+  final String? mobileNumber;
+  final String? fullName;
+  final String? city;
+  final String? gender;
+  final String? maritalStatus;
+  final DateTime? dateOfBirth;
+  final String? monthlyIncome;
+  final String? employmentStatus;
+  final DateTime? lastUpdated;
 
   UserInfo copyWith({
     String? mobileNumber,

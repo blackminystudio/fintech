@@ -10,12 +10,11 @@ import '../../widgets/miny_divider.dart';
 import '../../widgets/onboarding_title.dart';
 
 class BasicInfoScreen extends ConsumerStatefulWidget {
-  final VoidCallback onTap;
-
   const BasicInfoScreen({
-    super.key,
     required this.onTap,
+    super.key,
   });
+  final VoidCallback onTap;
 
   @override
   ConsumerState<BasicInfoScreen> createState() => _BasicInfoPageState();

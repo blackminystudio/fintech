@@ -1,10 +1,4 @@
 class AuthConstants {
-  // Image paths
-  static const String appLogoPath = 'assets/images/app_logo.svg';
-  static const String googleIconPath = 'assets/images/googleicon.png';
-  static const String splashScreenLogoPath =
-      'assets/images/splash_screen_logo.svg';
-
   // Texts
   static const String introducingText = 'INTRODUCING';
   static const String headingText =
@@ -16,4 +10,12 @@ class AuthConstants {
   static const String andText = ' & ';
   static const String privacyPolicyText = 'Privacy Policy';
   static const String googleButtonLabel = 'Sign up with google';
+}
+
+class ImagePath {
+  // Image paths
+  static const String appLogoPath = 'assets/images/app_logo.svg';
+  static const String googleIconPath = 'assets/images/googleicon.png';
+  static const String splashScreenLogoPath =
+      'assets/images/splash_screen_logo.svg';
 }

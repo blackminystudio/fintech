@@ -12,15 +12,15 @@ import '../../widgets/onboarding_title.dart';
 import '../../widgets/resend_otp.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
-  final String correctOtp;
-  final VoidCallback onTap;
-  final VoidCallback onResendOtp;
   const OtpScreen({
-    super.key,
     required this.correctOtp,
     required this.onTap,
     required this.onResendOtp,
+    super.key,
   });
+  final String correctOtp;
+  final VoidCallback onTap;
+  final VoidCallback onResendOtp;
   @override
   ConsumerState<OtpScreen> createState() => _OtpPageState();
 }
