@@ -1,31 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../store/onboarding_store.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/onboarding_title.dart';
 
-class FinancialInfoPage extends StatefulWidget {
-  final Function(String? income, String? employment) onTap;
+class FinancialInfoScreen extends ConsumerStatefulWidget {
+  final VoidCallback onTap;
 
-  const FinancialInfoPage({super.key, required this.onTap});
+  const FinancialInfoScreen({super.key, required this.onTap});
 
   @override
-  State<FinancialInfoPage> createState() => _FinancialInfoPageState();
+  ConsumerState<FinancialInfoScreen> createState() => _FinancialInfoPageState();
 }
 
-class _FinancialInfoPageState extends State<FinancialInfoPage> {
+class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
+  late UserProfileStore store;
   String? selectedIncome;
   String? selectedEmploymentStatus;
   bool get isSelectionComplete =>
       selectedIncome != null && selectedEmploymentStatus != null;
+
+  @override
+  void initState() {
+    super.initState();
+    store = ref.read(userProfileProvider.notifier);
+    final info = ref.read(userProfileProvider).info;
+    selectedIncome = info?.monthlyIncome;
+    selectedEmploymentStatus = info?.employmentStatus;
+  }
+
   void _onTapConfirm() {
-    {
-      widget.onTap.call(
-        selectedIncome,
-        selectedEmploymentStatus,
-      );
+    store.updateCopyUserInfo(
+      monthlyIncome: selectedIncome,
+      employmentStatus: selectedEmploymentStatus,
+    );
+    if (isSelectionComplete) {
+      widget.onTap.call();
     }
+  }
+
+  void _onSelectIncome(String? value) {
+    setState(() {
+      selectedIncome = value;
+    });
+    store.updateCopyUserInfo(
+      monthlyIncome: value,
+    );
+  }
+
+  void _onSelectEmployeeStatus(String? value) {
+    setState(() {
+      selectedEmploymentStatus = value;
+    });
+    store.updateCopyUserInfo(
+      employmentStatus: value,
+    );
   }
 
   final incomeOptions = [
@@ -67,9 +99,7 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
                     label: OnboardingConstants.monthlyIncomeLabel,
                     options: incomeOptions,
                     selectedValue: selectedIncome,
-                    onSelected: (value) => setState(
-                      () => selectedIncome = value,
-                    ),
+                    onSelected: _onSelectIncome,
                   ),
                   SizedBox(height: theme.sizing.height.s10),
                   ..._buildChipsSection(
@@ -77,9 +107,7 @@ class _FinancialInfoPageState extends State<FinancialInfoPage> {
                     label: OnboardingConstants.employmentStatusLabel,
                     options: employmentOptions,
                     selectedValue: selectedEmploymentStatus,
-                    onSelected: (value) => setState(
-                      () => selectedEmploymentStatus = value,
-                    ),
+                    onSelected: _onSelectEmployeeStatus,
                   ),
                 ],
               ),

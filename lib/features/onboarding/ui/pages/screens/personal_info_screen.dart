@@ -1,35 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/expandable_search.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../store/onboarding_store.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/expandable_search.dart';
+import '../../widgets/onboarding_title.dart';
 
-class PersonalInfoPage extends StatefulWidget {
+class PersonalInfoScreen extends ConsumerStatefulWidget {
   final List<String> cityList;
-  final Function(String? gender, String? maritalStatus) onTap;
+  final VoidCallback onTap;
 
-  const PersonalInfoPage({
+  const PersonalInfoScreen({
     super.key,
     required this.onTap,
     required this.cityList,
   });
 
   @override
-  State<PersonalInfoPage> createState() => _PersonalInfoPageState();
+  ConsumerState<PersonalInfoScreen> createState() => _PersonalInfoPageState();
 }
 
-class _PersonalInfoPageState extends State<PersonalInfoPage>
+class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
     with WidgetsBindingObserver {
-  TextEditingController cityController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  late TextEditingController _cityController;
+  late ScrollController _scrollController;
   final FocusNode _cityFocusNode = FocusNode();
   bool _keyboardVisible = false;
-
+  late UserProfileStore store;
   String? selectedCity;
   String? selectedGender;
   String? selectedMaritalStatus;
+
+  bool get _isFormValid =>
+      selectedCity != null &&
+      selectedGender != null &&
+      selectedMaritalStatus != null;
 
   final genderOptions = [
     OnboardingConstants.male,
@@ -44,23 +51,50 @@ class _PersonalInfoPageState extends State<PersonalInfoPage>
   @override
   void initState() {
     super.initState();
+    _cityController = TextEditingController();
+    _scrollController = ScrollController();
+    // Add WidgetsBinding observer to handle layout updates,
+    // especially for city selector focus and height adjustments.
     WidgetsBinding.instance.addObserver(this);
+
+    // Store Initialisation
+    final info = ref.read(userProfileProvider).info;
+    store = ref.read(userProfileProvider.notifier);
+    selectedCity = info?.city;
+    selectedGender = info?.gender;
+    selectedMaritalStatus = info?.maritalStatus;
+
+    if (selectedCity != null) {
+      _cityController.text = selectedCity!;
+    }
   }
 
-  bool get _isFormValid =>
-      selectedCity != null &&
-      selectedGender != null &&
-      selectedMaritalStatus != null;
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _cityFocusNode.dispose();
+    _cityController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   void _onTapContinue() {
-    widget.onTap.call(selectedGender, selectedMaritalStatus);
+    store.updateCopyUserInfo(
+      city: selectedCity,
+      gender: selectedGender,
+      maritalStatus: selectedMaritalStatus,
+    );
     FocusScope.of(context).unfocus();
+    widget.onTap.call();
   }
 
   void _onSearchSelected(String? value) {
     setState(() {
       selectedCity = value;
     });
+    store.updateCopyUserInfo(
+      city: value,
+    );
   }
 
   void _onSearchChanged(value) {
@@ -73,25 +107,22 @@ class _PersonalInfoPageState extends State<PersonalInfoPage>
     setState(() {
       selectedMaritalStatus = value;
     });
+    store.updateCopyUserInfo(
+      maritalStatus: selectedMaritalStatus,
+    );
   }
 
   void _onSelectedGender(String? value) {
     setState(() {
       selectedGender = value;
     });
+    store.updateCopyUserInfo(
+      gender: value,
+    );
   }
 
   @override
-  void dispose() {
-    _scrollController.dispose();
-    _cityFocusNode.dispose();
-    cityController.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
   // Used for keyboard visibility detection
-  @override
   void didChangeMetrics() {
     final bottomInset = View.of(context).viewInsets.bottom;
     final newKeyboardVisible = bottomInset > 0;
@@ -112,7 +143,6 @@ class _PersonalInfoPageState extends State<PersonalInfoPage>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Column(
       children: [
         Expanded(
@@ -137,6 +167,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage>
                 ),
                 SizedBox(height: theme.sizing.height.s3),
                 ExpandableSearchField(
+                  controller: _cityController,
                   allItems: widget.cityList,
                   focusNode: _cityFocusNode,
                   onSelected: _onSearchSelected,

@@ -1,63 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../store/onboarding_store.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/onboarding_title.dart';
 
-class NumberPage extends StatefulWidget {
-  final Function(String number) onTap;
-  const NumberPage({
+// | QA Scenario
+// | ------------------------------------------------
+// | User types <10 digits
+// | User taps "Verify" with <10 digits
+// | User types 10 digits and taps "Verify"
+// | User deletes back to <10 after successful verify
+// | User taps "Verify" again with <10 digits
+// | User corrects to 10 digits after error
+
+class NumberScreen extends ConsumerStatefulWidget {
+  final VoidCallback onTap;
+  const NumberScreen({
     super.key,
     required this.onTap,
   });
 
   @override
-  State<NumberPage> createState() => _NumberPageState();
+  ConsumerState<NumberScreen> createState() => _NumberPageState();
 }
 
-class _NumberPageState extends State<NumberPage> {
-  final TextEditingController _mobileController = TextEditingController();
-  bool _isValid = true;
-  int mobileNumberLength = 10;
-
-  bool get isCurrentlyValid =>
-      _mobileController.text.length == mobileNumberLength;
+class _NumberPageState extends ConsumerState<NumberScreen> {
+  late TextEditingController _mobileController;
+  bool _showError = false;
+  final mobileNumberLength = 10;
+  bool get _isValidNow => _mobileController.text.length == mobileNumberLength;
+  late UserProfileStore store;
 
   @override
   void initState() {
     super.initState();
-
-    _mobileController.addListener(_handleMobileChange);
-  }
-
-  void _onTapVerify() {
-    _validateMobileNumber();
-    if (_isValid) {
-      widget.onTap.call(_mobileController.text);
+    _mobileController = TextEditingController();
+    store = ref.read(userProfileProvider.notifier);
+    final mobile = ref.read(userProfileProvider).info?.mobileNumber;
+    if (mobile != null) {
+      _mobileController.text = mobile;
     }
-  }
-
-  void _handleMobileChange() {
-    if (isCurrentlyValid) {
-      FocusScope.of(context).unfocus();
-      setState(() {
-        _isValid = isCurrentlyValid;
-      });
-    }
-  }
-
-  void _validateMobileNumber() {
-    setState(() {
-      _isValid = isCurrentlyValid;
-    });
   }
 
   @override
   void dispose() {
     _mobileController.dispose();
     super.dispose();
+  }
+
+  void _onTapVerify() {
+    setState(() {
+      _showError = !_isValidNow;
+    });
+    if (_isValidNow) {
+      widget.onTap.call();
+      store.updateCopyUserInfo(mobileNumber: _mobileController.text);
+    }
+    FocusScope.of(context).unfocus();
+  }
+
+  void _handleTextChange(String value) {
+    if (_isValidNow) {
+      if (_showError) {
+        setState(() {
+          _showError = false;
+        });
+      }
+      // Outside of setstate to avoid rebuild
+      FocusScope.of(context).unfocus();
+    }
   }
 
   @override
@@ -78,15 +93,7 @@ class _NumberPageState extends State<NumberPage> {
                   subTitle: OnboardingConstants.otpSubText,
                 ),
                 _buildPhoneNumberField(),
-                SizedBox(height: theme.spacing.height.s4),
-                if (!_isValid)
-                  Text(
-                    OnboardingConstants.mobileValidationError,
-                    style: theme.textStyle.headingSmall.copyWith(
-                      // TODO: DS: Add Token "WarningRed" (#EE4E4E);
-                      color: theme.colors.accentRed,
-                    ),
-                  ),
+                ..._buildErrorText()
               ],
             ),
           ),
@@ -99,6 +106,21 @@ class _NumberPageState extends State<NumberPage> {
     );
   }
 
+  List<Widget> _buildErrorText() {
+    if (!_showError) return [const SizedBox.shrink()];
+    final theme = Theme.of(context);
+    return [
+      SizedBox(height: theme.spacing.height.s12),
+      Text(
+        OnboardingConstants.mobileValidationError,
+        style: theme.textStyle.headingSmall.copyWith(
+          // TODO: DS: Add Token "WarningRed" (#EE4E4E);
+          color: theme.colors.accentRed,
+        ),
+      )
+    ];
+  }
+
   Widget _buildPhoneNumberField() {
     final theme = Theme.of(context);
     return MinyContainer(
@@ -108,7 +130,7 @@ class _NumberPageState extends State<NumberPage> {
       backgroundColor: theme.colors.neutralLight,
       borderSide: BorderSide(
         width: theme.spacing.width.s2,
-        color: !_isValid ? theme.colors.accentRed : theme.colors.neutralBorder,
+        color: _showError ? theme.colors.accentRed : theme.colors.neutralBorder,
       ),
       borderRadius: theme.borderradius.normal,
       child: IntrinsicHeight(
@@ -133,7 +155,8 @@ class _NumberPageState extends State<NumberPage> {
                 style: theme.textStyle.headingLarge.copyWith(
                   color: theme.colors.textPrimary,
                 ),
-                scrollPadding: const EdgeInsets.all(0),
+                scrollPadding: EdgeInsets.all(theme.spacing.height.s0),
+                textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
                     vertical: theme.spacing.height.s20,
@@ -144,9 +167,10 @@ class _NumberPageState extends State<NumberPage> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
+                onChanged: _handleTextChange,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(10),
+                  LengthLimitingTextInputFormatter(mobileNumberLength),
                 ],
               ),
             ),

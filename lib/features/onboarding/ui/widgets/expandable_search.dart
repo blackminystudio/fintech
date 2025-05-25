@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
+import '../../../../core/utilities/extenstions.dart';
 import '../../utilities/onboarding_constants.dart';
 
 class ExpandableSearchField extends StatefulWidget {
   final List<String> allItems;
-  final String? selected;
   final ValueChanged<String> onSelected;
+  final TextEditingController controller;
+  final FocusNode? focusNode;
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
-  final FocusNode? focusNode;
 
   const ExpandableSearchField({
     super.key,
     required this.allItems,
     required this.onSelected,
-    this.selected,
-    this.inputFormatters,
-    this.onChanged,
+    required this.controller,
     this.focusNode,
+    this.onChanged,
+    this.inputFormatters,
   });
 
   @override
@@ -35,8 +36,11 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
   void initState() {
     super.initState();
     filteredItems = widget.allItems;
-    _controller = TextEditingController(text: widget.selected ?? '');
+    _controller = widget.controller;
     _controller.addListener(_filterItems);
+    if (_controller.text.isNotNullOrEmpty) {
+      _isItemSelected = true;
+    }
   }
 
   void _filterItems() {
@@ -47,15 +51,6 @@ class _ExpandableSearchFieldState extends State<ExpandableSearchField> {
           .where((item) => item.toLowerCase().contains(query))
           .toList();
     });
-  }
-
-  @override
-  void didUpdateWidget(covariant ExpandableSearchField old) {
-    super.didUpdateWidget(old);
-    if (widget.selected != old.selected) {
-      _controller.text = widget.selected ?? '';
-      _isItemSelected = widget.selected != null;
-    }
   }
 
   @override

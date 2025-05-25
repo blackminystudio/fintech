@@ -1,33 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../../../core/utilities/extenstions.dart';
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/onboarding_title.dart';
-import '../widgets/resend_otp.dart';
+import '../../../../../core/utilities/extenstions.dart';
+import '../../../store/onboarding_store.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/onboarding_title.dart';
+import '../../widgets/resend_otp.dart';
 
-class OtpPage extends StatefulWidget {
+class OtpScreen extends ConsumerStatefulWidget {
   final String correctOtp;
   final VoidCallback onTap;
   final VoidCallback onResendOtp;
-  final String number;
-  const OtpPage({
+  const OtpScreen({
     super.key,
     required this.correctOtp,
     required this.onTap,
     required this.onResendOtp,
-    required this.number,
   });
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  ConsumerState<OtpScreen> createState() => _OtpPageState();
 }
 
-class _OtpPageState extends State<OtpPage> {
-  TextEditingController otpController = TextEditingController();
+class _OtpPageState extends ConsumerState<OtpScreen> {
+  late TextEditingController otpController;
   String? errorMessage;
+  @override
+  void initState() {
+    super.initState();
+    otpController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    otpController.dispose();
+    super.dispose();
+  }
 
   void _onTapSubmit() {
     if (verifyOtp()) {
@@ -52,7 +63,8 @@ class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final subTitle = '${OnboardingConstants.otpSentText}${widget.number}.';
+    final number = ref.read(userProfileProvider).info?.mobileNumber;
+    final subTitle = '${OnboardingConstants.otpSentText}$number.';
     return Column(
       children: [
         Expanded(

@@ -5,21 +5,21 @@ version: 1.0.0+1
 
 environment:
   sdk: 3.6.0
-
 # --------- DEPENDENCIES ---------
 dependencies:
   flutter:
     sdk: flutter
 
   cupertino_icons: 1.0.8
+  flutter_riverpod: 2.6.1
+  flutter_screenutil: 5.9.3
+  flutter_svg: 2.0.17
+  intl: 0.20.2
   miny_design_system:
     git:
       url: https://github.com/blackminystudio/miny-design-system.git
       ref: main
-  flutter_screenutil: 5.9.3
-  flutter_svg: 2.0.17
   pin_code_fields: 8.0.1
-  intl: ^0.20.2
 
 # --------- DEV DEPENDENCIES ---------
 dev_dependencies:

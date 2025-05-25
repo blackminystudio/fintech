@@ -1,45 +1,64 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../utilities/onboarding_constants.dart';
-import '../widgets/bottom_action_bar.dart';
-import '../widgets/onboarding_title.dart';
+import '../../../store/onboarding_store.dart';
+import '../../../utilities/onboarding_constants.dart';
+import '../../widgets/bottom_action_bar.dart';
+import '../../widgets/onboarding_title.dart';
 
-class DobPage extends StatefulWidget {
-  // TODO: this need to be non null
-  final Function(DateTime? dob) onTap;
+class DobScreen extends ConsumerStatefulWidget {
+  final VoidCallback onTap;
 
-  const DobPage({
+  const DobScreen({
     super.key,
     required this.onTap,
   });
 
   @override
-  State<DobPage> createState() => _DobPageState();
+  ConsumerState<DobScreen> createState() => _DobPageState();
 }
 
-class _DobPageState extends State<DobPage> {
+class _DobPageState extends ConsumerState<DobScreen> {
   DateTime? selectedDate;
-  DateTime tempDate = DateTime(2000);
+  DateTime userSelectionDate = DateTime(2000);
+  late UserProfileStore store;
+
+  @override
+  void initState() {
+    super.initState();
+    store = ref.read(userProfileProvider.notifier);
+    final info = ref.read(userProfileProvider).info;
+    selectedDate = info?.dateOfBirth;
+  }
+
   void _onTapOkay() {
     setState(() {
-      selectedDate = tempDate;
+      selectedDate = userSelectionDate;
     });
+    store.updateCopyUserInfo(dateOfBirth: selectedDate);
     Navigator.pop(context);
+  }
+
+  void _onTapContinue() {
+    widget.onTap.call();
+    store.updateCopyUserInfo(dateOfBirth: selectedDate);
   }
 
   void _showDatePicker(BuildContext context) {
     final theme = Theme.of(context);
-    tempDate = selectedDate ?? DateTime(2000);
+    userSelectionDate = selectedDate ?? DateTime(2000);
 
     showModalBottomSheet(
       context: context,
       backgroundColor: theme.colors.neutralLight,
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.all(Radius.circular(theme.borderradius.large)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(theme.borderradius.large),
+          topRight: Radius.circular(theme.borderradius.large),
+        ),
       ),
       builder: (context) => _buildDatePickerSheet(theme),
     );
@@ -61,10 +80,10 @@ class _DobPageState extends State<DobPage> {
               child: CupertinoDatePicker(
                 dateOrder: DatePickerDateOrder.dmy,
                 mode: CupertinoDatePickerMode.date,
-                initialDateTime: tempDate,
+                initialDateTime: userSelectionDate,
                 maximumDate: DateTime.now(),
                 onDateTimeChanged: (DateTime newDate) {
-                  tempDate = newDate;
+                  userSelectionDate = newDate;
                 },
               ),
             ),
@@ -103,13 +122,8 @@ class _DobPageState extends State<DobPage> {
           ),
         ),
         BottomActionBar(
-          // TODO:
-          /// Errors:
-          /// "Select your date of birth"
           label: OnboardingConstants.continueButtonText,
-          onTap: selectedDate != null
-              ? () => widget.onTap.call(selectedDate)
-              : null,
+          onTap: (selectedDate != null) ? _onTapContinue : null,
         ),
       ],
     );
