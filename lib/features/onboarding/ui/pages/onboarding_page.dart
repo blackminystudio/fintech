@@ -21,27 +21,33 @@ const cityList = [
   'Phoenix',
 ];
 
-class Wrapper extends StatefulWidget {
-  const Wrapper({super.key});
+class OnboardingPage extends StatefulWidget {
+  const OnboardingPage({super.key});
 
   @override
-  State<Wrapper> createState() => _WrapperState();
+  State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
-class _WrapperState extends State<Wrapper> {
-  late PageController pageController;
+class _OnboardingPageState extends State<OnboardingPage> {
+  late PageController _pageController;
   int pageIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    pageController = PageController();
+    _pageController = PageController();
     _handlePageListener();
   }
 
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   void _handlePageListener() {
-    pageController.addListener(() {
-      final index = pageController.page?.round();
+    _pageController.addListener(() {
+      final index = _pageController.page?.round();
       if (index != null && index != pageIndex) {
         setState(() {
           pageIndex = index;
@@ -51,14 +57,14 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void goToNextPage() {
-    pageController.nextPage(
+    _pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
 
   void goToPreviousPage() {
-    pageController.previousPage(
+    _pageController.previousPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
@@ -95,7 +101,7 @@ class _WrapperState extends State<Wrapper> {
               }),
               Expanded(
                 child: PageView(
-                  controller: pageController,
+                  controller: _pageController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     NumberScreen(onTap: goToNextPage),

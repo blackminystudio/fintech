@@ -24,8 +24,8 @@ class PersonalInfoScreen extends ConsumerStatefulWidget {
 
 class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
     with WidgetsBindingObserver {
-  final TextEditingController _cityController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  late TextEditingController _cityController;
+  late ScrollController _scrollController;
   final FocusNode _cityFocusNode = FocusNode();
   bool _keyboardVisible = false;
   late UserProfileStore store;
@@ -51,6 +51,8 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
   @override
   void initState() {
     super.initState();
+    _cityController = TextEditingController();
+    _scrollController = ScrollController();
     // Add WidgetsBinding observer to handle layout updates,
     // especially for city selector focus and height adjustments.
     WidgetsBinding.instance.addObserver(this);
@@ -65,6 +67,15 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
     if (selectedCity != null) {
       _cityController.text = selectedCity!;
     }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _cityFocusNode.dispose();
+    _cityController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   void _onTapContinue() {
@@ -82,7 +93,7 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
       selectedCity = value;
     });
     store.updateCopyUserInfo(
-      city: selectedCity,
+      city: value,
     );
   }
 
@@ -106,17 +117,8 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
       selectedGender = value;
     });
     store.updateCopyUserInfo(
-      gender: selectedGender,
+      gender: value,
     );
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _cityFocusNode.dispose();
-    _cityController.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   @override

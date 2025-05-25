@@ -45,16 +45,3 @@ class UserProfileStore extends StateNotifier<UserProfile> {
     state = state.copyWith(info: newInfo);
   }
 }
-
-// extension on UserProfile {
-//   UserProfile copyWith({
-//     String? uid,
-//     AuthData? auth,
-//     UserInfo? info,
-//   }) =>
-//       UserProfile(
-//         uid: uid ?? this.uid,
-//         auth: auth ?? this.auth,
-//         info: info ?? this.info,
-//       );
-// }

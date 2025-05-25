@@ -122,9 +122,6 @@ class _DobPageState extends ConsumerState<DobScreen> {
           ),
         ),
         BottomActionBar(
-          // TODO:
-          /// Errors:
-          /// "Select your date of birth"
           label: OnboardingConstants.continueButtonText,
           onTap: (selectedDate != null) ? _onTapContinue : null,
         ),

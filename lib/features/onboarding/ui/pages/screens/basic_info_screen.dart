@@ -24,11 +24,11 @@ class BasicInfoScreen extends ConsumerStatefulWidget {
 class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
   String? _errorText;
   late UserProfileStore store;
-  late TextEditingController fullNameController;
+  late TextEditingController _nameController;
 
   void _onTapconfirm() {
     FocusScope.of(context).unfocus();
-    final name = fullNameController.text.trim();
+    final name = _nameController.text.trim();
     setState(() {
       if (name.isEmpty) {
         _errorText = OnboardingConstants.nameEmpty;
@@ -44,14 +44,14 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
   void initState() {
     super.initState();
     store = ref.read(userProfileProvider.notifier);
-    fullNameController = TextEditingController(
+    _nameController = TextEditingController(
       text: ref.read(userProfileProvider).info?.fullName,
     );
   }
 
   @override
   void dispose() {
-    fullNameController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -114,7 +114,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                   text: user.info?.fullName ?? '',
                   labelText: OnboardingConstants.fullNameLabel,
                   icon: OnboardingConstants.fullNameIcon,
-                  controller: fullNameController,
+                  controller: _nameController,
                 ),
                 SizedBox(height: theme.sizing.height.s7),
                 const MinyDivider(),
