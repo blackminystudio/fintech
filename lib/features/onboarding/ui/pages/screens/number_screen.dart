@@ -18,11 +18,11 @@ import '../../widgets/onboarding_title.dart';
 // | User corrects to 10 digits after error
 
 class NumberScreen extends ConsumerStatefulWidget {
-  final VoidCallback onTap;
   const NumberScreen({
-    super.key,
     required this.onTap,
+    super.key,
   });
+  final VoidCallback onTap;
 
   @override
   ConsumerState<NumberScreen> createState() => _NumberPageState();
