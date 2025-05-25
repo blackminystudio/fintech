@@ -26,8 +26,19 @@ class OtpScreen extends ConsumerStatefulWidget {
 }
 
 class _OtpPageState extends ConsumerState<OtpScreen> {
-  TextEditingController otpController = TextEditingController();
+  late TextEditingController otpController;
   String? errorMessage;
+  @override
+  void initState() {
+    super.initState();
+    otpController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    otpController.dispose();
+    super.dispose();
+  }
 
   void _onTapSubmit() {
     if (verifyOtp()) {

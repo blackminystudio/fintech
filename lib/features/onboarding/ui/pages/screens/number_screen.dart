@@ -29,15 +29,16 @@ class NumberScreen extends ConsumerStatefulWidget {
 }
 
 class _NumberPageState extends ConsumerState<NumberScreen> {
-  final TextEditingController _mobileController = TextEditingController();
+  late TextEditingController _mobileController;
   bool _showError = false;
-  final mobileNumber = 10;
-  bool get _isValidNow => _mobileController.text.length == mobileNumber;
+  final mobileNumberLength = 10;
+  bool get _isValidNow => _mobileController.text.length == mobileNumberLength;
   late UserProfileStore store;
 
   @override
   void initState() {
     super.initState();
+    _mobileController = TextEditingController();
     store = ref.read(userProfileProvider.notifier);
     final mobile = ref.read(userProfileProvider).info?.mobileNumber;
     if (mobile != null) {
@@ -154,7 +155,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
                 style: theme.textStyle.headingLarge.copyWith(
                   color: theme.colors.textPrimary,
                 ),
-                scrollPadding: const EdgeInsets.all(0),
+                scrollPadding: EdgeInsets.all(theme.spacing.height.s0),
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
@@ -169,7 +170,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
                 onChanged: _handleTextChange,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(mobileNumber),
+                  LengthLimitingTextInputFormatter(mobileNumberLength),
                 ],
               ),
             ),

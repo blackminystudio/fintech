@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
         title: 'FintechApp',
         theme: MinyTheme.lightTheme,
         debugShowCheckedModeBanner: false,
-        home: const Wrapper(),
+        home: const OnboardingPage(),
       );
 }
