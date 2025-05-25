@@ -7,16 +7,15 @@ enum OnboardingPageType {
 }
 
 class OnboardingTitle extends StatelessWidget {
+  const OnboardingTitle({
+    required this.title,
+    required this.subTitle,
+    super.key,
+    this.onboardingPageType = OnboardingPageType.large,
+  });
   final String title;
   final String subTitle;
   final OnboardingPageType onboardingPageType;
-
-  const OnboardingTitle({
-    super.key,
-    required this.title,
-    required this.subTitle,
-    this.onboardingPageType = OnboardingPageType.large,
-  });
 
   @override
   Widget build(BuildContext context) {

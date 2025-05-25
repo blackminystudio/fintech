@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.colors.neutralLight,

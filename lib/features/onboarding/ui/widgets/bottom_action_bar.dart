@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
 class BottomActionBar extends StatelessWidget {
-  final String label;
-  final VoidCallback? onTap;
   const BottomActionBar({
+    required this.label,
     super.key,
     this.onTap,
-    required this.label,
   });
+  final String label;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
