@@ -24,8 +24,8 @@ class BottomActionBar extends StatelessWidget {
         ),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: theme.sizing.height.s5,
-        horizontal: theme.sizing.height.s8,
+        vertical: theme.spacing.height.s20,
+        horizontal: theme.spacing.width.s32,
       ),
       child: MinyButton(
         label: label,

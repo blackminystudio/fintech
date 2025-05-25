@@ -69,8 +69,8 @@ class _DobPageState extends ConsumerState<DobScreen> {
   ) =>
       Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: theme.sizing.width.s7,
-          vertical: theme.spacing.width.s40,
+          horizontal: theme.spacing.width.s24,
+          vertical: theme.spacing.height.s40,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -104,7 +104,7 @@ class _DobPageState extends ConsumerState<DobScreen> {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: theme.sizing.height.s8),
+            padding: EdgeInsets.symmetric(horizontal: theme.spacing.width.s32),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -151,8 +151,8 @@ class DateSelectorTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(
-          vertical: theme.spacing.height.s20,
-          horizontal: theme.spacing.height.s20,
+          vertical: theme.spacing.width.s20,
+          horizontal: theme.spacing.width.s20,
         ),
         decoration: ShapeDecoration(
           shape: SmoothRectangleBorder(
@@ -179,7 +179,7 @@ class DateSelectorTile extends StatelessWidget {
                 color: theme.colors.textPrimary,
               ),
             ),
-            SizedBox(width: theme.sizing.width.s4),
+            SizedBox(width: theme.spacing.width.s16),
             Text(
               formattedDate,
               style: theme.textStyle.headingMedium.copyWith(

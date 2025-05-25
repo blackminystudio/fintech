@@ -70,7 +70,7 @@ class _OtpPageState extends ConsumerState<OtpScreen> {
         Expanded(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(
-              horizontal: theme.spacing.height.s32,
+              horizontal: theme.spacing.width.s32,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class _OtpPageState extends ConsumerState<OtpScreen> {
                       color: theme.colors.accentRed,
                     ),
                   ),
-                SizedBox(height: theme.sizing.height.s4),
+                SizedBox(height: theme.spacing.height.s16),
                 ResendOtpWidget(
                   // TODO: resend is set to 5 for DEV only
                   countDown: 5,
@@ -108,15 +108,16 @@ class _OtpPageState extends ConsumerState<OtpScreen> {
   PinCodeTextField _buildPincodeField(BuildContext context) {
     final theme = Theme.of(context);
     return PinCodeTextField(
+      autoDisposeControllers: false,
       controller: otpController,
       appContext: context,
       length: 6,
       animationType: AnimationType.fade,
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
-        borderRadius: BorderRadius.circular(theme.sizing.height.s3),
-        fieldHeight: theme.sizing.height.s13,
-        fieldWidth: theme.sizing.height.s13,
+        borderRadius: BorderRadius.circular(theme.borderradius.normal),
+        fieldHeight: theme.sizing.width.s13,
+        fieldWidth: theme.sizing.width.s13,
         activeFillColor: theme.colors.neutralBorder,
         inactiveFillColor: theme.colors.neutralBorder,
         selectedFillColor: theme.colors.neutralBorder,

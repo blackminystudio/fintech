@@ -63,7 +63,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
         Expanded(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(
-              horizontal: theme.spacing.height.s32,
+              horizontal: theme.spacing.width.s32,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,6 +105,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
               ),
             ),
             padding: EdgeInsets.symmetric(
+              //TODO:DS Add size-s7  &&  space-s28
               vertical: theme.sizing.height.s7,
             ),
             child: Column(
@@ -156,7 +157,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
       child: Row(
         children: [
           MinyContainer(child: Icon(icon, size: theme.sizing.height.s5)),
-          SizedBox(width: theme.sizing.width.s4),
+          SizedBox(width: theme.spacing.width.s16),
           Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -168,7 +169,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                     color: theme.colors.textSecondary,
                   ),
                 ),
-                SizedBox(width: theme.sizing.width.s4),
+                SizedBox(width: theme.spacing.width.s16),
                 isActive
                     ? TextField(
                         inputFormatters: [
@@ -214,7 +215,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
   Padding _buildInfoContent(ThemeData theme) => Padding(
         padding: EdgeInsets.symmetric(
           horizontal: theme.sizing.width.s7,
-          vertical: theme.sizing.width.s4,
+          vertical: theme.spacing.height.s16,
         ),
         child: Row(
           children: [
@@ -223,7 +224,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
               OnboardingConstants.infoIcon,
               color: theme.colors.accentPurple,
             ),
-            SizedBox(width: theme.sizing.width.s3),
+            SizedBox(width: theme.spacing.width.s12),
             Flexible(
               child: Text(
                 OnboardingConstants.basicInfoFooterNote,

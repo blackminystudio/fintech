@@ -149,7 +149,7 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
           child: SingleChildScrollView(
             controller: _scrollController,
             padding: EdgeInsets.symmetric(
-              horizontal: theme.spacing.height.s32,
+              horizontal: theme.spacing.width.s32,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +165,7 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
                     color: theme.colors.textSecondarylight,
                   ),
                 ),
-                SizedBox(height: theme.sizing.height.s3),
+                SizedBox(height: theme.spacing.height.s12),
                 ExpandableSearchField(
                   controller: _cityController,
                   allItems: widget.cityList,
@@ -173,7 +173,7 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
                   onSelected: _onSearchSelected,
                   onChanged: _onSearchChanged,
                 ),
-                SizedBox(height: theme.sizing.height.s10),
+                SizedBox(height: theme.spacing.height.s40),
                 ..._buildChipsSection(
                   theme,
                   label: OnboardingConstants.genderLabel,
@@ -181,7 +181,7 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
                   selectedValue: selectedGender,
                   onSelected: _onSelectedGender,
                 ),
-                SizedBox(height: theme.sizing.height.s10),
+                SizedBox(height: theme.spacing.height.s40),
                 ..._buildChipsSection(
                   theme,
                   options: maritalOptions,
@@ -189,7 +189,7 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
                   selectedValue: selectedMaritalStatus,
                   onSelected: _onSelectedMaritalStatus,
                 ),
-                SizedBox(height: theme.sizing.height.s10),
+                SizedBox(height: theme.spacing.height.s40),
               ],
             ),
           ),
@@ -216,7 +216,7 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
             color: theme.colors.textSecondarylight,
           ),
         ),
-        SizedBox(height: theme.sizing.height.s4),
+        SizedBox(height: theme.spacing.height.s16),
         Wrap(
           spacing: theme.spacing.width.s8,
           runSpacing: theme.spacing.height.s12,
