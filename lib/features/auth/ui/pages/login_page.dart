@@ -15,23 +15,23 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: theme.sizing.width.s8,
+            horizontal: theme.spacing.width.s32,
           ),
           child: Column(
             children: [
-              SizedBox(height: theme.sizing.height.s20),
+              SizedBox(height: theme.spacing.height.s80),
               SvgPicture.asset(
                 ImagePath.appLogoPath,
                 height: theme.sizing.height.s32,
               ),
-              SizedBox(height: theme.sizing.height.s20),
+              SizedBox(height: theme.spacing.height.s80),
               Text(
                 AuthConstants.introducingText,
                 style: theme.textStyle.bodyXsmall.copyWith(
                   color: theme.colors.neutralBackground,
                 ),
               ),
-              SizedBox(height: theme.sizing.height.s6),
+              SizedBox(height: theme.spacing.height.s24),
               Text(
                 AuthConstants.headingText,
                 textAlign: TextAlign.center,
@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
                   color: theme.colors.neutralBackground,
                 ),
               ),
-              SizedBox(height: theme.sizing.height.s6),
+              SizedBox(height: theme.spacing.height.s24),
               Text(
                 AuthConstants.subText,
                 textAlign: TextAlign.center,
@@ -76,14 +76,14 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: theme.sizing.height.s5),
+              SizedBox(height: theme.spacing.height.s20),
               MinyButton(
                 enableIcon: true,
                 onPressed: () {},
                 label: AuthConstants.googleButtonLabel,
                 iconPath: ImagePath.googleIconPath,
               ),
-              SizedBox(height: theme.sizing.height.s10),
+              SizedBox(height: theme.spacing.height.s40),
             ],
           ),
         ),
