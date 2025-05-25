@@ -83,7 +83,7 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
         Expanded(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(
-              horizontal: theme.spacing.height.s32,
+              horizontal: theme.spacing.width.s32,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -100,7 +100,7 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
                     selectedValue: selectedIncome,
                     onSelected: _onSelectIncome,
                   ),
-                  SizedBox(height: theme.sizing.height.s10),
+                  SizedBox(height: theme.spacing.height.s40),
                   ..._buildChipsSection(
                     theme,
                     label: OnboardingConstants.employmentStatusLabel,
@@ -135,7 +135,7 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
             color: theme.colors.textSecondarylight,
           ),
         ),
-        SizedBox(height: theme.sizing.height.s4),
+        SizedBox(height: theme.spacing.height.s16),
         Wrap(
           spacing: theme.spacing.width.s12,
           runSpacing: theme.spacing.height.s12,

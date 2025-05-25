@@ -8,7 +8,7 @@ class MinyDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Divider(
-      thickness: theme.spacing.height.s2,
+      thickness: theme.sizing.height.half,
       height: theme.spacing.height.s0,
       color: theme.colors.neutralLightBackground,
     );
