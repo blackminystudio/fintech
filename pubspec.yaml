@@ -4,15 +4,15 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.6.0
+  sdk: 3.6.0
 
 # --------- DEPENDENCIES ---------
 dependencies:
-  cupertino_icons: ^1.0.8
+  cupertino_icons: 1.0.8
   flutter:
     sdk: flutter
-  flutter_native_splash: ^2.4.4
-  flutter_screenutil: ^5.9.3
+  flutter_native_splash: 2.4.4
+  flutter_screenutil: 5.9.3
   miny_design_system:
     git:
       url: https://github.com/blackminystudio/miny-design-system.git
@@ -20,9 +20,12 @@ dependencies:
 
 # --------- DEV DEPENDENCIES ---------
 dev_dependencies:
-  flutter_lints: ^5.0.0
+  flutter_lints: 5.0.0
   flutter_test:
     sdk: flutter
 
+# --------- FLUTTER CONFIG ---------
 flutter:
   uses-material-design: true
+  assets:
+    - assets/native_splash_assets/

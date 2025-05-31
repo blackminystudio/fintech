@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Home Test', (WidgetTester tester) async {
     await tester.pumpWidget(
       ScreenUtilInit(
         designSize: const Size(440, 956),
         minTextAdapt: true,
-        builder: (context, _) => const MyApp(),
+        builder: (context, _) => const MaterialApp(home: HomePage()),
       ),
     );
 
