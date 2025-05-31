@@ -124,6 +124,5 @@ linter:
     - depend_on_referenced_packages
     - prefer_const_constructors_in_immutables
     - always_put_required_named_parameters_first
-    - prefer_final_in_for_each
     - sort_constructors_first
     - sort_unnamed_constructors_first
