@@ -8,20 +8,21 @@ environment:
 
 # --------- DEPENDENCIES ---------
 dependencies:
+  cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.8
+  flutter_native_splash: ^2.4.4
+  flutter_screenutil: ^5.9.3
   miny_design_system:
     git:
       url: https://github.com/blackminystudio/miny-design-system.git
       ref: main
-  flutter_screenutil: ^5.9.3
 
 # --------- DEV DEPENDENCIES ---------
 dev_dependencies:
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
