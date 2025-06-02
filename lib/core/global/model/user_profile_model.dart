@@ -1,14 +1,20 @@
+enum UserStatus { active, disabled }
+
 class UserProfile {
   const UserProfile({
     this.uid,
     this.auth,
     this.info,
+    this.status = UserStatus.active,
   });
+
   final String? uid;
   final AuthData? auth;
   final UserInfo? info;
+  final UserStatus status;
 
   bool get isInfoComplete => info?.isComplete ?? false;
+  bool get isDisabled => status == UserStatus.disabled;
 
   UserProfile copyWith({
     String? uid,
@@ -23,13 +29,29 @@ class UserProfile {
 }
 
 class AuthData {
-  const AuthData({
-    required this.email,
-    required this.createdAt,
-    required this.lastLoginAt,
+  factory AuthData.create({
+    required String email,
+    String? displayName,
+    String? photoUrl,
+    DateTime? createdAt,
+    DateTime? lastLoginAt,
+  }) =>
+      AuthData._internal(
+        email,
+        displayName,
+        photoUrl,
+        createdAt ?? DateTime.now(),
+        lastLoginAt ?? DateTime.now(),
+      );
+
+  // private constructor
+  const AuthData._internal(
+    this.email,
     this.displayName,
     this.photoUrl,
-  });
+    this.createdAt,
+    this.lastLoginAt,
+  );
   final String email;
   final String? displayName;
   final String? photoUrl;
@@ -38,7 +60,31 @@ class AuthData {
 }
 
 class UserInfo {
-  const UserInfo({
+  factory UserInfo.create({
+    String? mobileNumber,
+    String? fullName,
+    String? city,
+    String? gender,
+    String? maritalStatus,
+    DateTime? dateOfBirth,
+    String? monthlyIncome,
+    String? employmentStatus,
+    DateTime? lastUpdated,
+  }) =>
+      UserInfo._internal(
+        mobileNumber: mobileNumber,
+        fullName: fullName,
+        city: city,
+        gender: gender,
+        maritalStatus: maritalStatus,
+        dateOfBirth: dateOfBirth,
+        monthlyIncome: monthlyIncome,
+        employmentStatus: employmentStatus,
+        lastUpdated: lastUpdated,
+      );
+
+  // private constructor
+  const UserInfo._internal({
     this.mobileNumber,
     this.fullName,
     this.city,
@@ -49,6 +95,7 @@ class UserInfo {
     this.employmentStatus,
     this.lastUpdated,
   });
+
   final String? mobileNumber;
   final String? fullName;
   final String? city;
@@ -70,7 +117,7 @@ class UserInfo {
     String? employmentStatus,
     DateTime? lastUpdated,
   }) =>
-      UserInfo(
+      UserInfo._internal(
         mobileNumber: mobileNumber ?? this.mobileNumber,
         fullName: fullName ?? this.fullName,
         city: city ?? this.city,

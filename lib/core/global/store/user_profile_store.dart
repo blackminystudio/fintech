@@ -31,7 +31,7 @@ class UserProfileStore extends StateNotifier<UserProfile> {
     String? monthlyIncome,
     String? employmentStatus,
   }) {
-    final newInfo = (state.info ?? const UserInfo()).copyWith(
+    final newInfo = (state.info ?? UserInfo.create()).copyWith(
       mobileNumber: mobileNumber,
       fullName: fullName,
       city: city,

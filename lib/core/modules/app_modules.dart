@@ -1,33 +1,29 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/auth/store/auth_store.dart';
 import '../services/firebase_options.dart';
 
 class AppModules {
-  static Future<void> _testFirebaseInit() async {
-    await FirebaseFirestore.instance.collection('tests').doc('1234').set({
-      'name': 'Test User',
-      'createdAt': FieldValue.serverTimestamp(),
-      'success': true,
-    });
-  }
-
-  static Future<void> initialize() async {
+  static Future<void> initialize(ProviderContainer container) async {
     final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-    // Only run splash logic outside test
     if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      // ✅ Initialize Flutter Native Splash
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-      // TODO: Dev only, remove in production
-      await Future.delayed(const Duration(seconds: 5));
+
+      // ✅ Initialize Firebase
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
+
       FlutterNativeSplash.remove();
-      await _testFirebaseInit();
+
+      // ✅ Trigger auth state loading
+      container.read(authStoreProvider.notifier);
     }
   }
 }

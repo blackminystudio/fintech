@@ -6,14 +6,16 @@ import 'app.dart';
 import 'core/modules/app_modules.dart';
 
 void main() async {
-  await AppModules.initialize();
+  final container = ProviderContainer();
+  await AppModules.initialize(container);
 
   runApp(
     ScreenUtilInit(
       designSize: const Size(440, 956),
       minTextAdapt: true,
-      builder: (_, __) => const ProviderScope(
-        child: FintechApp(),
+      builder: (_, __) => UncontrolledProviderScope(
+        container: container,
+        child: const FintechApp(),
       ),
     ),
   );
