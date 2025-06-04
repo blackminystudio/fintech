@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 enum UserStatus { active, disabled }
 
 class UserProfile {
@@ -8,6 +10,20 @@ class UserProfile {
     this.status = UserStatus.active,
   });
 
+  factory UserProfile.fromFirebaseUser(User user) {
+    final meta = user.metadata;
+    return UserProfile(
+      uid: user.uid,
+      auth: AuthData.create(
+        email: user.email ?? '',
+        displayName: user.displayName,
+        photoUrl: user.photoURL,
+        createdAt: meta.creationTime ?? DateTime.now(),
+        lastLoginAt: meta.lastSignInTime ?? DateTime.now(),
+      ),
+      info: UserInfo.create(),
+    );
+  }
   final String? uid;
   final AuthData? auth;
   final UserInfo? info;

@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
-import '../../../auth_/presentation/utilities/auth_constants.dart';
-import '../../store/auth_store.dart';
+import '../../store/auth_store_provider.dart';
+import '../../utilities/auth_constants.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -18,7 +18,7 @@ class LoginPage extends ConsumerWidget {
       setState(() {
         isLoading = true;
       });
-      await ref.read(authStoreProvider.notifier).loginWithGoogle();
+      await ref.read(authStoreProvider.notifier).signInWithGoogle();
       setState(() {
         isLoading = false;
       });

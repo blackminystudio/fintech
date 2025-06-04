@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 
-import '../../../core/router/app_router.dart';
-import '../ui/pages/login_page.dart';
+import '../../../../core/router/app_router.dart';
+import '../ux/pages/login_page.dart';
 
 final authRoutes = <GoRoute>[
   GoRoute(
