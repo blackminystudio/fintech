@@ -14,11 +14,11 @@ class OnboardingConstants {
 // OtpPage_Text
   static const String otpHeading = 'OTP please?';
   static const String otpSentText = 'We\'ve sent it to +91 ';
-  static const String otpError = 'OTP incorrect, try again?';
+  static const String otpValidationError = 'OTP incorrect, try again?';
   static const String resendOtp = 'Resend OTP';
   static const String resendIn = 'Resend in ';
   static const String submitOtp = 'Submit OTP';
-  static const String otpValidationError = 'OTP should be 6 digits';
+  static const String otpLengthError = 'OTP should be 6 digits';
 
   // BasicInfoPage_Texts
   static const String nameEmpty = "Name can't be empty";

@@ -50,9 +50,9 @@ class _OtpPageState extends ConsumerState<OtpScreen> {
     final enteredOtp = otpController.text;
     setState(() {
       if (enteredOtp.length < 6) {
-        errorMessage = OnboardingConstants.otpValidationError;
+        errorMessage = OnboardingConstants.otpLengthError;
       } else if (enteredOtp != widget.correctOtp) {
-        errorMessage = OnboardingConstants.otpError;
+        errorMessage = OnboardingConstants.otpValidationError;
       } else {
         errorMessage = null;
       }
