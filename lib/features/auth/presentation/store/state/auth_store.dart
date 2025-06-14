@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/global/di/injector.dart';
@@ -11,24 +12,14 @@ import '../../../domain/use_cases/logout.dart';
 import '../../../domain/use_cases/sign_in_with_google.dart';
 import 'auth_state.dart';
 
-// Future<void> loginWithGoogle() async {
-//   try {
-//     state = const AsyncLoading();
-//     if (_routeNotifier.status == AuthStateStatus.disabled) return;
-//     final userProfile = await _authService.signInWithGoogle();
-//     state = AsyncData(userProfile);
-//     // ① Push the newly‐signed‐in AuthData into the global store:
-//     _userProfileStore.setAuthData(userProfile.auth!);
-//     _routeNotifier.setAuthenticated();
-//   } on FirebaseAuthException catch (e) {
-//     _handleAuthException(e);
-//   } catch (e, st) {
-//     state = AsyncError(e, st);
-//   }
-// }
+final authStateChangesProvider = StreamProvider<User?>(
+  (ref) => FirebaseAuth.instance.authStateChanges(),
+);
 
 class AuthStore extends StateNotifier<AuthState> {
-  AuthStore(this.ref) : super(const AuthState.initial());
+  AuthStore(this.ref) : super(const AuthState.initial()) {
+    _listenAuthStateChange();
+  }
 
   final Ref ref;
   final Logout _logout = injector.get<Logout>();
@@ -36,8 +27,58 @@ class AuthStore extends StateNotifier<AuthState> {
 
   bool get isFetching => state.status != AuthStateStatus.loading;
   AppRouterNotifier get _routeNotifier => ref.read(appRouterNotifier);
-  UserProfileStore get _userProfileStore =>
-      ref.read(userProfileProvider.notifier);
+  UserProfileStore get _userProfileStore => ref.read(
+        userProfileProvider.notifier,
+      );
+
+  void _listenAuthStateChange() {
+    ref.listen<AsyncValue<User?>>(
+      authStateChangesProvider,
+      (previous, next) async {
+        final user = next.value;
+        if (user == null) {
+          _setUnauthenticated();
+          return;
+        }
+
+        try {
+          await user.reload();
+          final refreshedUser = FirebaseAuth.instance.currentUser;
+
+          if (refreshedUser == null) {
+            _setUnauthenticated();
+            return;
+          }
+          final profile = UserProfile.fromFirebaseUser(refreshedUser);
+
+          // Update the state with the new UserProfile:
+          state = state.copyWith(
+            userProfile: profile,
+          );
+          _userProfileStore.setAuthData(profile.auth!);
+
+          _routeNotifier.setAuthenticated();
+        } on FirebaseAuthException catch (e) {
+          _handleAuthException(e);
+        }
+      },
+    );
+  }
+
+  void _handleAuthException(FirebaseAuthException e) {
+    if (e.code == 'user-disabled') {
+      _routeNotifier.setDisabled();
+    } else {
+      _setUnauthenticated();
+    }
+  }
+
+  void _setUnauthenticated() {
+    state = state.copyWith(
+      userProfile: const UserProfile(),
+    );
+    _routeNotifier.setUnauthenticated();
+  }
 
   Future<void> signInWithGoogle() async {
     if (isFetching) {
@@ -50,7 +91,7 @@ class AuthStore extends StateNotifier<AuthState> {
     }
   }
 
-  void logout(UserProfile user) {
+  void logout() {
     _logout();
     final user = state.userProfile;
     state = state.copyWith(

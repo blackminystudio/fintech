@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../features/auth/store/auth_store.dart';
+import '../../../features/auth/presentation/store/auth_store_provider.dart';
 
 // TODO: Need to be redesigned
 

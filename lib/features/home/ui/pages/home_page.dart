@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
 import '../../../../core/global/store/user_profile_store.dart';
-import '../../../auth/store/auth_store.dart';
+import '../../../auth/presentation/store/auth_store_provider.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});

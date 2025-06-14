@@ -1,10 +1,10 @@
 import 'package:get_it/get_it.dart';
 
-import '../../../features/auth_/data/repositories/auth_repository_impl.dart';
-import '../../../features/auth_/data/services/auth_service_impl.dart';
-import '../../../features/auth_/domain/repositories/auth_repository.dart';
-import '../../../features/auth_/domain/use_cases/logout.dart';
-import '../../../features/auth_/domain/use_cases/sign_in_with_google.dart';
+import '../../../features/auth/data/repositories/auth_repository_impl.dart';
+import '../../../features/auth/data/services/auth_service_impl.dart';
+import '../../../features/auth/domain/repositories/auth_repository.dart';
+import '../../../features/auth/domain/use_cases/logout.dart';
+import '../../../features/auth/domain/use_cases/sign_in_with_google.dart';
 
 final injector = GetIt.instance;
 

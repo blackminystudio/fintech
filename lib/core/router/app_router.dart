@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/auth_/presentation/router/auth_routes.dart';
+import '../../features/auth/presentation/router/auth_routes.dart';
 import '../../features/home/router/home_routes.dart';
 import '../global/router/global_routes.dart';
 import 'app_router_notifier.dart';

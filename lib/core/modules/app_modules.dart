@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/auth/store/auth_store.dart';
+import '../../features/auth/presentation/store/auth_store_provider.dart';
 import '../global/di/injector.dart';
 import '../services/firebase_options.dart';
 
@@ -16,7 +16,9 @@ class AppModules {
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
       try {
         await Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform);
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+        injectDependencies();
         // Trigger and wait for auth state to resolve
         container.read(authStoreProvider.notifier);
         FlutterNativeSplash.remove();
@@ -25,7 +27,6 @@ class AppModules {
         FlutterNativeSplash.remove();
       }
     }
-    injectDependencies();
   }
 
   static void injectDependencies() {
