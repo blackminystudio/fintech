@@ -198,9 +198,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                     : Text(
                         text,
                         style: theme.textStyle.headingMedium.copyWith(
-                          color: isActive
-                              ? theme.colors.textPrimary
-                              : theme.colors.textSecondarylight,
+                          color: theme.colors.textSecondarylight,
                         ),
                       ),
               ],
