@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/auth/presentation/store/auth_store_provider.dart';
 import '../global/di/injector.dart';
-import '../services/firebase_options.dart';
+// import '../../../core/lib/services/firebase_options.dart';
 
 class AppModules {
   static Future<void> initialize(ProviderContainer container) async {
@@ -15,9 +14,9 @@ class AppModules {
     if (!Platform.environment.containsKey('FLUTTER_TEST')) {
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
       try {
-        await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        );
+        // await Firebase.initializeApp(
+        //   options: DefaultFirebaseOptions.currentPlatform,
+        // );
         injectDependencies();
         // Trigger and wait for auth state to resolve
         container.read(authStoreProvider.notifier);

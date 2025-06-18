@@ -1,6 +1,11 @@
+import 'package:core/modules/app_modules.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize all core + feature DI modules
+  await AppModules.initialize();
   runApp(const MyApp());
 }
 

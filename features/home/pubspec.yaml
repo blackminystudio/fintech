@@ -17,6 +17,7 @@ dependencies:
 
   # If home needs state or services:
   flutter_riverpod: ^2.0.0
+  get_it: ^8.0.3
 
 dev_dependencies:
   flutter_test:
