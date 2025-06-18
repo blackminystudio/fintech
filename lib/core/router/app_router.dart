@@ -11,6 +11,7 @@ enum AppRoute {
   login,
   home,
   disabled,
+  loading,
 }
 
 extension AppRoutePath on AppRoute {
@@ -18,6 +19,7 @@ extension AppRoutePath on AppRoute {
         AppRoute.home => '/',
         AppRoute.login => '/login',
         AppRoute.disabled => '/disabled',
+        AppRoute.loading => '/loading',
       };
 }
 
@@ -26,7 +28,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     refreshListenable: notifier,
-    initialLocation: AppRoute.home.path,
+    initialLocation: AppRoute.loading.path,
     redirect: (context, state) => appRouterRedirect(state, notifier),
     routes: [
       ...homeRoutes,

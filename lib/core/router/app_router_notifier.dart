@@ -5,6 +5,7 @@ enum AuthStatus {
   unauthenticated,
   authenticated,
   disabled,
+  loading,
 }
 
 final appRouterNotifier = Provider<AppRouterNotifier>(
@@ -12,7 +13,7 @@ final appRouterNotifier = Provider<AppRouterNotifier>(
 );
 
 class AppRouterNotifier extends ChangeNotifier {
-  AuthStatus _status = AuthStatus.unauthenticated;
+  AuthStatus _status = AuthStatus.loading;
   AuthStatus get status => _status;
 
   void setAuthenticated() {

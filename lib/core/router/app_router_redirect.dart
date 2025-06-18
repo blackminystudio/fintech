@@ -13,8 +13,13 @@ FutureOr<String?> appRouterRedirect(
   final path = state.uri.path;
   final onLogin = path == AppRoute.login.path;
   final onDisabled = path == AppRoute.disabled.path;
+  final onLoading = path == AppRoute.loading.path;
 
   switch (authState) {
+    case AuthStatus.loading:
+      if (!onLoading) return AppRoute.loading.path;
+      return null;
+
     case AuthStatus.disabled:
       if (!onDisabled) return AppRoute.disabled.path;
       return null;
@@ -24,7 +29,7 @@ FutureOr<String?> appRouterRedirect(
       return null;
 
     case AuthStatus.authenticated:
-      if (onLogin) return AppRoute.home.path;
+      if (onLogin || onLoading) return AppRoute.home.path;
       return null;
   }
 }

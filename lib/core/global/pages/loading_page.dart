@@ -6,20 +6,7 @@ class LoadingPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => const Scaffold(
         body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'loading...',
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 16),
-                CircularProgressIndicator(),
-              ],
-            ),
-          ),
+          child: CircularProgressIndicator(),
         ),
       );
 }
