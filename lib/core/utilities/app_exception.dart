@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'error/error_map.dart';
-import 'error/error_type.dart';
+import 'Error/error_map.dart';
+import 'Error/error_type.dart';
 
 class AppException implements Exception {
   const AppException({

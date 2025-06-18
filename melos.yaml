@@ -1,0 +1,6 @@
+name: fintech_workspace
+# Run `melos bootstrap` after editing this to link all local packages
+packages:
+  - app
+  - core
+  - features/*

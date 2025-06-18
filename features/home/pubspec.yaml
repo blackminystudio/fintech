@@ -1,0 +1,23 @@
+name: home
+description: Home feature (dashboard, main feed, etc.)
+version: 1.0.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Core plumbing
+  core:
+    path: ../../core
+
+  # If home needs state or services:
+  flutter_riverpod: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

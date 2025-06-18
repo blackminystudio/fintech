@@ -1,0 +1,30 @@
+# features/auth/pubspec.yaml
+name: auth
+description: Authentication feature (login, logout, user state)
+version: 1.0.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Core package for router, shared stores, etc.
+  core:
+    path: ../../core
+
+  # Riverpod for state management
+  flutter_riverpod: ^2.0.0
+
+  # Firebase & Google Sign-In
+  firebase_auth: ^4.0.0
+  google_sign_in: ^5.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  # Add build_runner only if you generate code here
