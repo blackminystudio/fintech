@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:auth/di/auth_module.dart';
+import 'package:auth/modules/auth_module.dart';
 import 'package:core/services/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
-import 'package:home/di/home_module.dart';
+import 'package:home/modules/home_module.dart';
 
-import '../di/feature_module.dart';
+import 'feature_module.dart';
 
 class AppModules {
   static Future<void> initialize() async {
