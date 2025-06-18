@@ -8,18 +8,15 @@ environment:
   flutter: ">=3.19.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-
-  # Core routing, DI, modules, etc.
-  core:
-    path: ../core
-
-  # Feature packages
   auth:
     path: ../features/auth
+  core:
+    path: ../core
+  flutter:
+    sdk: flutter
   flutter_riverpod: ^2.6.1
   flutter_screenutil: ^5.9.3
+
   home:
     path: ../features/home
 
@@ -36,3 +33,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/native_splash_assets/
