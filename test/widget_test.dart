@@ -1,11 +1,12 @@
-import 'package:fintechapp/features/home/ui/pages/home_page.dart';
+import 'package:fintechapp/features/home/ui/widgets/notifiacation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test',
+  testWidgets('Icon find in Notification Widget',
       (final WidgetTester tester) async {
     await tester.pumpWidget(
       ScreenUtilInit(
@@ -15,11 +16,12 @@ void main() {
           title: 'FintechApp',
           theme: MinyTheme.lightTheme,
           debugShowCheckedModeBanner: false,
-          home: const HomePage(),
+          home: const NotifiactionButton(
+            icon: Iconsax.notification_bing,
+          ),
         ),
       ),
     );
-
-    expect(find.text('Home Page'), findsOneWidget);
+    expect(find.byType(Icon), findsOneWidget);
   });
 }
