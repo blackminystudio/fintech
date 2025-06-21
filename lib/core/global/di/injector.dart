@@ -11,9 +11,6 @@ final injector = GetIt.instance;
 // Future<void> initSingletons() async {
 //   //Services
 //   injector.registerLazySingleton<LocalDb>(() => InitDbImpl());
-//   injector.registerLazySingleton<NetworkService>(() => DioNetworkService());
-//   injector.registerLazySingleton<SharedPref>(() => SharedPrefImplementation());
-
 //   //initiating db
 //   await injector<LocalDb>().initDb();
 // }
@@ -34,9 +31,7 @@ void injectUseCases() {
   // Auth
   final authRepo = injector.get<AuthRepository>();
   injector
-    ..registerFactory<Logout>(
-      () => Logout(authRepository: authRepo),
-    )
+    ..registerFactory<Logout>(() => Logout(authRepository: authRepo))
     ..registerFactory<SignInWithGoogle>(
       () => SignInWithGoogle(authRepository: authRepo),
     );

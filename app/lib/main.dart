@@ -1,56 +1,27 @@
-import 'package:core/modules/app_modules.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize all core + feature DI modules
   await AppModules.initialize();
-  runApp(const MyApp());
+  runApp(
+    ScreenUtilInit(
+      designSize: const Size(440, 956),
+      minTextAdapt: true,
+      builder: (context, _) => const ProviderScope(child: MyApp()),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static final _router = AppRouter();
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  void _incrementCounter() {
-    setState(() => _counter++);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('Hey Lucky'),
-            Text('$_counter',
-                style: Theme.of(context).textTheme.headlineMedium),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp.router(
+        title: 'Flutter Demo',
+        theme: MinyTheme.lightTheme,
+        routerDelegate: _router.delegate(),
+        routeInformationParser: _router.defaultRouteParser(),
+      );
 }

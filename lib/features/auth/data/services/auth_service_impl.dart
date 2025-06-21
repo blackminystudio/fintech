@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../core/global/model/user_profile_model.dart';
-import '../../../../core/utilities/Error/error_type.dart';
 import '../../../../core/utilities/app_exception.dart';
+import '../../../../core/utilities/error/error_type.dart';
 import '../../domain/auth_types.dart';
 import 'auth_service.dart';
 

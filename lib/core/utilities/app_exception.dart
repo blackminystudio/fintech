@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'Error/error_map.dart';
-import 'Error/error_type.dart';
+import 'error/error_map.dart';
+import 'error/error_type.dart';
 
 class AppException implements Exception {
   const AppException({
@@ -50,7 +50,8 @@ class AppException implements Exception {
   final ErrorType errorType;
 
   @override
-  String toString() => 'message: $message, '
+  String toString() =>
+      'message: $message, '
       'code: $code, '
       'source: $source, '
       'errorType: $errorType';

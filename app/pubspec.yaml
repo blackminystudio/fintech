@@ -4,7 +4,7 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.2.3 <4.0.0"
   flutter: ">=3.19.0"
 
 dependencies:
@@ -18,6 +18,8 @@ dependencies:
   # Feature packages
   auth:
     path: ../features/auth
+  flutter_riverpod: ^2.6.1
+  flutter_screenutil: ^5.9.3
   home:
     path: ../features/home
 

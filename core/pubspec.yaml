@@ -4,7 +4,7 @@ version: 0.0.1
 publish_to: "none"
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
+  sdk: ">=3.2.3 <4.0.0"
   flutter: ">=3.19.0"
 
 dependencies:
@@ -20,15 +20,32 @@ dependencies:
   get_it: ^8.0.3
   flutter_riverpod: ^2.6.1
   firebase_core: ^3.13.0
-  auto_route: ^6.0.0
+  # auto_route: ^7.8.4
   flutter_native_splash: ^2.4.4
+  injectable: ^2.5.0
+  package_info_plus: ^8.3.0
+  logger: ^2.5.0
+  flutter_secure_storage: ^9.2.4
+  device_info_plus: ^11.5.0
+  auto_route: 10.1.0
+  dartz: ^0.10.1
+  equatable: ^2.0.7
+  intl: ^0.20.2
+  json_annotation: ^4.9.0
+  firebase_auth: ^5.6.0
+
+  miny_design_system:
+    git:
+      url: https://github.com/blackminystudio/miny-design-system.git
+      ref: main
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
   # Code generation for AutoRoute
-  build_runner: any
-  auto_route_generator: any
+  build_runner: ^2.4.7
+  auto_route_generator: ^10.2.3
+  injectable_generator: ^2.4.2
