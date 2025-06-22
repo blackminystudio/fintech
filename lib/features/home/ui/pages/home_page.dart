@@ -5,6 +5,7 @@ import '../../utilities/home_constants.dart';
 import '../widgets/greeting_card.dart';
 import '../widgets/notifiacation_button.dart';
 import '../widgets/profile_progress.dart';
+import '../widgets/swipe_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -29,21 +30,29 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   children: [
                     const GreetingCard(
-                      greetingIcon: HomePageConstants.greetingIcon,
-                      greetingMeassage: HomePageConstants.greetingMessage,
-                      userName: HomePageConstants.userName,
+                      greetingIcon: HomeConstants.greetingIcon,
+                      greetingMeassage: HomeConstants.greetingMessage,
+                      userName: HomeConstants.userName,
                     ),
                     const Spacer(),
                     const NotifiactionButton(
-                      icon: HomePageConstants.notificationIcon,
+                      icon: HomeConstants.notificationIcon,
                     ),
                     SizedBox(width: theme.spacing.width.s12),
                     const ProfileProgress(
-                      profilePictureUrl: HomePageConstants.profileImageUrl,
+                      profilePictureUrl: HomeImagePaths.profileImageUrl,
                       progressValue: 0.7,
                     ),
                   ],
                 ),
+              ),
+              // TODO: Need s28
+              SizedBox(height: theme.spacing.height.s32),
+              const SwipeCard(
+                currentBalance: '18,425',
+                debitedBalance: '32,200',
+                creditedBalance: '50,625',
+                bankLogo: HomeImagePaths.bankLogo,
               ),
             ],
           ),
