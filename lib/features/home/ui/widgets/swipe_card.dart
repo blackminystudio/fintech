@@ -102,9 +102,8 @@ class _SwipeCardState extends State<SwipeCard> {
               },
               child: Padding(
                 padding: EdgeInsets.all(theme.spacing.width.s4),
-                // TODO: Icon check
                 child: Icon(
-                  obscureText ? Iconsax.eye_slash : Iconsax.eye,
+                  obscureText ? Iconsax.eye_slash5 : Iconsax.eye4,
                   size: theme.sizing.width.s4,
                   color: theme.colors.textSecondary,
                 ),
