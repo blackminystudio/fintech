@@ -13,8 +13,6 @@ class HomeConstants {
   // Icons
   static const IconData greetingIcon = Iconsax.cloud_sunny;
   static const IconData notificationIcon = Iconsax.notification_bing;
-
-  // Profile Image URL
 }
 
 class HomeImagePaths {

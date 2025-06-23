@@ -26,6 +26,8 @@ dependencies:
       ref: main
   pin_code_fields: 8.0.1
   iconsax: 0.0.8
+  percent_indicator: 4.2.5
+
 
 # --------- DEV DEPENDENCIES ---------
 dev_dependencies:
