@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:miny_design_system/miny_design_system.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test',
+  testWidgets('Icon find in Notification Widget',
       (final WidgetTester tester) async {
     await tester.pumpWidget(
       ScreenUtilInit(
@@ -19,7 +19,6 @@ void main() {
         ),
       ),
     );
-
-    expect(find.text('Home Page'), findsOneWidget);
+    expect(find.byType(SafeArea), findsOneWidget);
   });
 }

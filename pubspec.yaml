@@ -25,6 +25,7 @@ dependencies:
       url: https://github.com/blackminystudio/miny-design-system.git
       ref: main
   pin_code_fields: 8.0.1
+  iconsax: 0.0.8
 
 # --------- DEV DEPENDENCIES ---------
 dev_dependencies:
