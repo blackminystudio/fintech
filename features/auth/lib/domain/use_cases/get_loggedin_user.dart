@@ -5,8 +5,8 @@ import '../repositories/auth_repository.dart';
 
 @injectable
 class GetLoggedInUser {
-  GetLoggedInUser({required this.authRepository});
-  final AuthRepository authRepository;
+  GetLoggedInUser(this._authRepository);
+  final AuthRepository _authRepository;
 
-  EitherUserProfileNullable call() async => authRepository.getLoggedInUser();
+  EitherAuthNullable call() async => await _authRepository.getLoggedInUser();
 }

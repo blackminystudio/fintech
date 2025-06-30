@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 
-import '../global/model/user_profile_model.dart';
+import 'entities/auth_entity.dart';
 
-typedef EitherUserProfile = Future<Either<AppException, UserProfile>>;
-typedef EitherUserProfileNullable = Future<Either<AppException, UserProfile?>>;
+typedef EitherAuth = Future<Either<AppException, AuthEntity>>;
+typedef EitherAuthNullable = Future<Either<AppException, AuthEntity?>>;

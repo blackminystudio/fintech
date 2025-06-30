@@ -2,8 +2,6 @@ import 'package:core/core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../domain/auth_types.dart';
-import '../../global/model/user_profile_model.dart';
 import 'auth_service.dart';
 
 @LazySingleton(as: AuthService)
@@ -12,84 +10,48 @@ class AuthServiceImpl implements AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
-  EitherUserProfile signInWithGoogle() async {
-    try {
-      // 1. Trigger Google sign‐in flow:
-      final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        // User cancelled before selecting an account
-        return const Left(
-          AppException(
-            source: 'GoogleSignIn',
-            code: 'sign-in-cancelled',
-            errorType: ErrorType.signinCancelled,
-            message: 'Google sign-in was cancelled by the user.',
-          ),
-        );
-      }
-
-      // 2. Obtain GoogleAuth credentials
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
+  Future<User> signInWithGoogle() async {
+    final googleUser = await _googleSignIn.signIn();
+    // If the user cancels the sign-in, googleUser will be null
+    if (googleUser == null) {
+      throw const AppException(
+        source: 'GoogleSignIn',
+        code: 'sign-in-cancelled',
+        errorType: ErrorType.signinCancelled,
+        message: 'Google sign-in was cancelled by the user.',
       );
-
-      // 3. Sign in to Firebase with those credentials
-      final userCred = await _firebaseAuth.signInWithCredential(credential);
-      final user = userCred.user;
-      if (user == null) {
-        // This should rarely happen—treat as an error
-        return const Left(
-          AppException(
-            source: 'FirebaseAuth',
-            code: 'no-user',
-            errorType: ErrorType.noUser,
-            message: 'Failed to retrieve user after Google sign-in.',
-          ),
-        );
-      }
-
-      // 4. Map Firebase User → UserProfile and wrap in Right
-      return Right(UserProfile.fromFirebaseUser(user));
-    } on FirebaseAuthException catch (e) {
-      // Any FirebaseAuth-specific errors (invalid-token, account-exists, etc.)
-      return Left(AppException.fromFirebaseException(e));
-    } catch (e) {
-      // Fallback for any other unexpected error
-      return Left(AppException.fromFirebaseException(e));
     }
+
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final userCred = await _firebaseAuth.signInWithCredential(credential);
+    final user = userCred.user;
+
+    if (user == null) {
+      throw const AppException(
+        code: 'no-user',
+        source: 'FirebaseAuth',
+        errorType: ErrorType.noUser,
+        message: 'Failed to retrieve user after Google sign-in.',
+      );
+    }
+    return user;
   }
 
   @override
-  EitherUserProfileNullable getLoggedInUser() async {
-    try {
-      final firebaseUser = _firebaseAuth.currentUser;
-      if (firebaseUser == null) {
-        // Not signed in
-        return const Right(null);
-      }
-      // Signed in → map to our domain model
-      return Right(UserProfile.fromFirebaseUser(firebaseUser));
-    } on FirebaseAuthException catch (e) {
-      return Left(AppException.fromFirebaseException(e));
-    } catch (e) {
-      return Left(AppException.fromFirebaseException(e));
-    }
+  Future<User?> getLoggedInUser() async {
+    final firebaseUser = _firebaseAuth.currentUser;
+    if (firebaseUser == null) return null;
+    return firebaseUser;
   }
 
   @override
-  Future<Either<AppException, void>> logout() async {
-    try {
-      // Sign out from Google (if signed in)
-      await _googleSignIn.signOut();
-      // Then sign out from Firebase
-      await _firebaseAuth.signOut();
-      return const Right(null);
-    } on FirebaseAuthException catch (e) {
-      return Left(AppException.fromFirebaseException(e));
-    } catch (e) {
-      return Left(AppException.fromFirebaseException(e));
-    }
+  Future<void> logout() async {
+    await _googleSignIn.signOut();
+    await _firebaseAuth.signOut();
   }
 }

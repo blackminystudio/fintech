@@ -1,4 +1,4 @@
-//@GeneratedMicroModule;AuthPackageModule;package:auth/src/di/injector.module.dart
+//@GeneratedMicroModule;AuthPackageModule;package:auth/util/di/injector.module.dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // coverage:ignore-file
@@ -22,11 +22,10 @@ class AuthPackageModule extends _i526.MicroPackageModule {
     gh.lazySingleton<_i681.AuthService>(() => _i295.AuthServiceImpl());
     gh.lazySingleton<_i698.AuthRepository>(
         () => _i288.AuthRepositoryImpl(authService: gh<_i681.AuthService>()));
-    gh.factory<_i154.SignInWithGoogle>(() =>
-        _i154.SignInWithGoogle(authRepository: gh<_i698.AuthRepository>()));
-    gh.factory<_i477.Logout>(
-        () => _i477.Logout(authRepository: gh<_i698.AuthRepository>()));
-    gh.factory<_i775.GetLoggedInUser>(() =>
-        _i775.GetLoggedInUser(authRepository: gh<_i698.AuthRepository>()));
+    gh.factory<_i154.SignInWithGoogle>(
+        () => _i154.SignInWithGoogle(gh<_i698.AuthRepository>()));
+    gh.factory<_i477.Logout>(() => _i477.Logout(gh<_i698.AuthRepository>()));
+    gh.factory<_i775.GetLoggedInUser>(
+        () => _i775.GetLoggedInUser(gh<_i698.AuthRepository>()));
   }
 }

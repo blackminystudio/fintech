@@ -4,8 +4,8 @@ import '../repositories/auth_repository.dart';
 
 @injectable
 class Logout {
-  Logout({required this.authRepository});
-  final AuthRepository authRepository;
+  Logout(this._authRepository);
+  final AuthRepository _authRepository;
 
-  Future<void> call() async => authRepository.logout();
+  Future<void> call() async => _authRepository.logout();
 }

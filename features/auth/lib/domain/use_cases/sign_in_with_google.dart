@@ -5,10 +5,8 @@ import '../repositories/auth_repository.dart';
 
 @injectable
 class SignInWithGoogle {
-  SignInWithGoogle({
-    required this.authRepository,
-  });
-  final AuthRepository authRepository;
+  SignInWithGoogle(this._authRepository);
+  final AuthRepository _authRepository;
 
-  EitherUserProfile call() async => authRepository.signInWithGoogle();
+  EitherAuth call() async => await _authRepository.signInWithGoogle();
 }
