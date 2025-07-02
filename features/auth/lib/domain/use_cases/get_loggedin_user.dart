@@ -8,5 +8,5 @@ class GetLoggedInUser {
   GetLoggedInUser(this._authRepository);
   final AuthRepository _authRepository;
 
-  EitherAuthNullable call() async => await _authRepository.getLoggedInUser();
+  FutureEitherAuthNull call() async => await _authRepository.getCurrentUser();
 }

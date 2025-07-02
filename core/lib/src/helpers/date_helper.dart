@@ -1,4 +1,4 @@
-import 'package:core/core.dart';
+import '../../core.dart';
 
 class DateHelper {
   DateHelper._();

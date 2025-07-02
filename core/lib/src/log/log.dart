@@ -1,8 +1,9 @@
 // Package imports:
 // ignore_for_file: public_member_api_docs
 
-import 'package:core/core.dart';
 import 'package:logger/logger.dart';
+
+import '../../core.dart';
 
 enum LogType {
   trace,

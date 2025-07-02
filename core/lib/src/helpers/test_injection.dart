@@ -1,4 +1,4 @@
-import 'package:core/core.dart';
+import '../../core.dart';
 
 void _removeIfRegistered<T extends Object>({
   String? instanceName,

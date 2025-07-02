@@ -8,5 +8,5 @@ class SignInWithGoogle {
   SignInWithGoogle(this._authRepository);
   final AuthRepository _authRepository;
 
-  EitherAuth call() async => await _authRepository.signInWithGoogle();
+  FutureEitherAuth call() async => await _authRepository.signInWithGoogle();
 }

@@ -3,17 +3,15 @@ import 'package:core/core.dart';
 import '../../../domain/entities/auth_entity.dart';
 
 enum AuthStatus {
-  initial,
   loading,
   authenticated,
   unauthenticated,
   disabled,
-  failure,
 }
 
 class AuthState extends Equatable {
   const AuthState({
-    this.status = AuthStatus.initial,
+    this.status = AuthStatus.unauthenticated,
     this.authEntity,
     this.exception,
   });
@@ -21,7 +19,7 @@ class AuthState extends Equatable {
   const AuthState.initial({
     this.authEntity,
     this.exception,
-    this.status = AuthStatus.initial,
+    this.status = AuthStatus.unauthenticated,
   });
 
   final AuthStatus status;
@@ -35,8 +33,8 @@ class AuthState extends Equatable {
   }) =>
       AuthState(
         authEntity: authEntity ?? this.authEntity,
-        exception: exception ?? this.exception,
         status: status ?? this.status,
+        exception: exception,
       );
 
   @override

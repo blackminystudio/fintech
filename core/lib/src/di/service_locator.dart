@@ -1,7 +1,8 @@
 import 'package:auth/auth.dart';
-import 'package:core/core.dart';
-import 'package:core/src/di/service_locator.config.dart';
 import 'package:home/home.dart';
+
+import '../../core.dart';
+import 'service_locator.config.dart';
 
 final getIt = GetIt.instance;
 

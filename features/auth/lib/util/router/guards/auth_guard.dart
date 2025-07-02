@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../auth.dart';
 import '../../../presentation/store/src/auth_state.dart';
@@ -16,14 +15,15 @@ class AuthGuard extends AutoRouteGuard {
       case AuthStatus.authenticated:
         resolver.next();
         break;
+      case AuthStatus.loading:
+        router.replace(const LoadingRoute());
+        break;
       case AuthStatus.unauthenticated:
         router.replace(const LoginRoute());
         break;
       case AuthStatus.disabled:
         router.replace(const DisabledUserRoute());
         break;
-      default:
-        router.replace(const LoadingRoute());
     }
   }
 }

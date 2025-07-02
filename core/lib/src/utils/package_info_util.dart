@@ -1,10 +1,11 @@
-import 'package:core/core.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
+import '../../core.dart';
 
 @Injectable()
 class PackageUtil {
-  final PackageInfo _packageInfo;
   const PackageUtil(this._packageInfo);
+  final PackageInfo _packageInfo;
   String get version => _packageInfo.version;
   String get buildNumber => _packageInfo.buildNumber;
   String get appName => _packageInfo.appName;

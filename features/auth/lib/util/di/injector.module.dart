@@ -21,7 +21,7 @@ class AuthPackageModule extends _i526.MicroPackageModule {
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
     gh.lazySingleton<_i681.AuthService>(() => _i295.AuthServiceImpl());
     gh.lazySingleton<_i698.AuthRepository>(
-        () => _i288.AuthRepositoryImpl(authService: gh<_i681.AuthService>()));
+        () => _i288.AuthRepositoryImpl(gh<_i681.AuthService>()));
     gh.factory<_i154.SignInWithGoogle>(
         () => _i154.SignInWithGoogle(gh<_i698.AuthRepository>()));
     gh.factory<_i477.Logout>(() => _i477.Logout(gh<_i698.AuthRepository>()));

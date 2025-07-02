@@ -1,11 +1,12 @@
-import 'package:core/core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../../../core.dart';
 
 @Named('secure')
 @LazySingleton(as: LocalStorage)
 class SecureStorageImpl implements LocalStorage {
-  final FlutterSecureStorage storage;
   SecureStorageImpl(this.storage);
+  final FlutterSecureStorage storage;
 
   @override
   Future<dynamic> get(String key) async => storage.read(key: key);

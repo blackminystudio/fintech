@@ -4,6 +4,7 @@ library;
 export 'package:auto_route/auto_route.dart';
 export 'package:dartz/dartz.dart' show Either, Left, Right;
 export 'package:equatable/equatable.dart';
+export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:get_it/get_it.dart';
 export 'package:injectable/injectable.dart';
 export 'package:intl/intl.dart';

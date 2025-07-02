@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import 'package:core/core.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+
+import '../../core.dart';
 
 @Injectable()
 class DeviceUtil {
-  final DeviceInfoPlugin _deviceInfoPlugin;
   DeviceUtil(this._deviceInfoPlugin);
+  final DeviceInfoPlugin _deviceInfoPlugin;
 
   Future<String> name() async {
     final deviceInfo = StringBuffer();

@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:core/core.dart';
+import '../../core.dart';
 
 abstract class UseCase<Type, Params, Repo> {
   Repo get repo;

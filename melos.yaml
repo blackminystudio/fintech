@@ -8,10 +8,10 @@ command:
     branch: main
   bootstrap:
     environment:
-      sdk: ">=3.2.3 <4.0.0"
+      sdk: "3.8.0"
     dev_dependencies:
-      build_runner: ^2.4.7
-      mocktail: ^1.0.2
+      build_runner: 2.5.4
+      mocktail: 1.0.2
   clean:
     hooks:
       post: |

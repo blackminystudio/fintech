@@ -47,7 +47,7 @@ class SimplePrettyPrinter extends PrettyPrinter {
 
   @override
   List<String> log(LogEvent event) {
-    final levelColor = levelColors?[event.level] ?? AnsiColor.none();
+    final levelColor = levelColors?[event.level] ?? const AnsiColor.none();
     final levelName = event.level.name.toUpperCase().padRight(5);
     final rawPrefix = '[$levelName]';
     final coloredPrefix = levelColor(rawPrefix);

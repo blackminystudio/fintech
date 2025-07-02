@@ -1,10 +1,11 @@
 import 'dart:developer' as dev;
 
-import 'package:core/core.dart';
-import 'package:core/src/services/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+import '../../core.dart';
+import '../services/firebase_options.dart';
 
 class AppModules {
   static Future<void> initialize() async {
@@ -17,15 +18,15 @@ class AppModules {
       );
       await configureDependencies();
     } catch (e) {
-      dev.log("Error: $e", name: 'AppModules.initialize');
+      dev.log('Error: $e', name: 'AppModules.initialize');
     } finally {
       FlutterNativeSplash.remove();
-      initLogs();
+      await initLogs();
     }
   }
 }
 
-void initLogs() async {
+Future<void> initLogs() async {
   if (!getIt.isRegistered<Log>()) {
     dev.log('Log not initialized', name: 'initLogs');
     return;
@@ -34,7 +35,7 @@ void initLogs() async {
   final package = getIt<PackageUtil>();
   final device = await getIt<DeviceUtil>().name();
 
-  log.console(
+  await log.console(
     'AppInfo: \n'
     'appName = ${package.appName}, \n'
     'version = ${package.version}, \n'

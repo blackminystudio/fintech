@@ -6,11 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class ReleaseLogFilter extends LogFilter {
-  final Set<Level> excludedLevels;
   ReleaseLogFilter({this.excludedLevels = const {}});
+  final Set<Level> excludedLevels;
 
   @override
-  bool shouldLog(LogEvent event) {
-    return kDebugMode && !excludedLevels.contains(event.level);
-  }
+  bool shouldLog(LogEvent event) =>
+      kDebugMode && !excludedLevels.contains(event.level);
 }

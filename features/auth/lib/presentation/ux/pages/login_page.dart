@@ -1,11 +1,11 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:home/util/router/home_router.gr.dart';
 
 import '../../../auth.dart';
 import '../../../util/constants/auth_constants.dart';
+import '../../store/src/auth_state.dart';
 
 @RoutePage()
 class LoginPage extends ConsumerWidget {
@@ -14,13 +14,29 @@ class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    var isLoading = false;
+    final authState = ref.watch(authStoreProvider);
+    final isLoading = authState.status == AuthStatus.loading;
 
-    Future<void> _handleLogin(Function(void Function()) setState) async {
-      setState(() => isLoading = true);
+    ref.listen<AuthState>(authStoreProvider, (prev, next) {
+      final e = next.exception;
+      if (e != null && e.errorType == ErrorType.signinCancelled) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'What Happened? You cancelled the sign-in process.',
+              style: theme.textStyle.bodySmall,
+            ),
+            showCloseIcon: true,
+            duration: const Duration(milliseconds: 1000),
+          ),
+        );
+      }
+    });
+
+    Future<void> _handleLogin() async {
       await ref.read(authStoreProvider.notifier).signInWithGoogle();
       await context.router.replace(const HomeRoute());
-      setState(() => isLoading = false);
     }
 
     return Scaffold(
@@ -90,13 +106,11 @@ class LoginPage extends ConsumerWidget {
                 ),
               ),
               SizedBox(height: theme.spacing.height.s20),
-              StatefulBuilder(
-                builder: (context, setState) => MinyButton(
-                  enableIcon: true,
-                  onPressed: () => _handleLogin(setState),
-                  label: AuthConstants.googleButtonLabel,
-                  isLoading: isLoading,
-                ),
+              MinyButton(
+                enableIcon: true,
+                isLoading: isLoading,
+                onPressed: _handleLogin,
+                label: AuthConstants.googleButtonLabel,
               ),
               SizedBox(height: theme.spacing.height.s40),
             ],

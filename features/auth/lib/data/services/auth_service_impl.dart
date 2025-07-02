@@ -12,11 +12,11 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<User> signInWithGoogle() async {
     final googleUser = await _googleSignIn.signIn();
-    // If the user cancels the sign-in, googleUser will be null
+    // Custom exception if the user cancels the sign-in
     if (googleUser == null) {
       throw const AppException(
-        source: 'GoogleSignIn',
         code: 'sign-in-cancelled',
+        source: 'GoogleSignIn',
         errorType: ErrorType.signinCancelled,
         message: 'Google sign-in was cancelled by the user.',
       );
@@ -32,6 +32,7 @@ class AuthServiceImpl implements AuthService {
     final user = userCred.user;
 
     if (user == null) {
+      // Custom exception if the user is not found
       throw const AppException(
         code: 'no-user',
         source: 'FirebaseAuth',
@@ -43,10 +44,11 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<User?> getLoggedInUser() async {
-    final firebaseUser = _firebaseAuth.currentUser;
-    if (firebaseUser == null) return null;
-    return firebaseUser;
+  Future<User?> getCurrentUser() async {
+    final user = _firebaseAuth.currentUser;
+    if (user == null) return null;
+    await user.reload();
+    return _firebaseAuth.currentUser;
   }
 
   @override
@@ -54,4 +56,7 @@ class AuthServiceImpl implements AuthService {
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
   }
+
+  @override
+  Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
 }
