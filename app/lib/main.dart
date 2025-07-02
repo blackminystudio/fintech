@@ -9,19 +9,22 @@ void main() async {
     ScreenUtilInit(
       designSize: const Size(440, 956),
       minTextAdapt: true,
-      builder: (context, _) => const ProviderScope(child: MyApp()),
+      child: const ProviderScope(child: MyApp()),
+      builder: (context, child) => child!,
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-  static final _router = AppRouter();
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: MinyTheme.lightTheme,
-        routerDelegate: _router.delegate(),
-        routeInformationParser: _router.defaultRouteParser(),
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: MinyTheme.lightTheme,
+      routerDelegate: router.delegate(),
+      routeInformationParser: router.defaultRouteParser(),
+    );
+  }
 }

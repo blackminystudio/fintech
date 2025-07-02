@@ -8,44 +8,52 @@ environment:
   flutter: ">=3.19.0"
 
 dependencies:
+  # Flutter SDK
   flutter:
     sdk: flutter
 
-  # Features
+  # Local Packages (Features)
   auth:
     path: ../features/auth
   home:
     path: ../features/home
 
-  get_it: ^8.0.3
+  # State Management & DI
   flutter_riverpod: ^2.6.1
-  firebase_core: ^3.13.0
-  # auto_route: ^7.8.4
-  flutter_native_splash: ^2.4.4
+  get_it: ^8.0.3
   injectable: ^2.5.0
-  package_info_plus: ^8.3.0
-  logger: ^2.5.0
-  flutter_secure_storage: ^9.2.4
-  device_info_plus: ^11.5.0
+
+  # Routing
   auto_route: 10.1.0
+
+  # Firebase
+  firebase_auth: ^5.6.0
+  firebase_core: ^3.13.0
+
+  # Utilities
   dartz: ^0.10.1
+  device_info_plus: ^11.5.0
   equatable: ^2.0.7
+  flutter_native_splash: ^2.4.4
+  flutter_secure_storage: ^9.2.4
   intl: ^0.20.2
   json_annotation: ^4.9.0
-  firebase_auth: ^5.6.0
+  logger: ^2.5.0
+  package_info_plus: ^8.3.0
 
+  # UI / Design System
   miny_design_system:
     git:
       url: https://github.com/blackminystudio/miny-design-system.git
       ref: main
 
 dev_dependencies:
+  # Code Generation
+  auto_route_generator: ^10.2.3
+  build_runner: ^2.4.7
+  injectable_generator: ^2.4.2
+
+  # Linting & Testing
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^6.0.0
-
-  # Code generation for AutoRoute
-  build_runner: ^2.4.7
-  auto_route_generator: ^10.2.3
-  injectable_generator: ^2.4.2

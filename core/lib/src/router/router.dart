@@ -1,3 +1,4 @@
-export 'observers/smart_route_observer.dart';
-export 'smart_router.dart';
+export 'app_router.dart';
+export 'observers/app_route_observer.dart';
+export 'router_provider.dart';
 export 'wrapper/wrappers.dart';

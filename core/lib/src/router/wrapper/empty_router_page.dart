@@ -1,5 +1,6 @@
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core.dart';
 
 @RoutePage()
 class EmptyRouterPage extends StatelessWidget {
