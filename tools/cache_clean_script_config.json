@@ -1,0 +1,9 @@
+{
+    "skipMelosActivation": false,
+    "skipPubspecLockRemoval": false,
+    "skipPubspecOverridesRemoval": false,
+    "skipMelosClean": false,
+    "skipFlutterClean": false,
+    "skipFlutterPubCacheClean": false,
+    "skipMelosBootstrap": false
+}

@@ -13,10 +13,7 @@ class HomePage extends ConsumerWidget {
     final authState = ref.watch(authStoreProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Home Page',
-          style: Theme.of(context).textStyle.bodySmall,
-        ),
+        title: Text('Home Page', style: Theme.of(context).textStyle.bodySmall),
       ),
       body: Center(
         child: Padding(

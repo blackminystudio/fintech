@@ -43,9 +43,7 @@ class LoginPage extends ConsumerWidget {
       backgroundColor: theme.colors.neutralLight,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: theme.spacing.width.s32,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: theme.spacing.width.s32),
           child: Column(
             children: [
               SizedBox(height: theme.spacing.height.s80),

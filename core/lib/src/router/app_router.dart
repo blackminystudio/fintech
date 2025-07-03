@@ -18,9 +18,9 @@ final class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        ...AuthRouter().routes,
-        ...HomeRouter().routes.withGuards([AuthGuard(ref)]),
-      ];
+    ...AuthRouter().routes,
+    ...HomeRouter().routes.withGuards([AuthGuard(ref)]),
+  ];
 }
 
 abstract class Routers {
@@ -31,7 +31,5 @@ abstract class Routers {
 extension AutoRouteListGuardX on List<AutoRoute> {
   /// Returns a new list where every route has exactly [guards] attached.
   List<AutoRoute> withGuards(List<AutoRouteGuard> guards) =>
-      map((route) => route.copyWith(guards: guards)).toList(
-        growable: false,
-      );
+      map((route) => route.copyWith(guards: guards)).toList(growable: false);
 }

@@ -10,9 +10,7 @@ final authStatusStreamProvider =
 );
 
 class AuthStore extends StateNotifier<AuthState> {
-  AuthStore(
-    this.ref,
-  ) : super(const AuthState.initial()) {
+  AuthStore(this.ref) : super(const AuthState()) {
     _listenAuthStream();
   }
   final Ref ref;

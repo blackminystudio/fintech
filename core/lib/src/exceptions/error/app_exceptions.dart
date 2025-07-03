@@ -13,10 +13,7 @@ class AppException implements Exception {
     this.errorType = ErrorType.unknown,
   });
 
-  factory AppException.fromService(
-    dynamic error,
-    StackTrace stackTrace,
-  ) {
+  factory AppException.fromService(dynamic error, StackTrace stackTrace) {
     var message = error.toString();
     String? code = 'unknown';
     String? source = 'Firebase';
@@ -56,7 +53,8 @@ class AppException implements Exception {
   final StackTrace? stackTrace;
 
   @override
-  String toString() => 'message: $message, '
+  String toString() =>
+      'message: $message, '
       'code: $code, '
       'source: $source, '
       'stackTrace: $stackTrace, '

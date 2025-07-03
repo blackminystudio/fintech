@@ -1,8 +1,6 @@
 import '../../core.dart';
 
-void _removeIfRegistered<T extends Object>({
-  String? instanceName,
-}) {
+void _removeIfRegistered<T extends Object>({String? instanceName}) {
   if (getIt.isRegistered<T>(instanceName: instanceName)) {
     getIt.unregister<T>(instanceName: instanceName);
   }
@@ -13,10 +11,7 @@ void registerTestFactory<T extends Object>(
   String? instanceName,
 }) {
   _removeIfRegistered<T>(instanceName: instanceName);
-  getIt.registerFactory<T>(
-    () => mockObject,
-    instanceName: instanceName,
-  );
+  getIt.registerFactory<T>(() => mockObject, instanceName: instanceName);
 }
 
 void registerTestSingleton<T extends Object>(
@@ -24,10 +19,7 @@ void registerTestSingleton<T extends Object>(
   String? instanceName,
 }) {
   _removeIfRegistered<T>(instanceName: instanceName);
-  getIt.registerSingleton<T>(
-    mockObject,
-    instanceName: instanceName,
-  );
+  getIt.registerSingleton<T>(mockObject, instanceName: instanceName);
 }
 
 void registerTestLazySingleton<T extends Object>(
@@ -35,10 +27,7 @@ void registerTestLazySingleton<T extends Object>(
   String? instanceName,
 }) {
   _removeIfRegistered<T>(instanceName: instanceName);
-  getIt.registerLazySingleton<T>(
-    () => mockObject,
-    instanceName: instanceName,
-  );
+  getIt.registerLazySingleton<T>(() => mockObject, instanceName: instanceName);
 }
 
 void unregisterTestInjection() {

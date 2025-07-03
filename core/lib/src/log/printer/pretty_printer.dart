@@ -25,13 +25,13 @@ class SimplePrettyPrinter extends PrettyPrinter {
 
   @override
   Map<Level, AnsiColor>? get levelColors => {
-        Level.info: const AnsiColor.fg(178), // Golden
-        Level.warning: const AnsiColor.fg(214), // Orange
-        Level.debug: const AnsiColor.fg(150), // Green
-        Level.trace: const AnsiColor.fg(8), // Grey
-        Level.error: const AnsiColor.fg(196), // Red
-        Level.fatal: const AnsiColor.fg(199), // Magenta
-      };
+    Level.info: const AnsiColor.fg(178), // Golden
+    Level.warning: const AnsiColor.fg(214), // Orange
+    Level.debug: const AnsiColor.fg(150), // Green
+    Level.trace: const AnsiColor.fg(8), // Grey
+    Level.error: const AnsiColor.fg(196), // Red
+    Level.fatal: const AnsiColor.fg(199), // Magenta
+  };
 
   @override
   Map<Level, String>? get levelEmojis =>

@@ -5,14 +5,7 @@ import 'package:logger/logger.dart';
 
 import '../../core.dart';
 
-enum LogType {
-  trace,
-  debug,
-  info,
-  warning,
-  error,
-  fatal,
-}
+enum LogType { trace, debug, info, warning, error, fatal }
 
 @LazySingleton()
 class Log {

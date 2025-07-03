@@ -10,14 +10,14 @@ import '../log/printer/pretty_printer.dart';
 @module
 abstract class RegisterModule {
   Logger get logger => Logger(
-        filter: ReleaseLogFilter(
-          excludedLevels: {
-            // Add your excluded log levels here e.g: [Level.info]
-            // Level.info
-          },
-        ),
-        printer: SimplePrettyPrinter(),
-      );
+    filter: ReleaseLogFilter(
+      excludedLevels: {
+        // Add your excluded log levels here e.g: [Level.info]
+        // Level.info
+      },
+    ),
+    printer: SimplePrettyPrinter(),
+  );
 
   @preResolve
   Future<PackageInfo> get packageInfo => PackageInfo.fromPlatform();

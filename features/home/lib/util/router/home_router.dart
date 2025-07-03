@@ -9,9 +9,6 @@ class HomeRouter extends RootStackRouter {
   HomeRouter() : super(navigatorKey: Routers.navigatorKey);
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(
-          page: HomeRoute.page,
-          path: '/home',
-        ),
-      ];
+    AutoRoute(page: HomeRoute.page, path: '/home'),
+  ];
 }

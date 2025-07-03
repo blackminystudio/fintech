@@ -33,15 +33,7 @@ class DeviceUtil {
       final version = iosInfo.systemVersion;
       final name = iosInfo.name;
       final model = iosInfo.model;
-      deviceInfo.writeAll([
-        systemName,
-        ' ',
-        version,
-        ', ',
-        name,
-        ' ',
-        model,
-      ]);
+      deviceInfo.writeAll([systemName, ' ', version, ', ', name, ' ', model]);
     }
 
     return deviceInfo.toString();
