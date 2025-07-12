@@ -9,6 +9,8 @@ class HomeConstants {
   static const String debitedLabel = 'Debited';
   static const String creditedLabel = 'Credited';
   static const String obscureBalance = '*******';
+  static const String percentage = '%';
+  static const String currency = '₹';
 
   // Icons
   static const IconData greetingIcon = Iconsax.cloud_sunny;
