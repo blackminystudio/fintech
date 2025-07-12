@@ -1,4 +1,6 @@
-class AuthEntity {
+import 'package:core/core.dart';
+
+class AuthEntity extends Equatable {
   const AuthEntity({
     required this.email,
     required this.createdAt,
@@ -18,11 +20,21 @@ class AuthEntity {
     String? photoUrl,
     DateTime? createdAt,
     DateTime? lastLoginAt,
-  }) => AuthEntity(
-    email: email ?? this.email,
-    displayName: displayName ?? this.displayName,
-    photoUrl: photoUrl ?? this.photoUrl,
-    createdAt: createdAt ?? this.createdAt,
-    lastLoginAt: lastLoginAt ?? this.lastLoginAt,
-  );
+  }) =>
+      AuthEntity(
+        email: email ?? this.email,
+        displayName: displayName ?? this.displayName,
+        photoUrl: photoUrl ?? this.photoUrl,
+        createdAt: createdAt ?? this.createdAt,
+        lastLoginAt: lastLoginAt ?? this.lastLoginAt,
+      );
+
+  @override
+  List<Object?> get props => [
+        email,
+        createdAt,
+        lastLoginAt,
+        displayName,
+        photoUrl,
+      ];
 }

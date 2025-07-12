@@ -20,6 +20,7 @@ export 'src/log/log.dart';
 export 'src/modules/app_modules.dart';
 export 'src/router/router.dart';
 export 'src/storages/storages.dart';
+export 'src/test/test.dart';
 export 'src/typedef/typedef.dart';
 export 'src/usecases/usecase.dart';
 export 'src/utils/utils.dart';

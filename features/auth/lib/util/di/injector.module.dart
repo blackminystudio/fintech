@@ -13,13 +13,22 @@ import 'package:auth/domain/repositories/auth_repository.dart' as _i698;
 import 'package:auth/domain/use_cases/get_loggedin_user.dart' as _i775;
 import 'package:auth/domain/use_cases/logout.dart' as _i477;
 import 'package:auth/domain/use_cases/sign_in_with_google.dart' as _i154;
+import 'package:auth/util/di/service_module.dart' as _i34;
+import 'package:firebase_auth/firebase_auth.dart' as _i59;
+import 'package:google_sign_in/google_sign_in.dart' as _i116;
 import 'package:injectable/injectable.dart' as _i526;
 
 class AuthPackageModule extends _i526.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.lazySingleton<_i681.AuthService>(() => _i295.AuthServiceImpl());
+    final serviceModule = _$ServiceModule();
+    gh.lazySingleton<_i59.FirebaseAuth>(() => serviceModule.firebaseAuth);
+    gh.lazySingleton<_i116.GoogleSignIn>(() => serviceModule.googleSignIn);
+    gh.lazySingleton<_i681.AuthService>(() => _i295.AuthServiceImpl(
+          firebaseAuth: gh<_i59.FirebaseAuth>(),
+          googleSignIn: gh<_i116.GoogleSignIn>(),
+        ));
     gh.lazySingleton<_i698.AuthRepository>(
         () => _i288.AuthRepositoryImpl(gh<_i681.AuthService>()));
     gh.factory<_i154.SignInWithGoogle>(
@@ -29,3 +38,5 @@ class AuthPackageModule extends _i526.MicroPackageModule {
         () => _i775.GetLoggedInUser(gh<_i698.AuthRepository>()));
   }
 }
+
+class _$ServiceModule extends _i34.ServiceModule {}
