@@ -6,12 +6,17 @@ import 'auth_service.dart';
 
 @LazySingleton(as: AuthService)
 class AuthServiceImpl implements AuthService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  AuthServiceImpl({
+    required this.firebaseAuth,
+    required this.googleSignIn,
+  });
+
+  final FirebaseAuth firebaseAuth;
+  final GoogleSignIn googleSignIn;
 
   @override
   Future<User> signInWithGoogle() async {
-    final googleUser = await _googleSignIn.signIn();
+    final googleUser = await googleSignIn.signIn();
     // Custom exception if the user cancels the sign-in
     if (googleUser == null) {
       throw const AppException(
@@ -28,7 +33,7 @@ class AuthServiceImpl implements AuthService {
       idToken: googleAuth.idToken,
     );
 
-    final userCred = await _firebaseAuth.signInWithCredential(credential);
+    final userCred = await firebaseAuth.signInWithCredential(credential);
     final user = userCred.user;
 
     if (user == null) {
@@ -45,18 +50,18 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<User?> getCurrentUser() async {
-    final user = _firebaseAuth.currentUser;
+    final user = firebaseAuth.currentUser;
     if (user == null) return null;
     await user.reload();
-    return _firebaseAuth.currentUser;
+    return firebaseAuth.currentUser;
   }
 
   @override
   Future<void> logout() async {
-    await _googleSignIn.signOut();
-    await _firebaseAuth.signOut();
+    await googleSignIn.signOut();
+    await firebaseAuth.signOut();
   }
 
   @override
-  Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
+  Stream<User?> authStateChanges() => firebaseAuth.authStateChanges();
 }

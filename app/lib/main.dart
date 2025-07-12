@@ -1,12 +1,11 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   await AppModules.initialize();
   runApp(
     ScreenUtilInit(
-      designSize: const Size(440, 956),
+      designSize: designSize,
       minTextAdapt: true,
       child: const ProviderScope(child: MyApp()),
       builder: (context, child) => child!,

@@ -10,9 +10,12 @@ final authRepoProvider = Provider<AuthRepository>(
   (ref) => getIt<AuthRepository>(),
 );
 
-final logoutProvider = Provider<Logout>((ref) => getIt<Logout>());
+final logoutProvider = Provider<Logout>(
+  (ref) => Logout(ref.read(authRepoProvider)),
+);
+
 final signInWithGoogleProvider = Provider<SignInWithGoogle>(
-  (ref) => getIt<SignInWithGoogle>(),
+  (ref) => SignInWithGoogle(ref.read(authRepoProvider)),
 );
 
 final authStoreProvider = StateNotifierProvider<AuthStore, AuthState>(

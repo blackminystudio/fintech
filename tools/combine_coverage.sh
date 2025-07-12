@@ -2,8 +2,6 @@
 
 escapedPath="$(echo `pwd` | sed 's/\//\\\//g')"
 
-# ignoredPaths=("mystiq_types")
-
 # # shellcheck disable=SC2068
 # for ignoredPath in ${ignoredPaths[@]}; do
 #   if [[ "$escapedPath" == *"$ignoredPath"* ]]; then
