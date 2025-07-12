@@ -19,11 +19,8 @@ dependencies:
   home:
     path: ../features/home
 
-  # External Packages
-  flutter_screenutil: ^5.9.3
-
 dev_dependencies:
-  flutter_lints: ^5.0.0
+  flutter_lints: 5.0.0
   flutter_test:
     sdk: flutter
 
