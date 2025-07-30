@@ -10,6 +10,8 @@ class AuthConstants {
   static const String andText = ' & ';
   static const String privacyPolicyText = 'Privacy Policy';
   static const String googleButtonLabel = 'Sign up with google';
+  static const String cancelledSignIn =
+      'What Happened? You cancelled the sign-in process.';
 }
 
 class ImagePath {

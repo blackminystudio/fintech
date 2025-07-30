@@ -3,11 +3,17 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+const testUid = 'uid_alice_123';
 const testEmail = 'alice@example.com';
 const testDisplayName = 'Alice';
 const testPhotoUrl = 'https://avatar/';
 final testCreatedAt = DateTime(2025, 1, 1, 12);
 final testLastLoginAt = DateTime(2025, 1, 2, 8, 30);
+
+// Mocks
+const testError = 'test-error';
+const testMessage = 'something went wrong';
+const testPlugin = 'firebase_auth';
 
 // new values
 const newEmail = 'bob@example.org';

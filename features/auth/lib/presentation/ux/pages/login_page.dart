@@ -24,7 +24,7 @@ class LoginPage extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'What Happened? You cancelled the sign-in process.',
+              AuthConstants.cancelledSignIn,
               style: theme.textStyle.bodySmall,
             ),
             showCloseIcon: true,

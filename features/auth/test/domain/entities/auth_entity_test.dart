@@ -13,8 +13,7 @@ void main() {
       lastLoginAt: testLastLoginAt,
     );
 
-    test(
-        'Given a newly constructed entity '
+    test('Given a newly constructed entity '
         'When inspecting its fields '
         'Then all properties match the constructor arguments', () {
       expect(baseAuthEntity.email, testEmail);
@@ -24,8 +23,7 @@ void main() {
       expect(baseAuthEntity.lastLoginAt, testLastLoginAt);
     });
 
-    test(
-        'Given an entity '
+    test('Given an entity '
         'When copyWith() is called with partial overrides '
         'Then only those fields change and others remain intact', () {
       final updatedAuthEntity = baseAuthEntity.copyWith(
@@ -39,8 +37,7 @@ void main() {
       expect(updatedAuthEntity.createdAt, baseAuthEntity.createdAt);
     });
 
-    test(
-        'Given an entity '
+    test('Given an entity '
         'When copyWith() is called with no arguments '
         'Then a new instance is returned with identical values', () {
       final copyAuthEntity = baseAuthEntity.copyWith();
@@ -53,11 +50,10 @@ void main() {
       expect(copyAuthEntity.lastLoginAt, baseAuthEntity.lastLoginAt);
     });
 
-    test(
-        'Given two separate instances constructed with the same data '
+    test('Given two separate instances constructed with the same data '
         'When comparing them '
         'Then they are considered equal by value', () {
-      final otherAuthEnity = AuthEntity(
+      final otherAuthEntity = AuthEntity(
         email: baseAuthEntity.email,
         displayName: baseAuthEntity.displayName,
         photoUrl: baseAuthEntity.photoUrl,
@@ -65,7 +61,7 @@ void main() {
         lastLoginAt: baseAuthEntity.lastLoginAt,
       );
 
-      expect(otherAuthEnity, equals(baseAuthEntity));
+      expect(otherAuthEntity, equals(baseAuthEntity));
     });
   });
 }

@@ -5,6 +5,7 @@ import 'package:core/core.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter_test/flutter_test.dart';
 
+import 'auth_test_helper.dart';
 import 'mocks.dart';
 
 class FakePageRouteInfo extends Fake implements PageRouteInfo {}
@@ -27,10 +28,7 @@ class FakeLogout extends Logout {
 }
 
 class FakeUserMetadata extends Fake implements fb.UserMetadata {
-  FakeUserMetadata({
-    required this.creationTime,
-    required this.lastSignInTime,
-  });
+  FakeUserMetadata({required this.creationTime, required this.lastSignInTime});
   @override
   final DateTime? creationTime;
   @override
@@ -40,9 +38,9 @@ class FakeUserMetadata extends Fake implements fb.UserMetadata {
 class FirebaseAuthExceptionMock extends Fake
     implements fb.FirebaseAuthException {
   FirebaseAuthExceptionMock({
-    this.code = 'test-error',
-    this.message = 'something went wrong',
-    this.plugin = 'firebase_auth',
+    this.code = testError,
+    this.message = testMessage,
+    this.plugin = testPlugin,
   });
   @override
   final String code;
@@ -59,13 +57,13 @@ class FakeFbUser extends Fake implements fb.User {
     String? photoURL,
     DateTime? creationTime,
     DateTime? lastSignInTime,
-  })  : metadata = FakeUserMetadata(
-          creationTime: creationTime,
-          lastSignInTime: lastSignInTime,
-        ),
-        _email = email,
-        _displayName = displayName,
-        _photoURL = photoURL;
+  }) : metadata = FakeUserMetadata(
+         creationTime: creationTime,
+         lastSignInTime: lastSignInTime,
+       ),
+       _email = email,
+       _displayName = displayName,
+       _photoURL = photoURL;
 
   final String? _email;
   final String? _displayName;
