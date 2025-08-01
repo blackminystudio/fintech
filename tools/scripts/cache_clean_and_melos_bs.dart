@@ -6,7 +6,7 @@ import 'package:glob/list_local_fs.dart';
 
 Future<void> main() async {
   print('Starting cache clean and melos bootstrap script.');
-  final configFile = File('tools/cache_clean_script_config.json');
+  final configFile = File('tools/scripts/cache_clean_script_config.json');
   final config =
       json.decode(await configFile.readAsString()) as Map<String, dynamic>;
 
@@ -115,8 +115,8 @@ Future<bool> runProcess(String command, List<String> arguments) async {
       .transform(utf8.decoder)
       .transform(const LineSplitter())
       .listen((line) {
-        print('Error: $line');
-      });
+    print('Error: $line');
+  });
 
   // Wait for the process to complete and then cancel the subscriptions.
   final exitCode = await process.exitCode;

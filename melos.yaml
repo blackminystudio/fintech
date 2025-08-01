@@ -4,6 +4,7 @@ packages:
   - app
   - core
   - features/*
+  - tools/bricks/feature/hooks
 
 command:
   version:
@@ -54,10 +55,10 @@ command:
 
 scripts:
   analyze: dart format . --set-exit-if-changed && flutter analyze --fatal-infos .
-  gen_coverage: melos exec -- "\$MELOS_ROOT_PATH/tools/combine_coverage.sh"
+  gen_coverage: melos exec -- "\$MELOS_ROOT_PATH/tools/scripts/combine_coverage.sh"
 
   cache_clean:
-    run: dart run tools/cache_clean_and_melos_bs.dart
+    run: dart run tools/scripts/cache_clean_and_melos_bs.dart
     description: Clean pub cache and run melos bootstrap
 
   build-core:
