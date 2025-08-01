@@ -1,7 +1,10 @@
 analyzer:
   language:
     strict-casts: true
-  exclude: [/*/**.g.dart, plugin/google_maps/**]
+  exclude: 
+    - /*/**.g.dart
+    - plugin/google_maps/**
+    - "**/__brick__/**"
 
 linter:
   rules:
