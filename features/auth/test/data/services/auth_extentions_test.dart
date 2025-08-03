@@ -7,8 +7,7 @@ import '../../helpers/fakes.dart';
 
 void main() {
   group('UserExtension.toAuthModel', () {
-    test(
-        'Given a Firebase User with full metadata, '
+    test('Given a Firebase User with full metadata, '
         'when toAuthModel() is called, '
         'then it produces an AuthModel with matching fields', () {
       final fb.User fake = FakeFbUser(
@@ -28,8 +27,7 @@ void main() {
       expect(model.lastLoginAt, testLastLoginAt);
     });
 
-    test(
-        'Given a Firebase User with null email/displayName/photoURL, '
+    test('Given a Firebase User with null email/displayName/photoURL, '
         'when toAuthModel() is called, '
         'then defaults are applied correctly', () {
       final fb.User fake = FakeFbUser(
@@ -46,8 +44,7 @@ void main() {
       expect(model.lastLoginAt, testLastLoginAt);
     });
 
-    test(
-        'Given metadata missing creation or sign-in times, '
+    test('Given metadata missing creation or sign-in times, '
         'when toAuthModel() is called, '
         'then fallback to DateTime.now() for missing values', () {
       final fb.User fake = FakeFbUser(

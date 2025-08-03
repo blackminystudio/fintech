@@ -1,10 +1,11 @@
 import 'dart:developer' as dev;
 
+import 'package:core/core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import '../../core.dart';
+import '../di/configure_dependencies.dart';
 import '../services/firebase_options.dart';
 
 class AppModules {

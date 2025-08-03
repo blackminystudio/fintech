@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:home/home.dart';
 
 import '../../../util/router/auth_router.gr.dart';
 import '../../store/auth_store_provider.dart';
@@ -14,7 +13,7 @@ class LoadingPage extends ConsumerWidget {
     ref.listen<AuthState>(authStoreProvider, (prev, next) {
       switch (next.status) {
         case AuthStatus.authenticated:
-          context.router.replace(const HomeRoute());
+          context.router.replacePath('/home');
           break;
         case AuthStatus.unauthenticated:
           context.router.replace(const LoginRoute());

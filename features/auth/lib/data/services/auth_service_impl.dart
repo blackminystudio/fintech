@@ -6,10 +6,7 @@ import 'auth_service.dart';
 
 @LazySingleton(as: AuthService)
 class AuthServiceImpl implements AuthService {
-  AuthServiceImpl({
-    required this.firebaseAuth,
-    required this.googleSignIn,
-  });
+  AuthServiceImpl({required this.firebaseAuth, required this.googleSignIn});
 
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;

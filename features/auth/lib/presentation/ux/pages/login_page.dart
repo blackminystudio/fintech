@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:home/util/router/home_router.gr.dart';
 
 import '../../../auth.dart';
 import '../../../util/constants/auth_constants.dart';
@@ -36,7 +35,7 @@ class LoginPage extends ConsumerWidget {
 
     Future<void> _handleLogin() async {
       await ref.read(authStoreProvider.notifier).signInWithGoogle();
-      await context.router.replace(const HomeRoute());
+      await context.router.replacePath('/home');
     }
 
     return Scaffold(

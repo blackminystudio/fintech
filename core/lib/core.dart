@@ -13,15 +13,14 @@ export 'package:json_annotation/json_annotation.dart';
 export 'package:miny_design_system/miny_design_system.dart';
 
 // Internal Dependencies
-export 'src/di/service_locator.dart';
 export 'src/exceptions/exceptions.dart';
 export 'src/extensions/extensions.dart';
 export 'src/helpers/helpers.dart';
 export 'src/log/log.dart';
-export 'src/modules/app_modules.dart';
 export 'src/router/router.dart';
 export 'src/storages/storages.dart';
 export 'src/test/test.dart';
 export 'src/typedef/typedef.dart';
 export 'src/usecases/usecase.dart';
+export 'src/utils/di/service_locator.dart';
 export 'src/utils/utils.dart';

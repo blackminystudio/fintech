@@ -18,7 +18,7 @@ import 'package:auto_route/auto_route.dart' as _i4;
 /// [_i1.DisabledUserPage]
 class DisabledUserRoute extends _i4.PageRouteInfo<void> {
   const DisabledUserRoute({List<_i4.PageRouteInfo>? children})
-      : super(DisabledUserRoute.name, initialChildren: children);
+    : super(DisabledUserRoute.name, initialChildren: children);
 
   static const String name = 'DisabledUserRoute';
 
@@ -34,7 +34,7 @@ class DisabledUserRoute extends _i4.PageRouteInfo<void> {
 /// [_i2.LoadingPage]
 class LoadingRoute extends _i4.PageRouteInfo<void> {
   const LoadingRoute({List<_i4.PageRouteInfo>? children})
-      : super(LoadingRoute.name, initialChildren: children);
+    : super(LoadingRoute.name, initialChildren: children);
 
   static const String name = 'LoadingRoute';
 
@@ -50,7 +50,7 @@ class LoadingRoute extends _i4.PageRouteInfo<void> {
 /// [_i3.LoginPage]
 class LoginRoute extends _i4.PageRouteInfo<void> {
   const LoginRoute({List<_i4.PageRouteInfo>? children})
-      : super(LoginRoute.name, initialChildren: children);
+    : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 

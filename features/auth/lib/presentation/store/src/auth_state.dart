@@ -19,12 +19,11 @@ class AuthState extends Equatable {
     AuthEntity? authEntity,
     AuthStatus? status,
     AppException? exception,
-  }) =>
-      AuthState(
-        authEntity: authEntity ?? this.authEntity,
-        status: status ?? this.status,
-        exception: exception,
-      );
+  }) => AuthState(
+    authEntity: authEntity ?? this.authEntity,
+    status: status ?? this.status,
+    exception: exception,
+  );
 
   @override
   List<Object?> get props => [authEntity, exception, status];

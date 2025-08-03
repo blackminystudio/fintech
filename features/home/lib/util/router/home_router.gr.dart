@@ -16,7 +16,7 @@ import 'package:home/presentation/pages/home_page.dart' as _i1;
 /// [_i1.HomePage]
 class HomeRoute extends _i2.PageRouteInfo<void> {
   const HomeRoute({List<_i2.PageRouteInfo>? children})
-      : super(HomeRoute.name, initialChildren: children);
+    : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 

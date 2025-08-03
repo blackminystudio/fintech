@@ -115,8 +115,8 @@ Future<bool> runProcess(String command, List<String> arguments) async {
       .transform(utf8.decoder)
       .transform(const LineSplitter())
       .listen((line) {
-        print('Error: $line');
-      });
+    print('Error: $line');
+  });
 
   // Wait for the process to complete and then cancel the subscriptions.
   final exitCode = await process.exitCode;

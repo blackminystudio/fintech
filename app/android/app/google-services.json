@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "911090474857",
+    "project_id": "tacklepay-dev",
+    "storage_bucket": "tacklepay-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911090474857:android:d128aa5f85c4c126a9e7f8",
+        "android_client_info": {
+          "package_name": "com.blackminystudio.tacklepaydev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911090474857-gbiv6ervnc8ptjmhtfkvrp8hmv5chmor.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blackminystudio.tacklepaydev",
+            "certificate_hash": "83364fc3b484a6c126e8a28088f9faba9a2fa6d1"
+          }
+        },
+        {
+          "client_id": "911090474857-i5nsc7b060oa25q7hkecqv9cfsamr2i0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blackminystudio.tacklepaydev",
+            "certificate_hash": "d9b8e712f7c82661eaa7a645fcc2557840087bf5"
+          }
+        },
+        {
+          "client_id": "911090474857-je81f1fqguo9gcf2nifs2ukgn3nsfhaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQUss85fygRo2G2bdiahvh2VmHbX13Em8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911090474857-je81f1fqguo9gcf2nifs2ukgn3nsfhaq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911090474857-doi59nsjpoca7b904uvcu8j3oouchd5f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fintechapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911090474857:android:eba1e0e363cd3092a9e7f8",
+        "android_client_info": {
+          "package_name": "com.example.fintechapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911090474857-jqq14gm8lf9fgjkui333on885nfnig3l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fintechapp",
+            "certificate_hash": "933826cf9b494c0480234c4bd7c15af7af04883e"
+          }
+        },
+        {
+          "client_id": "911090474857-lchfv3rkokucosvpn3qo4vu6939h4ebl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fintechapp",
+            "certificate_hash": "d9b8e712f7c82661eaa7a645fcc2557840087bf5"
+          }
+        },
+        {
+          "client_id": "911090474857-pp5o224t8j05fcj085tuj9b943l4kkio.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fintechapp",
+            "certificate_hash": "83364fc3b484a6c126e8a28088f9faba9a2fa6d1"
+          }
+        },
+        {
+          "client_id": "911090474857-je81f1fqguo9gcf2nifs2ukgn3nsfhaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQUss85fygRo2G2bdiahvh2VmHbX13Em8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911090474857-je81f1fqguo9gcf2nifs2ukgn3nsfhaq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911090474857-doi59nsjpoca7b904uvcu8j3oouchd5f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fintechapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

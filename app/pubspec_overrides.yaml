@@ -1,7 +1,9 @@
-# melos_managed_dependency_overrides: auth,core,home
+# melos_managed_dependency_overrides: auth,config,core,home
 dependency_overrides:
   auth:
     path: ../features/auth
+  config:
+    path: ../config
   core:
     path: ../core
   home:

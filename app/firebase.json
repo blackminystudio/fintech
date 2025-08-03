@@ -11,7 +11,7 @@
             "ios": {
                 "default": {
                     "projectId": "tacklepay-dev",
-                    "appId": "1:911090474857:ios:a99be3d7cfcfb96fa9e7f8",
+                    "appId": "1:911090474857:ios:97e5ead604b6c580a9e7f8",
                     "uploadDebugSymbols": false,
                     "fileOutput": "ios/Runner/GoogleService-Info.plist"
                 }
@@ -21,7 +21,7 @@
                     "projectId": "tacklepay-dev",
                     "configurations": {
                         "android": "1:911090474857:android:eba1e0e363cd3092a9e7f8",
-                        "ios": "1:911090474857:ios:a99be3d7cfcfb96fa9e7f8",
+                        "ios": "1:911090474857:ios:97e5ead604b6c580a9e7f8",
                         "web": "1:911090474857:web:0a29ac106093d892a9e7f8"
                     }
                 }

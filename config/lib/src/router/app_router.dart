@@ -1,7 +1,5 @@
 import 'package:auth/auth.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:core/core.dart';
 import 'package:home/home.dart';
 
 @AutoRouterConfig(replaceInRouteName: Routers.replaceInRouteName)
@@ -21,11 +19,6 @@ final class AppRouter extends RootStackRouter {
     ...AuthRouter().routes,
     ...HomeRouter().routes.withGuards([AuthGuard(ref)]),
   ];
-}
-
-abstract class Routers {
-  static const String replaceInRouteName = 'Page|Screen,Route';
-  static final navigatorKey = GlobalKey<NavigatorState>();
 }
 
 extension AutoRouteListGuardX on List<AutoRoute> {
