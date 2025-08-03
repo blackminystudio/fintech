@@ -5,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 const testUid = 'uid_alice_123';
 const testEmail = 'alice@example.com';
+const testUpdatedEmail = 'updated@test.com';
 const testDisplayName = 'Alice';
+const testUpdatedName = 'Bob';
 const testPhotoUrl = 'https://avatar/';
 final testCreatedAt = DateTime(2025, 1, 1, 12);
 final testLastLoginAt = DateTime(2025, 1, 2, 8, 30);
@@ -14,6 +16,7 @@ final testLastLoginAt = DateTime(2025, 1, 2, 8, 30);
 const testError = 'test-error';
 const testMessage = 'something went wrong';
 const testPlugin = 'firebase_auth';
+const testCode = 'failed';
 
 // new values
 const newEmail = 'bob@example.org';

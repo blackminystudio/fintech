@@ -30,65 +30,56 @@ void main() {
   }
 
   group('LoginPage UI', () {
-    testWidgets(
-      'Given status is loading, '
-      'When LoginPage is built, '
-      'Then shows CircularProgressIndicator',
-      (tester) async {
-        await pumpPage(tester);
-        mockStore.setStatus(AuthStatus.loading);
-        await tester.pump();
-        expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      },
-    );
+    testWidgets('Given status is loading, '
+        'When LoginPage is built, '
+        'Then shows CircularProgressIndicator', (tester) async {
+      await pumpPage(tester);
+      mockStore.setStatus(AuthStatus.loading);
+      await tester.pump();
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
 
-    testWidgets(
-      'Given status is unauthenticated, '
-      'When LoginPage is built, '
-      'Then shows Google sign-in button',
-      (tester) async {
-        await pumpPage(tester);
-        expect(find.text(AuthConstants.googleButtonLabel), findsOneWidget);
-      },
-    );
+    testWidgets('Given status is unauthenticated, '
+        'When LoginPage is built, '
+        'Then shows Google sign-in button', (tester) async {
+      await pumpPage(tester);
+      expect(find.text(AuthConstants.googleButtonLabel), findsOneWidget);
+    });
 
-    testWidgets(
-      'Given sign-in was cancelled, '
-      'When state is updated, '
-      'Then shows cancellation snackbar',
-      (tester) async {
-        await pumpPage(tester);
-        mockStore.state = const AuthState(
-          exception: AppException(
-            errorType: ErrorType.signinCancelled,
-            message: 'Sign in cancelled',
-          ),
-        );
-        await tester.pump();
-        expect(
-          find.text('What Happened? You cancelled the sign-in process.'),
-          findsOneWidget,
-        );
-      },
-    );
+    testWidgets('Given sign-in was cancelled, '
+        'When state is updated, '
+        'Then shows cancellation snackbar', (tester) async {
+      await pumpPage(tester);
+      mockStore.state = const AuthState(
+        exception: AppException(
+          errorType: ErrorType.signinCancelled,
+          message: testMessage,
+        ),
+      );
+      await tester.pump();
+      expect(
+        find.text('What Happened? You cancelled the sign-in process.'),
+        findsOneWidget,
+      );
+    });
   });
 
   group('LoginPage Actions', () {
-    testWidgets(
-      'Given status is unauthenticated, '
-      'When Google button is tapped, '
-      'Then signInWithGoogle is triggered and navigates to Home',
-      (tester) async {
-        when(() => mockRouter.replace(const HomeRoute()))
-            .thenAnswer((_) async => null);
+    testWidgets('Given status is unauthenticated, '
+        'When Google button is tapped, '
+        'Then signInWithGoogle is triggered and navigates to Home', (
+      tester,
+    ) async {
+      when(
+        () => mockRouter.replace(const HomeRoute()),
+      ).thenAnswer((_) async => null);
 
-        await pumpPage(tester);
-        await tester.tap(find.text(AuthConstants.googleButtonLabel));
-        await tester.pumpAndSettle();
+      await pumpPage(tester);
+      await tester.tap(find.text(AuthConstants.googleButtonLabel));
+      await tester.pumpAndSettle();
 
-        expect(mockStore.signInCalled, isTrue);
-        verify(() => mockRouter.replace(const HomeRoute())).called(1);
-      },
-    );
+      expect(mockStore.signInCalled, isTrue);
+      verify(() => mockRouter.replace(const HomeRoute())).called(1);
+    });
   });
 }

@@ -79,7 +79,7 @@ void main() {
         'When getCurrentUser() is called '
         'Then returns that user', () async {
       // Given
-      final user = MockUser(uid: 'u1');
+      final user = MockUser(uid: testUid);
       createService(user: user, signedIn: true);
 
       // When

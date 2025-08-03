@@ -28,14 +28,24 @@ void main() {
     );
   }
 
-  testWidgets('displays error & logout button', (tester) async {
+  testWidgets('Given DisabledUserPage '
+      'When the page is rendered '
+      'Then it should display the error message and logout button', (
+    tester,
+  ) async {
     await pumpPage(tester);
-    expect(find.text('Your account has been disabled due to violation.'),
-        findsOneWidget);
+    expect(
+      find.text('Your account has been disabled due to violation.'),
+      findsOneWidget,
+    );
     expect(find.text('logout'), findsOneWidget);
   });
 
-  testWidgets('logout calls store and navigates', (tester) async {
+  testWidgets('Given user on DisabledUserPage '
+      'When logout button is tapped '
+      'Then store.loggedOut is true and navigates to HomeRoute', (
+    tester,
+  ) async {
     when(
       () => mockRouter.replace(const HomeRoute()),
     ).thenAnswer((_) async => null);

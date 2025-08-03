@@ -3,6 +3,7 @@ import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../helpers/auth_test_helper.dart';
 import '../../helpers/mocks.dart';
 
 void main() {
@@ -16,23 +17,23 @@ void main() {
 
   group('Logout UseCase', () {
     test(
-        'Given repository completes successfully '
-        'When usecase is called '
-        'Then it should complete without error and call logout() once',
-        () async {
-      when(() => mockAuthRepository.logout()).thenAnswer((_) async {});
-      await useCase();
-      verify(() => mockAuthRepository.logout()).called(1);
-    });
+      'Given repository completes successfully '
+      'When usecase is called '
+      'Then it should complete without error and call logout() once',
+      () async {
+        when(() => mockAuthRepository.logout()).thenAnswer((_) async {});
+        await useCase();
+        verify(() => mockAuthRepository.logout()).called(1);
+      },
+    );
 
-    test(
-        'Given repository throws AppException '
+    test('Given repository throws AppException '
         'When usecase is called '
         'Then it should rethrow that exception', () async {
       const failure = AppException(
-        source: 'test',
-        code: 'logout-failed',
-        message: 'Logout failed',
+        source: testPlugin,
+        code: testCode,
+        message: testMessage,
       );
       when(() => mockAuthRepository.logout()).thenThrow(failure);
       expect(() => useCase(), throwsA(failure));

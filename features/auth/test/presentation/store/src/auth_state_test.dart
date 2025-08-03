@@ -15,16 +15,11 @@ void main() {
       photoUrl: testPhotoUrl,
     );
 
-    final updatedEntity = baseEntity.copyWith(email: 'updated@test.com');
-
-    const exception = AppException(
-      source: 'auth',
-      message: 'Something went wrong',
-    );
+    final updatedEntity = baseEntity.copyWith(email: testUpdatedEmail);
+    const exception = AppException(source: testPlugin, message: testMessage);
 
     group('Constructor', () {
-      test(
-          'Given no arguments '
+      test('Given no arguments '
           'When constructed '
           'Then defaults to unauthenticated with null fields', () {
         const state = AuthState();
@@ -35,8 +30,7 @@ void main() {
     });
 
     group('copyWith', () {
-      test(
-          'Given a base state '
+      test('Given a base state '
           'When copyWith is called with all fields '
           'Then creates updated state', () {
         const state = AuthState();
@@ -51,8 +45,7 @@ void main() {
         expect(copied.exception, exception);
       });
 
-      test(
-          'Given a state with exception '
+      test('Given a state with exception '
           'When copyWith is called without exception '
           'Then clears exception', () {
         final state = AuthState(
@@ -68,8 +61,7 @@ void main() {
         expect(copied.exception, isNull);
       });
 
-      test(
-          'Given a state '
+      test('Given a state '
           'When copyWith is called without arguments '
           'Then preserves authEntity and status', () {
         final state = AuthState(
@@ -86,8 +78,7 @@ void main() {
     });
 
     group('Equatable', () {
-      test(
-          'Given two identical auth states '
+      test('Given two identical auth states '
           'When compared '
           'Then returns true', () {
         final a = AuthState(
@@ -105,19 +96,15 @@ void main() {
         expect(a, equals(b));
       });
 
-      test(
-          'Given states with different auth status '
+      test('Given states with different auth status '
           'When compared '
           'Then returns false', () {
-        const a = AuthState(
-          status: AuthStatus.authenticated,
-        );
+        const a = AuthState(status: AuthStatus.authenticated);
         const b = AuthState();
         expect(a, isNot(equals(b)));
       });
 
-      test(
-          'Given states with different authEntity '
+      test('Given states with different authEntity '
           'When compared '
           'Then returns false', () {
         final a = AuthState(
@@ -131,17 +118,14 @@ void main() {
         expect(a, isNot(equals(b)));
       });
 
-      test(
-          'Given states with different exceptions '
+      test('Given states with different exceptions '
           'When compared '
           'Then returns false', () {
         const a = AuthState(
           status: AuthStatus.authenticated,
           exception: exception,
         );
-        const b = AuthState(
-          status: AuthStatus.authenticated,
-        );
+        const b = AuthState(status: AuthStatus.authenticated);
         expect(a, isNot(equals(b)));
       });
     });

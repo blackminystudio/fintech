@@ -34,36 +34,31 @@ void main() {
   });
 
   group('AuthRepositoryImpl.signInWithGoogle', () {
-    test(
-        'Given AuthService.signInWithGoogle succeeds '
+    test('Given AuthService.signInWithGoogle succeeds '
         'When repository.signInWithGoogle is called '
         'Then it should return Right<AuthModel>', () async {
-      when(() => mockAuthService.signInWithGoogle()).thenAnswer(
-        (_) async => user,
-      );
+      when(
+        () => mockAuthService.signInWithGoogle(),
+      ).thenAnswer((_) async => user);
 
       final result = await authRepository.signInWithGoogle();
 
       expect(result.isRight(), isTrue);
-      result.fold(
-        (l) => fail('Expected Right, got Left($l)'),
-        (model) {
-          expect(model, isA<AuthModel>());
-          expect(model.email, testEmail);
-          expect(model.displayName, testDisplayName);
-        },
-      );
+      result.fold((l) => fail('Expected Right, got Left($l)'), (model) {
+        expect(model, isA<AuthModel>());
+        expect(model.email, testEmail);
+        expect(model.displayName, testDisplayName);
+      });
 
       verify(() => mockAuthService.signInWithGoogle()).called(1);
     });
 
-    test(
-        'Given AuthService.signInWithGoogle throws Exception '
+    test('Given AuthService.signInWithGoogle throws Exception '
         'When repository.signInWithGoogle is called '
         'Then it should return Left<AppException>', () async {
-      when(() => mockAuthService.signInWithGoogle()).thenThrow(
-        Exception('oops'),
-      );
+      when(
+        () => mockAuthService.signInWithGoogle(),
+      ).thenThrow(Exception('oops'));
 
       final result = await authRepository.signInWithGoogle();
 
@@ -78,13 +73,12 @@ void main() {
   });
 
   group('AuthRepositoryImpl.getCurrentUser', () {
-    test(
-        'Given AuthService.getCurrentUser returns null '
+    test('Given AuthService.getCurrentUser returns null '
         'When repository.getCurrentUser is called '
         'Then it should return Right(null)', () async {
-      when(() => mockAuthService.getCurrentUser()).thenAnswer(
-        (_) async => null,
-      );
+      when(
+        () => mockAuthService.getCurrentUser(),
+      ).thenAnswer((_) async => null);
 
       final result = await authRepository.getCurrentUser();
 
@@ -92,35 +86,30 @@ void main() {
       verify(() => mockAuthService.getCurrentUser()).called(1);
     });
 
-    test(
-        'Given AuthService.getCurrentUser returns a User '
+    test('Given AuthService.getCurrentUser returns a User '
         'When repository.getCurrentUser is called '
         'Then it should return Right<AuthModel>', () async {
-      when(() => mockAuthService.getCurrentUser()).thenAnswer(
-        (_) async => user,
-      );
+      when(
+        () => mockAuthService.getCurrentUser(),
+      ).thenAnswer((_) async => user);
 
       final result = await authRepository.getCurrentUser();
 
       expect(result.isRight(), isTrue);
-      result.fold(
-        (l) => fail('Expected Right, got Left($l)'),
-        (model) {
-          expect(model, isNotNull);
-          expect(model!.email, testEmail);
-        },
-      );
+      result.fold((l) => fail('Expected Right, got Left($l)'), (model) {
+        expect(model, isNotNull);
+        expect(model!.email, testEmail);
+      });
 
       verify(() => mockAuthService.getCurrentUser()).called(1);
     });
 
-    test(
-        'Given AuthService.getCurrentUser throws FirebaseAuthException '
+    test('Given AuthService.getCurrentUser throws FirebaseAuthException '
         'When repository.getCurrentUser is called '
         'Then it should return Left<AppException>', () async {
-      when(() => mockAuthService.getCurrentUser()).thenThrow(
-        FirebaseAuthExceptionMock(),
-      );
+      when(
+        () => mockAuthService.getCurrentUser(),
+      ).thenThrow(FirebaseAuthExceptionMock());
 
       final result = await authRepository.getCurrentUser();
 
@@ -135,71 +124,66 @@ void main() {
   });
 
   group('AuthRepositoryImpl.watchAuth', () {
-    test(
-        'Given authStateChanges emits null '
+    test('Given authStateChanges emits null '
         'When repository.watchAuth is listened '
         'Then it emits a single Right(null) and completes', () async {
-      when(() => mockAuthService.authStateChanges()).thenAnswer(
-        (_) => Stream.value(null),
-      );
+      when(
+        () => mockAuthService.authStateChanges(),
+      ).thenAnswer((_) => Stream.value(null));
 
       final events = await authRepository.watchAuth().toList();
       expect(events, [const Right<AppException, AuthModel?>(null)]);
     });
 
-    test(
-        'Given authStateChanges emits a User and getCurrentUser succeeds '
+    test('Given authStateChanges emits a User and getCurrentUser succeeds '
         'When repository.watchAuth is listened '
         'Then it emits a single Right<AuthModel>', () async {
-      when(() => mockAuthService.authStateChanges()).thenAnswer(
-        (_) => Stream.value(user),
-      );
-      when(() => mockAuthService.getCurrentUser()).thenAnswer(
-        (_) async => user,
-      );
+      when(
+        () => mockAuthService.authStateChanges(),
+      ).thenAnswer((_) => Stream.value(user));
+      when(
+        () => mockAuthService.getCurrentUser(),
+      ).thenAnswer((_) async => user);
 
       final events = await authRepository.watchAuth().toList();
       expect(events, hasLength(1));
-      events.first.fold(
-        (l) => fail('Expected Right, got Left($l)'),
-        (m) {
-          expect(m, isA<AuthModel>());
-          expect(m!.email, testEmail);
-        },
-      );
+      events.first.fold((l) => fail('Expected Right, got Left($l)'), (m) {
+        expect(m, isA<AuthModel>());
+        expect(m!.email, testEmail);
+      });
 
       verify(() => mockAuthService.authStateChanges()).called(1);
       verify(() => mockAuthService.getCurrentUser()).called(1);
     });
 
     test(
-        'Given authStateChanges emits a User and getCurrentUser throws error '
-        'When repository.watchAuth is listened '
-        'Then it emits a AppException with Error userDisabled and completes',
-        () async {
-      final user = FakeFbUser();
-      when(() => mockAuthService.authStateChanges()).thenAnswer(
-        (_) => Stream.value(user),
-      );
-      when(() => mockAuthService.getCurrentUser()).thenThrow(
-        fb.FirebaseAuthException(code: 'user-disabled'),
-      );
+      'Given authStateChanges emits a User and getCurrentUser throws error '
+      'When repository.watchAuth is listened '
+      'Then it emits a AppException with Error userDisabled and completes',
+      () async {
+        final user = FakeFbUser();
+        when(
+          () => mockAuthService.authStateChanges(),
+        ).thenAnswer((_) => Stream.value(user));
+        when(
+          () => mockAuthService.getCurrentUser(),
+        ).thenThrow(fb.FirebaseAuthException(code: 'user-disabled'));
 
-      final events = await authRepository.watchAuth().toList();
-      expect(events, hasLength(1));
-      expect(events.first.isLeft(), isTrue);
-      events.first.fold(
-        (l) => expect(l.errorType, ErrorType.userDisabled),
-        (r) => fail('Expected Left, got Right($r)'),
-      );
-    });
-    test(
-        'Given authStateChanges throws '
+        final events = await authRepository.watchAuth().toList();
+        expect(events, hasLength(1));
+        expect(events.first.isLeft(), isTrue);
+        events.first.fold(
+          (l) => expect(l.errorType, ErrorType.userDisabled),
+          (r) => fail('Expected Left, got Right($r)'),
+        );
+      },
+    );
+    test('Given authStateChanges throws '
         'When listening to watchAuth '
         'Then it emits a Left from outer catch and completes', () async {
-      when(mockAuthService.authStateChanges).thenAnswer(
-        (_) => Stream.error(Exception('boom')),
-      );
+      when(
+        mockAuthService.authStateChanges,
+      ).thenAnswer((_) => Stream.error(Exception('boom')));
       final events = await authRepository.watchAuth().toList();
       expect(events, hasLength(1));
       expect(events.first.isLeft(), isTrue);
@@ -211,15 +195,12 @@ void main() {
   });
 
   group('AuthRepositoryImpl.logout', () {
-    test(
-      'Given AuthService.logout succeeds '
-      'When repository.logout is called '
-      'Then it should forward the call without error',
-      () async {
-        when(() => mockAuthService.logout()).thenAnswer((_) async {});
-        await authRepository.logout();
-        verify(() => mockAuthService.logout()).called(1);
-      },
-    );
+    test('Given AuthService.logout succeeds '
+        'When repository.logout is called '
+        'Then it should forward the call without error', () async {
+      when(() => mockAuthService.logout()).thenAnswer((_) async {});
+      await authRepository.logout();
+      verify(() => mockAuthService.logout()).called(1);
+    });
   });
 }

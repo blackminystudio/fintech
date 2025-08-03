@@ -29,8 +29,7 @@ void main() {
   });
 
   group('SignInWithGoogle UseCase', () {
-    test(
-        'Given repository returns a valid AuthEntity '
+    test('Given repository returns a valid AuthEntity '
         'When usecase is called '
         'Then it should forward the same AuthEntity in a Right', () async {
       final authEntity = AuthEntity(
@@ -40,9 +39,9 @@ void main() {
         createdAt: testCreatedAt,
         lastLoginAt: testLastLoginAt,
       );
-      when(() => mockAuthRepository.signInWithGoogle()).thenAnswer(
-        (_) async => Right(authEntity),
-      );
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenAnswer((_) async => Right(authEntity));
 
       final result = await useCase();
 
@@ -54,19 +53,18 @@ void main() {
       verify(() => mockAuthRepository.signInWithGoogle()).called(1);
     });
 
-    test(
-        'Given repository throws an AppException '
+    test('Given repository throws an AppException '
         'When usecase is called '
         'Then it should return that exception in a Left', () async {
       const failure = AppException(
-        source: 'test',
-        code: 'google-fail',
-        message: 'Google sign-in failed.',
+        source: testPlugin,
+        code: testCode,
+        message: testMessage,
         errorType: ErrorType.invalidCredential,
       );
-      when(() => mockAuthRepository.signInWithGoogle()).thenAnswer(
-        (_) async => const Left(failure),
-      );
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenAnswer((_) async => const Left(failure));
 
       final result = await useCase();
 

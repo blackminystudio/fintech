@@ -13,8 +13,7 @@ void main() {
       lastLoginAt: testLastLoginAt,
     );
 
-    test(
-        'Given two AuthModels with identical data '
+    test('Given two AuthModels with identical data '
         'When comparing them '
         'Then they are equal', () {
       final copy = AuthModel(
@@ -28,16 +27,13 @@ void main() {
       expect(copy, equals(base));
     });
 
-    test(
-        'Given AuthModel '
+    test('Given AuthModel '
         'When copyWith is applied '
         'Then only specified fields change', () {
-      final changed = base.copyWith(
-        displayName: 'Bob',
-      );
+      final changed = base.copyWith(displayName: testUpdatedName);
 
       expect(changed.email, base.email);
-      expect(changed.displayName, 'Bob');
+      expect(changed.displayName, testUpdatedName);
       expect(changed.photoUrl, base.photoUrl);
       expect(changed.createdAt, base.createdAt);
       expect(changed.lastLoginAt, base.lastLoginAt);

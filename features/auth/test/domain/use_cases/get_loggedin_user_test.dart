@@ -21,8 +21,7 @@ void main() {
   });
 
   group('GetLoggedInUser UseCase', () {
-    test(
-        'Given repository returns a valid AuthEntity '
+    test('Given repository returns a valid AuthEntity '
         'When usecase is called '
         'Then it should forward the same AuthEntity in a Right', () async {
       final authEntity = AuthEntity(
@@ -32,52 +31,44 @@ void main() {
         createdAt: testCreatedAt,
         lastLoginAt: testLastLoginAt,
       );
-      when(() => mockAuthRepository.getCurrentUser()).thenAnswer(
-        (_) async => Right(authEntity),
-      );
+      when(
+        () => mockAuthRepository.getCurrentUser(),
+      ).thenAnswer((_) async => Right(authEntity));
 
       final result = await usecase();
 
       expect(result.isRight(), isTrue);
-      result.fold(
-        (_) => fail('Expected a Right but got Left'),
-        (value) {
-          expect(value, equals(authEntity));
-        },
-      );
+      result.fold((_) => fail('Expected a Right but got Left'), (value) {
+        expect(value, equals(authEntity));
+      });
 
       verify(() => mockAuthRepository.getCurrentUser()).called(1);
     });
 
-    test(
-        'Given repository returns null '
+    test('Given repository returns null '
         'When usecase is called '
         'Then it should return Right(null)', () async {
-      when(() => mockAuthRepository.getCurrentUser()).thenAnswer(
-        (_) async => const Right(null),
-      );
+      when(
+        () => mockAuthRepository.getCurrentUser(),
+      ).thenAnswer((_) async => const Right(null));
 
       final result = await usecase();
 
-      expect(
-        result,
-        const Right<AppException, AuthEntity?>(null),
-      );
+      expect(result, const Right<AppException, AuthEntity?>(null));
       verify(() => mockAuthRepository.getCurrentUser()).called(1);
     });
 
-    test(
-        'Given repository throws an AppException '
+    test('Given repository throws an AppException '
         'When usecase is called '
         'Then it should return that exception in a Left', () async {
       const failure = AppException(
-        code: 'oops',
-        source: 'test',
-        message: 'something went wrong',
+        code: testCode,
+        source: testPlugin,
+        message: testMessage,
       );
-      when(() => mockAuthRepository.getCurrentUser()).thenAnswer(
-        (_) async => const Left(failure),
-      );
+      when(
+        () => mockAuthRepository.getCurrentUser(),
+      ).thenAnswer((_) async => const Left(failure));
 
       final result = await usecase();
 

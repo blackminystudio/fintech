@@ -9,20 +9,17 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/mocks.dart';
 
 void main() {
-  test(
-    'Given provider overrides, '
-    'When reading providers, '
-    'Then they resolve correctly',
-    () {
-      getIt.registerFactory<AuthRepository>(MockAuthRepository.new);
-      // Given
-      final container = ProviderContainer();
+  test('Given provider overrides, '
+      'When reading providers, '
+      'Then they resolve correctly', () {
+    getIt.registerFactory<AuthRepository>(MockAuthRepository.new);
+    // Given
+    final container = ProviderContainer();
 
-      // When/Then
-      expect(container.read(authRepoProvider), isA<AuthRepository>());
-      expect(container.read(logoutProvider), isA<Logout>());
-      expect(container.read(signInWithGoogleProvider), isA<SignInWithGoogle>());
-      expect(container.read(authStoreProvider.notifier), isA<AuthStore>());
-    },
-  );
+    // When/Then
+    expect(container.read(authRepoProvider), isA<AuthRepository>());
+    expect(container.read(logoutProvider), isA<Logout>());
+    expect(container.read(signInWithGoogleProvider), isA<SignInWithGoogle>());
+    expect(container.read(authStoreProvider.notifier), isA<AuthStore>());
+  });
 }
