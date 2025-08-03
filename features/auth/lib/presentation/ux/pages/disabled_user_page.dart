@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:home/util/router/home_router.gr.dart';
 
 import '../../store/auth_store_provider.dart';
 
@@ -24,7 +23,7 @@ class DisabledUserPage extends ConsumerWidget {
             ElevatedButton(
               onPressed: () async {
                 await ref.read(authStoreProvider.notifier).logout();
-                await context.router.replace(const HomeRoute());
+                await context.router.replacePath('/home');
               },
               child: const Text('logout'),
             ),

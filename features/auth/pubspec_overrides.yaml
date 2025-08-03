@@ -1,6 +1,4 @@
-# melos_managed_dependency_overrides: core,home
+# melos_managed_dependency_overrides: core
 dependency_overrides:
   core:
     path: ../../core
-  home:
-    path: ../home

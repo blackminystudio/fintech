@@ -4,7 +4,6 @@ import 'package:auth/presentation/ux/pages/loading_page.dart';
 import 'package:auth/util/router/auth_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:home/util/router/home_router.gr.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../helpers/auth_test_helper.dart';
@@ -40,13 +39,11 @@ void main() {
   testWidgets('Given AuthStatus.authenticated '
       'When LoadingPage is built '
       'Then it navigates to HomeRoute', (tester) async {
-    when(
-      () => mockRouter.replace(const HomeRoute()),
-    ).thenAnswer((_) async => null);
+    when(() => mockRouter.replacePath('/home')).thenAnswer((_) async => null);
 
     await pumpPage(tester);
     mockStore.setStatus(AuthStatus.authenticated);
-    verify(() => mockRouter.replace(const HomeRoute())).called(1);
+    verify(() => mockRouter.replacePath('/home')).called(1);
   });
 
   testWidgets('Given AuthStatus.unauthenticated '

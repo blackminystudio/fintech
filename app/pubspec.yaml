@@ -12,12 +12,10 @@ dependencies:
     sdk: flutter
 
   # Internal Packages
-  auth:
-    path: ../features/auth
   core:
     path: ../core
-  home:
-    path: ../features/home
+  config:
+    path: ../config
 
 dev_dependencies:
   flutter_lints: 5.0.0

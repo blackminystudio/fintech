@@ -1,7 +1,6 @@
 import 'package:auth/presentation/store/auth_store_provider.dart';
 import 'package:auth/presentation/ux/pages/disabled_user_page.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:home/util/router/home_router.gr.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../helpers/auth_test_helper.dart';
@@ -46,15 +45,13 @@ void main() {
       'Then store.loggedOut is true and navigates to HomeRoute', (
     tester,
   ) async {
-    when(
-      () => mockRouter.replace(const HomeRoute()),
-    ).thenAnswer((_) async => null);
+    when(() => mockRouter.replacePath('/home')).thenAnswer((_) async => null);
 
     await pumpPage(tester);
     await tester.tap(find.text('logout'));
     await tester.pumpAndSettle();
 
     expect(mockStore.loggedOut, isTrue);
-    verify(() => mockRouter.replace(const HomeRoute())).called(1);
+    verify(() => mockRouter.replacePath('/home')).called(1);
   });
 }

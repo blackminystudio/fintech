@@ -1,10 +1,8 @@
-import 'package:auth/auth.dart';
-import 'package:home/home.dart';
+import 'package:auth/util/di/injector.module.dart';
+import 'package:core/core.dart';
+import 'package:home/util/di/injector.module.dart';
 
-import '../../core.dart';
-import 'service_locator.config.dart';
-
-final getIt = GetIt.instance;
+import 'configure_dependencies.config.dart';
 
 @InjectableInit(
   initializerName: r'$initGetIt',
@@ -13,6 +11,7 @@ final getIt = GetIt.instance;
   externalPackageModulesAfter: [
     ExternalModule(AuthPackageModule),
     ExternalModule(HomePackageModule),
+    ExternalModule(CorePackageModule),
   ],
 )
 Future<void> configureDependencies() async => $initGetIt(getIt);

@@ -1,5 +1,5 @@
-name: core
-description: "Core package for DI, routing, theming & shared utilities."
+name: config
+description: "config package for DI, routing, & feature level configurations"
 version: 0.0.1
 publish_to: "none"
 
@@ -10,6 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Internal Packages
+  core:
+    path: ../core
+  auth:
+    path: ../features/auth
+  home:
+    path: ../features/home
 
   # External Packages
   auto_route: 10.1.0
@@ -28,12 +36,6 @@ dependencies:
   json_annotation: 4.9.0
   logger: 2.6.0
   package_info_plus: 8.3.0
-
-  # Design System
-  miny_design_system:
-    git:
-      url: https://github.com/blackminystudio/miny-design-system.git
-      ref: main
 
 dev_dependencies:
   flutter_test:

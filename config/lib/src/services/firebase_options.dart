@@ -14,7 +14,6 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
-
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -66,14 +65,14 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBTjVXj0QISn6PY1gb9yvh6sCzctAH1nFk',
-    appId: '1:911090474857:ios:a99be3d7cfcfb96fa9e7f8',
+    appId: '1:911090474857:ios:97e5ead604b6c580a9e7f8',
     messagingSenderId: '911090474857',
     projectId: 'tacklepay-dev',
     storageBucket: 'tacklepay-dev.firebasestorage.app',
     androidClientId:
         '911090474857-gbiv6ervnc8ptjmhtfkvrp8hmv5chmor.apps.googleusercontent.com',
     iosClientId:
-        '911090474857-doi59nsjpoca7b904uvcu8j3oouchd5f.apps.googleusercontent.com',
-    iosBundleId: 'com.example.fintechapp',
+        '911090474857-gjmq3t59tm7u4489lnahm5fbbjcmplm0.apps.googleusercontent.com',
+    iosBundleId: 'com.example.app',
   );
 }

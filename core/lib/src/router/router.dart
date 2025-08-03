@@ -1,4 +1,6 @@
-export 'app_router.dart';
-export 'observers/app_route_observer.dart';
-export 'router_provider.dart';
-export 'wrapper/wrappers.dart';
+import 'package:flutter/material.dart';
+
+abstract class Routers {
+  static const String replaceInRouteName = 'Page|Screen,Route';
+  static final navigatorKey = GlobalKey<NavigatorState>();
+}
