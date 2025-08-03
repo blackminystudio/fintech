@@ -6,8 +6,8 @@ import 'auth_state.dart';
 
 final authStatusStreamProvider =
     StreamProvider.autoDispose<Either<AppException, AuthEntity?>>(
-  (ref) => ref.watch(authRepoProvider).watchAuth(),
-);
+      (ref) => ref.watch(authRepoProvider).watchAuth(),
+    );
 
 class AuthStore extends StateNotifier<AuthState> {
   AuthStore(this.ref) : super(const AuthState()) {
@@ -34,10 +34,12 @@ class AuthStore extends StateNotifier<AuthState> {
       (previous, next) => next.when(
         data: _onAuthResult,
         loading: () => state = state.copyWith(status: AuthStatus.loading),
-        error: (e, st) => state = state.copyWith(
-          status: AuthStatus.unauthenticated,
-          exception: AppException.fromService(e, st),
-        ),
+        error:
+            (e, st) =>
+                state = state.copyWith(
+                  status: AuthStatus.unauthenticated,
+                  exception: AppException.fromService(e, st),
+                ),
       ),
       fireImmediately: true,
     );
@@ -45,18 +47,22 @@ class AuthStore extends StateNotifier<AuthState> {
 
   void _onAuthResult(Either<AppException, AuthEntity?> result) {
     result.fold(
-      (exception) => state = state.copyWith(
-        exception: exception,
-        status: exception.errorType == ErrorType.userDisabled
-            ? AuthStatus.disabled
-            : AuthStatus.unauthenticated,
-      ),
-      (user) => state = state.copyWith(
-        authEntity: user,
-        status: user == null
-            ? AuthStatus.unauthenticated
-            : AuthStatus.authenticated,
-      ),
+      (exception) =>
+          state = state.copyWith(
+            exception: exception,
+            status:
+                exception.errorType == ErrorType.userDisabled
+                    ? AuthStatus.disabled
+                    : AuthStatus.unauthenticated,
+          ),
+      (user) =>
+          state = state.copyWith(
+            authEntity: user,
+            status:
+                user == null
+                    ? AuthStatus.unauthenticated
+                    : AuthStatus.authenticated,
+          ),
     );
   }
 }

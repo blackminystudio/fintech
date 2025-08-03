@@ -16,7 +16,7 @@ import 'package:core/src/router/wrapper/empty_router_page.dart' as _i1;
 /// [_i1.EmptyRouterPage]
 class EmptyRouterRoute extends _i2.PageRouteInfo<void> {
   const EmptyRouterRoute({List<_i2.PageRouteInfo>? children})
-      : super(EmptyRouterRoute.name, initialChildren: children);
+    : super(EmptyRouterRoute.name, initialChildren: children);
 
   static const String name = 'EmptyRouterRoute';
 

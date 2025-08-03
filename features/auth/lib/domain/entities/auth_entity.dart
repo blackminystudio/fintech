@@ -20,21 +20,20 @@ class AuthEntity extends Equatable {
     String? photoUrl,
     DateTime? createdAt,
     DateTime? lastLoginAt,
-  }) =>
-      AuthEntity(
-        email: email ?? this.email,
-        displayName: displayName ?? this.displayName,
-        photoUrl: photoUrl ?? this.photoUrl,
-        createdAt: createdAt ?? this.createdAt,
-        lastLoginAt: lastLoginAt ?? this.lastLoginAt,
-      );
+  }) => AuthEntity(
+    email: email ?? this.email,
+    displayName: displayName ?? this.displayName,
+    photoUrl: photoUrl ?? this.photoUrl,
+    createdAt: createdAt ?? this.createdAt,
+    lastLoginAt: lastLoginAt ?? this.lastLoginAt,
+  );
 
   @override
   List<Object?> get props => [
-        email,
-        createdAt,
-        lastLoginAt,
-        displayName,
-        photoUrl,
-      ];
+    email,
+    createdAt,
+    lastLoginAt,
+    displayName,
+    photoUrl,
+  ];
 }

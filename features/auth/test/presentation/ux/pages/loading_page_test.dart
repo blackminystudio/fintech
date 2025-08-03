@@ -29,57 +29,47 @@ void main() {
     );
   }
 
-  testWidgets(
-    'Given AuthStatus.loading '
-    'When LoadingPage is built '
-    'Then CircularProgressIndicator is shown',
-    (tester) async {
-      await pumpPage(tester);
-      mockStore.setStatus(AuthStatus.loading);
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    },
-  );
+  testWidgets('Given AuthStatus.loading '
+      'When LoadingPage is built '
+      'Then CircularProgressIndicator is shown', (tester) async {
+    await pumpPage(tester);
+    mockStore.setStatus(AuthStatus.loading);
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
 
-  testWidgets(
-    'Given AuthStatus.authenticated '
-    'When LoadingPage is built '
-    'Then it navigates to HomeRoute',
-    (tester) async {
-      when(
-        () => mockRouter.replace(const HomeRoute()),
-      ).thenAnswer((_) async => null);
+  testWidgets('Given AuthStatus.authenticated '
+      'When LoadingPage is built '
+      'Then it navigates to HomeRoute', (tester) async {
+    when(
+      () => mockRouter.replace(const HomeRoute()),
+    ).thenAnswer((_) async => null);
 
-      await pumpPage(tester);
-      mockStore.setStatus(AuthStatus.authenticated);
-      verify(() => mockRouter.replace(const HomeRoute())).called(1);
-    },
-  );
+    await pumpPage(tester);
+    mockStore.setStatus(AuthStatus.authenticated);
+    verify(() => mockRouter.replace(const HomeRoute())).called(1);
+  });
 
-  testWidgets(
-    'Given AuthStatus.unauthenticated '
-    'When LoadingPage is built '
-    'Then it navigates to LoginRoute',
-    (tester) async {
-      when(() => mockRouter.replace(const LoginRoute()))
-          .thenAnswer((_) async => null);
+  testWidgets('Given AuthStatus.unauthenticated '
+      'When LoadingPage is built '
+      'Then it navigates to LoginRoute', (tester) async {
+    when(
+      () => mockRouter.replace(const LoginRoute()),
+    ).thenAnswer((_) async => null);
 
-      await pumpPage(tester);
-      mockStore.setStatus(AuthStatus.unauthenticated);
-      verify(() => mockRouter.replace(const LoginRoute())).called(1);
-    },
-  );
+    await pumpPage(tester);
+    mockStore.setStatus(AuthStatus.unauthenticated);
+    verify(() => mockRouter.replace(const LoginRoute())).called(1);
+  });
 
-  testWidgets(
-    'Given AuthStatus.disabled '
-    'When LoadingPage is built '
-    'Then it navigates to DisabledUserRoute',
-    (tester) async {
-      when(() => mockRouter.replace(const DisabledUserRoute()))
-          .thenAnswer((_) async => null);
+  testWidgets('Given AuthStatus.disabled '
+      'When LoadingPage is built '
+      'Then it navigates to DisabledUserRoute', (tester) async {
+    when(
+      () => mockRouter.replace(const DisabledUserRoute()),
+    ).thenAnswer((_) async => null);
 
-      await pumpPage(tester);
-      mockStore.setStatus(AuthStatus.disabled);
-      verify(() => mockRouter.replace(const DisabledUserRoute())).called(1);
-    },
-  );
+    await pumpPage(tester);
+    mockStore.setStatus(AuthStatus.disabled);
+    verify(() => mockRouter.replace(const DisabledUserRoute())).called(1);
+  });
 }

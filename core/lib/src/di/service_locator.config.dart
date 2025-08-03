@@ -30,11 +30,7 @@ Future<_i174.GetIt> $initGetIt(
   String? environment,
   _i526.EnvironmentFilter? environmentFilter,
 }) async {
-  final gh = _i526.GetItHelper(
-    getIt,
-    environment,
-    environmentFilter,
-  );
+  final gh = _i526.GetItHelper(getIt, environment, environmentFilter);
   final registerModule = _$RegisterModule();
   gh.factory<_i974.Logger>(() => registerModule.logger);
   await gh.factoryAsync<_i655.PackageInfo>(
@@ -45,13 +41,15 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i558.FlutterSecureStorage>(() => registerModule.secureStorage);
   gh.lazySingleton<_i160.Log>(() => _i160.Log());
   gh.factory<_i676.DeviceUtil>(
-      () => _i676.DeviceUtil(gh<_i833.DeviceInfoPlugin>()));
+    () => _i676.DeviceUtil(gh<_i833.DeviceInfoPlugin>()),
+  );
   gh.lazySingleton<_i494.LocalStorage>(
     () => _i104.SecureStorageImpl(gh<_i558.FlutterSecureStorage>()),
     instanceName: 'secure',
   );
   gh.factory<_i925.PackageUtil>(
-      () => _i925.PackageUtil(gh<_i655.PackageInfo>()));
+    () => _i925.PackageUtil(gh<_i655.PackageInfo>()),
+  );
   await _i662.AuthPackageModule().init(gh);
   await _i1024.HomePackageModule().init(gh);
   return getIt;
