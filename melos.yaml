@@ -1,0 +1,97 @@
+name: fintech_workspace
+
+packages:
+  - app
+  - core
+  - features/*
+
+command:
+  version:
+    branch: main
+  bootstrap:
+    environment:
+      sdk: ">=3.7.0 <4.0.0"
+    dependencies:
+      # Core Dependencies
+      auto_route: 10.1.0
+      dartz: 0.10.1
+      device_info_plus: 11.5.0
+      equatable: 2.0.7
+      firebase_auth: 5.6.1
+      firebase_core: 3.15.0
+      flutter_native_splash: 2.4.4
+      flutter_riverpod: 2.6.1
+      flutter_screenutil: 5.9.3
+      flutter_secure_storage: 9.2.4
+      get_it: 8.0.3
+      injectable: 2.5.0
+      intl: 0.20.2
+      json_annotation: 4.9.0
+      logger: 2.6.0
+      package_info_plus: 8.3.0
+      flutter_svg: 2.2.0
+      google_sign_in: 6.3.0
+
+      # Design System
+      miny_design_system:
+        git:
+          url: https://github.com/blackminystudio/miny-design-system.git
+          ref: main
+
+    dev_dependencies:
+      flutter_lints: 5.0.0
+      auto_route_generator: 10.2.3
+      build_runner: 2.5.4
+      injectable_generator: 2.7.0
+      mocktail: 1.0.2
+      firebase_auth_mocks: 0.14.2
+      google_sign_in_mocks: 0.3.0
+  clean:
+    hooks:
+      post: |
+        melos exec --flutter --concurrency=3 -- "flutter clean"
+        melos run build:clean
+
+scripts:
+  analyze: dart format . --set-exit-if-changed && flutter analyze --fatal-infos .
+  gen_coverage: melos exec -- "\$MELOS_ROOT_PATH/tools/combine_coverage.sh"
+
+  cache_clean:
+    run: dart run tools/cache_clean_and_melos_bs.dart
+    description: Clean pub cache and run melos bootstrap
+
+  build-core:
+    run: melos exec -- "dart run build_runner build -d"
+    description: "Generate core"
+    packageFilters:
+      scope: "*core*"
+
+  build:
+    run: melos run build:select --no-select
+    description: "Run build runner in all packages that depend on it."
+
+  build:clean:
+    run: melos run build:clean:select --no-select
+    description: "Run build runner clean in all packages that depend on it."
+
+  build:select:
+    run: melos exec -- "dart run build_runner build -d"
+    description: "Run build runner in selected package that depends on build_runner."
+    packageFilters:
+      ignore:
+        - "*core*"
+      dependsOn:
+        - "build_runner"
+
+  build:clean:select:
+    run: melos exec -- "dart run build_runner clean"
+    description: "Run build runner clean in selected package that depends on build_runner."
+    packageFilters:
+      dependsOn:
+        - "build_runner"
+
+  initialize-app:
+    run: |
+      melos run build
+      melos run build-core
+    description: Initialize App.

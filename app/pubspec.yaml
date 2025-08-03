@@ -1,0 +1,30 @@
+name: fintechapp
+description: "The Fintech workspace demo runner."
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Internal Packages
+  auth:
+    path: ../features/auth
+  core:
+    path: ../core
+  home:
+    path: ../features/home
+
+dev_dependencies:
+  flutter_lints: 5.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - native_splash/

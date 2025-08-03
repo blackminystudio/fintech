@@ -4,6 +4,7 @@
 *.pyc
 *.swp
 .DS_Store
+coverage
 .atom/
 .build/
 .buildlog/
@@ -43,3 +44,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+melos_bs.lock 

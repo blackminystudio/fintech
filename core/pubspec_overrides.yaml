@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: auth,home
+dependency_overrides:
+  auth:
+    path: ../features/auth
+  home:
+    path: ../features/home

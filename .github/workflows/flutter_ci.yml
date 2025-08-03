@@ -9,6 +9,12 @@ on:
     branches:
       - "**"
 
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,18 +26,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Check for caret symbol (^) in all pubspec.yaml files
+        run: |
+          # Ensure we are in the root directory of the project
+          cd $(git rev-parse --show-toplevel)
+
+          # Find all pubspec.yaml files and search for caret symbol
+          has_caret=$(find . -name "pubspec.yaml" -exec grep -H -E "^\s*[a-zA-Z0-9_]+:\s*\^" {} + || true)
+          if [[ -n "$has_caret" ]]; then
+            echo "Error: Found caret symbol (^) in the following pubspec.yaml files:"
+            echo "$has_caret"
+            exit 1
+          else
+            echo "No caret symbols found in pubspec.yaml files. All checks passed."
+          fi
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.flutter-version }}
           channel: stable
           cache: true
+      - name: Set up Melos
+        run: dart pub global activate melos
 
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Bootstrap Melos
+        run: melos bootstrap
 
-      - name: Run tests
-        run: flutter test
+      - name: Dart Format
+        run: dart format . --set-exit-if-changed
+      - name: List Cyclic Dependency
+        run: melos list --cycles
+
+      - name: Run tests with coverage
+        run: melos run gen_coverage
 
       - name: Dart Format
         run: dart format . --set-exit-if-changed
