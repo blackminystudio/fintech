@@ -15,6 +15,9 @@ on:
       - reopened
       - ready_for_review
 
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   build:
     name: Lint
@@ -61,6 +64,29 @@ jobs:
 
       - name: Dart Format
         run: dart format . --set-exit-if-changed
+      - name: Get Affected Packages
+        id: affected_packages
+        run: |
+          AFFECTED_PACKAGES=$(./.github/scripts/changed_packages.sh ${{ github.base_ref }})
+          echo "affected_packages=$AFFECTED_PACKAGES" >> $GITHUB_ENV
+        env:
+          GITHUB_ENV: $GITHUB_ENV
 
-      - name: Dart Analyze
-        run: flutter analyze --fatal-infos .
+      - name: Dart Analyze (only affected packages)
+        run: |
+          AFFECTED_PACKAGES="${{env.affected_packages}}"
+          
+          if [ "$AFFECTED_PACKAGES" = "NO_CHANGES" ]; then
+            echo "No Dart packages affected. Skipping analysis."
+            exit 0
+          fi
+          
+          echo "Running analysis in the following packages:"
+          echo "$AFFECTED_PACKAGES"
+          
+          for pkg_path in $AFFECTED_PACKAGES; do
+            package_name=$(basename "$pkg_path")
+            echo "Analyzing $package_name ($pkg_path)"
+            melos exec --scope="$package_name" -- flutter analyze --fatal-infos .
+          done
+
