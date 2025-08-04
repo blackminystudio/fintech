@@ -7,4 +7,4 @@ environment:
 # --------- DEV DEPENDENCIES ---------
 dev_dependencies:
   melos: 6.3.2
-  glob: 2.1.2
+  glob: 2.1.3
