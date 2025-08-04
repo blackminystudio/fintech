@@ -52,8 +52,7 @@ jobs:
         run: dart pub global activate melos
 
       - name: Bootstrap Melos
-        # run: melos exec --diff=origin/${{github.base_ref}} --flutter -- flutter pub get && melos exec --diff=origin/${{ github.base_ref }} --no-flutter -- dart pub get
-        run: melos bs
+        run: melos exec --diff=origin/${{github.base_ref}} --flutter -- flutter pub get && melos exec --diff=origin/${{ github.base_ref }} --no-flutter -- dart pub get
       - name: List Cyclic Dependency
         run: melos list --cycles
 
