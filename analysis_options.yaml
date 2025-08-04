@@ -1,7 +1,17 @@
 analyzer:
   language:
     strict-casts: true
-  exclude: [/*/**.g.dart, plugin/google_maps/**]
+  exclude:
+    # Exclude generated code
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.config.dart"
+
+    # Exclude build outputs and IDE config
+    - ".dart_tool/**"
+    - ".idea/**"
+    - ".vscode/**"
+    - "build/**"
 
 linter:
   rules:

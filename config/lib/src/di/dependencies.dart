@@ -2,7 +2,7 @@ import 'package:auth/util/di/injector.module.dart';
 import 'package:core/core.dart';
 import 'package:home/util/di/injector.module.dart';
 
-import 'configure_dependencies.config.dart';
+import 'dependencies.config.dart';
 
 @InjectableInit(
   initializerName: r'$initGetIt',

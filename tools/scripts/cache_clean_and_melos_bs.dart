@@ -6,7 +6,7 @@ import 'package:glob/list_local_fs.dart';
 
 Future<void> main() async {
   print('Starting cache clean and melos bootstrap script.');
-  final configFile = File('tools/cache_clean_script_config.json');
+  final configFile = File('tools/scripts/cache_clean_script_config.json');
   final config =
       json.decode(await configFile.readAsString()) as Map<String, dynamic>;
 
