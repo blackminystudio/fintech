@@ -29,7 +29,9 @@ command:
       intl: 0.20.2
       json_annotation: 4.9.0
       logger: 2.6.0
+      mason: 0.1.1
       package_info_plus: 8.3.0
+      path: 1.9.1
       flutter_svg: 2.2.0
       google_sign_in: 6.3.0
 
@@ -55,10 +57,10 @@ command:
 
 scripts:
   analyze: dart format . --set-exit-if-changed && flutter analyze --fatal-infos .
-  gen_coverage: melos exec -- "\$MELOS_ROOT_PATH/tools/combine_coverage.sh"
+  gen_coverage: melos exec -- "\$MELOS_ROOT_PATH/tools/scripts/combine_coverage.sh"
 
   cache_clean:
-    run: dart run tools/cache_clean_and_melos_bs.dart
+    run: dart run tools/scripts/cache_clean_and_melos_bs.dart
     description: Clean pub cache and run melos bootstrap
 
   build-core:
