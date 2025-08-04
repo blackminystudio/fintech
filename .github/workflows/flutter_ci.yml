@@ -2,9 +2,6 @@
 name: Flutter CI
 
 on:
-  push:
-    branches:
-      - staging*
   pull_request:
     branches:
       - "**"
