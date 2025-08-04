@@ -1,10 +1,13 @@
 name: fintechapp
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
-  flutter: ">=3.19.0"
+  sdk: ">=3.7.0 <4.0.0"
+  flutter: ">=3.29.0"
 
 # --------- DEV DEPENDENCIES ---------
 dev_dependencies:
   melos: 6.3.2
   glob: 2.1.3
+
+
+
