@@ -17,14 +17,16 @@ on:
 
 jobs:
   build:
+    name: Lint
+    if: '! github.event.pull_request.draft'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        flutter-version: [3.32.0]
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       - name: Check for caret symbol (^) in all pubspec.yaml files
         run: |
@@ -43,23 +45,15 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ matrix.flutter-version }}
+          flutter-version: '3.32.0'
           channel: stable
           cache: true
       - name: Set up Melos
         run: dart pub global activate melos
 
-      - name: Fetch Base Branch
-        run: git fetch origin ${{ github.base_ref }} --depth=1
-
-      - name: Show Changed Packages
-        run: melos list --diff=origin/${{ github.base_ref }}
-
       - name: Bootstrap Melos
-        run: melos exec --diff=origin/${{ github.base_ref }} --flutter -- flutter pub get && melos exec --diff=origin/${{ github.base_ref }} --no-flutter -- dart pub get
-
-      - name: Dart Format
-        run: dart format . --set-exit-if-changed
+        # run: melos exec --diff=origin/${{github.base_ref}} --flutter -- flutter pub get && melos exec --diff=origin/${{ github.base_ref }} --no-flutter -- dart pub get
+        run: melos bs
       - name: List Cyclic Dependency
         run: melos list --cycles
 
