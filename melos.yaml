@@ -8,7 +8,7 @@ packages:
 
 command:
   version:
-    branch: main
+    branch: staging
   bootstrap:
     environment:
       sdk: ">=3.7.0 <4.0.0"
@@ -56,7 +56,7 @@ command:
         melos run build:clean
 
 scripts:
-  analyze: dart format . --set-exit-if-changed && flutter analyze --fatal-infos .
+  format: dart format . --set-exit-if-changed && flutter analyze --fatal-infos .
   gen_coverage: melos exec -- "\$MELOS_ROOT_PATH/tools/scripts/combine_coverage.sh"
 
   cache_clean:
