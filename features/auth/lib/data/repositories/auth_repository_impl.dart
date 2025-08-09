@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 
 import '../../domain/auth_types.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../services/auth_extentions.dart';
+import '../services/auth_extensions.dart';
 import '../services/auth_service.dart';
 
 @LazySingleton(as: AuthRepository)
