@@ -42,22 +42,19 @@ class LoginPage extends ConsumerWidget {
       backgroundColor: theme.colors.neutralLight,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: theme.spacing.width.s32),
+          padding: EdgeInsets.symmetric(horizontal: theme.spacing.s32),
           child: Column(
             children: [
-              SizedBox(height: theme.spacing.height.s80),
-              SvgPicture.asset(
-                ImagePath.appLogoPath,
-                height: theme.sizing.height.s32,
-              ),
-              SizedBox(height: theme.spacing.height.s80),
+              SizedBox(height: theme.spacing.s80),
+              SvgPicture.asset(ImagePath.appLogoPath, height: theme.sizing.s32),
+              SizedBox(height: theme.spacing.s80),
               Text(
                 AuthConstants.introducingText,
                 style: theme.textStyle.bodyXsmall.copyWith(
                   color: theme.colors.neutralBackground,
                 ),
               ),
-              SizedBox(height: theme.spacing.height.s24),
+              SizedBox(height: theme.spacing.s24),
               Text(
                 AuthConstants.headingText,
                 textAlign: TextAlign.center,
@@ -65,7 +62,7 @@ class LoginPage extends ConsumerWidget {
                   color: theme.colors.neutralBackground,
                 ),
               ),
-              SizedBox(height: theme.spacing.height.s24),
+              SizedBox(height: theme.spacing.s24),
               Text(
                 AuthConstants.subText,
                 textAlign: TextAlign.center,
@@ -102,14 +99,14 @@ class LoginPage extends ConsumerWidget {
                   ],
                 ),
               ),
-              SizedBox(height: theme.spacing.height.s20),
+              SizedBox(height: theme.spacing.s20),
               MinyButton(
                 enableIcon: true,
                 isLoading: isLoading,
                 onPressed: _handleLogin,
                 label: AuthConstants.googleButtonLabel,
               ),
-              SizedBox(height: theme.spacing.height.s40),
+              SizedBox(height: theme.spacing.s40),
             ],
           ),
         ),
