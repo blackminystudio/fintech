@@ -30,8 +30,8 @@ Widget navIcon(BuildContext context) {
     child: NavIcon(
       icon: icon,
       label: label,
-      isSelected: isSelected,
       imageUrl: image,
+      isSelected: isSelected,
     ),
   );
 }
