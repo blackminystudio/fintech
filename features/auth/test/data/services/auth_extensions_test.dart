@@ -1,4 +1,4 @@
-import 'package:auth/data/services/auth_extentions.dart';
+import 'package:auth/data/services/auth_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter_test/flutter_test.dart';
 
