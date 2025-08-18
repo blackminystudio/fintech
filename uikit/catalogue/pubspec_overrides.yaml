@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: core,miny_uikit
+dependency_overrides:
+  core:
+    path: ../../core
+  miny_uikit:
+    path: ../miny_uikit

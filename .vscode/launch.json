@@ -6,6 +6,13 @@
             "cwd": "app",
             "type": "dart",
             "request": "launch",
+        },
+        {
+            "name": "Catalogue",
+            "cwd": "uikit/catalogue",
+            "type": "dart",
+            "request": "launch",
+            "deviceId": "chrome"
         }
     ]
 }

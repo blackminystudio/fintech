@@ -1,0 +1,30 @@
+name: miny_uikit
+description: "A new Flutter package project."
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  iconsax: 0.0.8
+
+  # Internal Packages
+  core:
+    path: ../../core
+
+  # External Packages
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # External dev dependencies
+
+flutter:
+  uses-material-design: true
+  # assets:
+    # - assets/

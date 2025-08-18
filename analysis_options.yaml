@@ -1,4 +1,4 @@
-analyzer:
+eaanalyzer:
   language:
     strict-casts: true
   exclude:
@@ -132,3 +132,8 @@ linter:
     - always_put_required_named_parameters_first
     - sort_constructors_first
     - sort_unnamed_constructors_first
+
+
+
+formatter:
+  page_width: 80
