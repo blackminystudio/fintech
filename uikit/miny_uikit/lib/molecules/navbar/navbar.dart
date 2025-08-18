@@ -7,10 +7,10 @@ class NavBar extends StatefulWidget {
   const NavBar({
     required this.navIcons,
     required this.onChanged,
-    this.mutedIndex,
+    List<int>? mutedIndex,
     super.key,
-  });
-  final int? mutedIndex;
+  }) : mutedIndex = mutedIndex ?? const [];
+  final List<int> mutedIndex;
   final List<NavIcon> navIcons;
   final Function(int index) onChanged;
   @override
@@ -53,12 +53,12 @@ class _NavBarState extends State<NavBar> {
                 child: Stack(
                   children: [
                     AnimatedPositioned(
-                      duration: const Duration(milliseconds: 220),
-                      curve: Curves.easeInOut,
-                      left: left,
                       top: 0,
+                      left: left,
                       width: indicatorWidth,
+                      curve: Curves.easeInOut,
                       height: indicatorHeight,
+                      duration: const Duration(milliseconds: 220),
                       child: const SliderIndicator(),
                     ),
                   ],
@@ -75,9 +75,10 @@ class _NavBarState extends State<NavBar> {
                         child: GestureDetector(
                           onTap:
                               () => setState(() {
-                                if (index != widget.mutedIndex) {
+                                if (!widget.mutedIndex.contains(index)) {
                                   selectedIndex = index;
                                 }
+
                                 widget.onChanged(index);
                               }),
                           behavior: HitTestBehavior.opaque,
