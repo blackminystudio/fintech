@@ -1,3 +1,4 @@
+import 'package:onboarding/onboarding.dart';
 import 'package:auth/auth.dart';
 import 'package:core/core.dart';
 import 'package:home/home.dart';
@@ -16,6 +17,7 @@ final class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
+    ...OnboardingRouter().routes,
     ...AuthRouter().routes,
     ...HomeRouter().routes.withGuards([AuthGuard(ref)]),
   ];
