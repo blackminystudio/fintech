@@ -19,6 +19,8 @@ dependencies:
   firebase_auth: 6.0.0
   flutter_svg: 2.2.0
   google_sign_in: 6.3.0
+  cloud_firestore: 6.0.0
+  json_serializable: 6.9.5
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +35,7 @@ dev_dependencies:
   mocktail: 1.0.2
   firebase_auth_mocks: 0.15.0
   google_sign_in_mocks: 0.3.0
+  fake_cloud_firestore: 4.0.0
 
 flutter:
   uses-material-design: true
