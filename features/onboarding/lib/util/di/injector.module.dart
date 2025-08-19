@@ -15,12 +15,14 @@ import 'package:onboarding/domain/repositories/onboarding_repository.dart'
     as _i933;
 
 class OnboardingPackageModule extends _i526.MicroPackageModule {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
     gh.lazySingleton<_i875.OnboardingService>(
-        () => _i426.OnboardingServiceImpl());
+      () => _i426.OnboardingServiceImpl(),
+    );
     gh.lazySingleton<_i933.OnboardingRepository>(
-        () => _i1072.OnboardingRepositoryImpl(gh<_i875.OnboardingService>()));
+      () => _i1072.OnboardingRepositoryImpl(gh<_i875.OnboardingService>()),
+    );
   }
 }

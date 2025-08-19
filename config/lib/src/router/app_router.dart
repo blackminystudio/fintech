@@ -1,7 +1,7 @@
-import 'package:onboarding/onboarding.dart';
 import 'package:auth/auth.dart';
 import 'package:core/core.dart';
 import 'package:home/home.dart';
+import 'package:onboarding/onboarding.dart';
 
 @AutoRouterConfig(replaceInRouteName: Routers.replaceInRouteName)
 final class AppRouter extends RootStackRouter {
