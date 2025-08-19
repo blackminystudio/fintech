@@ -35,7 +35,7 @@ class LoginPage extends ConsumerWidget {
 
     Future<void> _handleLogin() async {
       await ref.read(authStoreProvider.notifier).signInWithGoogle();
-      await context.router.replacePath('/home');
+      await context.router.replacePath('/onboarding');
     }
 
     return Scaffold(
