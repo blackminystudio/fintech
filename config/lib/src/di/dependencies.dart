@@ -1,3 +1,4 @@
+import 'package:onboarding/onboarding.dart';
 import 'package:auth/util/di/injector.module.dart';
 import 'package:core/core.dart';
 import 'package:home/util/di/injector.module.dart';
@@ -9,6 +10,7 @@ import 'dependencies.config.dart';
   preferRelativeImports: false,
   asExtension: false,
   externalPackageModulesAfter: [
+    ExternalModule(OnboardingPackageModule),
     ExternalModule(AuthPackageModule),
     ExternalModule(HomePackageModule),
     ExternalModule(CorePackageModule),
