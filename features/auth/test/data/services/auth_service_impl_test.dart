@@ -1,5 +1,6 @@
 import 'package:auth/data/services/auth_service_impl.dart';
 import 'package:core/core.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,11 +10,17 @@ import '../../helpers/mocks.dart';
 void main() {
   late MockGoogleSignIn mockGoogle;
   late MockFirebaseAuth mockAuth;
+  late FakeFirebaseFirestore mockFirebase;
   late AuthServiceImpl service;
 
   void createService({MockUser? user, bool signedIn = false}) {
     mockAuth = MockFirebaseAuth(mockUser: user, signedIn: signedIn);
-    service = AuthServiceImpl(firebaseAuth: mockAuth, googleSignIn: mockGoogle);
+    mockFirebase = FakeFirebaseFirestore();
+    service = AuthServiceImpl(
+      firebaseAuth: mockAuth,
+      googleSignIn: mockGoogle,
+      firebaseFirestore: mockFirebase,
+    );
   }
 
   setUp(() {
@@ -101,6 +108,7 @@ void main() {
       service = AuthServiceImpl(
         firebaseAuth: mockAuth,
         googleSignIn: googleSignIn,
+        firebaseFirestore: mockFirebase,
       );
 
       // When

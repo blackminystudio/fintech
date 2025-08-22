@@ -1,4 +1,4 @@
-eaanalyzer:
+analyzer:
   language:
     strict-casts: true
   exclude:
@@ -12,7 +12,9 @@ eaanalyzer:
     - ".idea/**"
     - ".vscode/**"
     - "build/**"
-
+  errors:
+    hash_and_equals: ignore
+    
 linter:
   rules:
     - always_declare_return_types

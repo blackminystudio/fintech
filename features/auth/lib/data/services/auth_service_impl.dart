@@ -1,14 +1,20 @@
 import 'package:core/core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../models/auth_model.dart';
 import 'auth_service.dart';
 
 @LazySingleton(as: AuthService)
 class AuthServiceImpl implements AuthService {
-  AuthServiceImpl({required this.firebaseAuth, required this.googleSignIn});
+  AuthServiceImpl({
+    required this.firebaseAuth,
+    required this.googleSignIn,
+    required this.firebaseFirestore,
+  });
 
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
+  final FirebaseFirestore firebaseFirestore;
 
   @override
   Stream<User?> authStateChanges() => firebaseAuth.authStateChanges();
@@ -58,6 +64,23 @@ class AuthServiceImpl implements AuthService {
         message: 'Failed to retrieve user after Google sign-in.',
       );
     }
+    final appUser = AuthModel(
+      email: user.email ?? '',
+      createdAt: user.metadata.creationTime ?? DateTime.now(),
+      lastLoginAt: user.metadata.lastSignInTime ?? DateTime.now(),
+      displayName: user.displayName,
+      photoUrl: user.photoURL,
+    );
+    await firebaseFirestore
+        .collection('user')
+        .doc(user.uid)
+        .set(appUser.toJson());
+    await firebaseFirestore
+        .collection('user')
+        .doc(user.uid)
+        .collection('profile')
+        .doc('info')
+        .set({'email': appUser.email, 'fullName': appUser.displayName});
     return user;
   }
 }
