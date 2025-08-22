@@ -19,42 +19,6 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
   late OnboardingStore store;
   String? selectedIncome;
   String? selectedEmploymentStatus;
-  bool get isSelectionComplete =>
-      selectedIncome != null && selectedEmploymentStatus != null;
-
-  @override
-  void initState() {
-    super.initState();
-    store = ref.read(onboardingStoreProvider.notifier);
-    final info = ref.read(onboardingStoreProvider).onboardingEntity;
-    selectedIncome = info?.monthlyIncome;
-    selectedEmploymentStatus = info?.employmentStatus;
-  }
-
-  void _onTapConfirm() {
-    store.updateCopyUserInfo(
-      monthlyIncome: selectedIncome,
-      employmentStatus: selectedEmploymentStatus,
-    );
-    if (isSelectionComplete) {
-      widget.onTap.call();
-    }
-  }
-
-  void _onSelectIncome(String? value) {
-    setState(() {
-      selectedIncome = value;
-    });
-    store.updateCopyUserInfo(monthlyIncome: value);
-  }
-
-  void _onSelectEmployeeStatus(String? value) {
-    setState(() {
-      selectedEmploymentStatus = value;
-    });
-    store.updateCopyUserInfo(employmentStatus: value);
-  }
-
   final incomeOptions = [
     OnboardingConstants.income0to10k,
     OnboardingConstants.income10kto50k,
@@ -70,6 +34,9 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
     OnboardingConstants.governmentJob,
     OnboardingConstants.retired,
   ];
+
+  bool get isSelectionComplete =>
+      selectedIncome != null && selectedEmploymentStatus != null;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +82,15 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    store = ref.read(onboardingStoreProvider.notifier);
+    final info = ref.read(onboardingStoreProvider).onboardingEntity;
+    selectedIncome = info?.monthlyIncome;
+    selectedEmploymentStatus = info?.employmentStatus;
+  }
+
   List<Widget> _buildChipsSection(
     ThemeData theme, {
     required String label,
@@ -146,4 +122,29 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
               .toList(),
     ),
   ];
+
+  void _onSelectEmployeeStatus(String? value) {
+    setState(() {
+      selectedEmploymentStatus = value;
+    });
+    store.updateCopyUserInfo(employmentStatus: value);
+  }
+
+  void _onSelectIncome(String? value) {
+    setState(() {
+      selectedIncome = value;
+    });
+    store.updateCopyUserInfo(monthlyIncome: value);
+  }
+
+  void _onTapConfirm() {
+    store.updateCopyUserInfo(
+      monthlyIncome: selectedIncome,
+      employmentStatus: selectedEmploymentStatus,
+      toUpdate: true,
+    );
+    if (isSelectionComplete) {
+      widget.onTap.call();
+    }
+  }
 }

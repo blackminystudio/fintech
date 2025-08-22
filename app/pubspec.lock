@@ -637,6 +637,13 @@ packages:
       url: "https://github.com/blackminystudio/miny-design-system.git"
     source: git
     version: "0.0.1"
+  onboarding:
+    dependency: "direct overridden"
+    description:
+      path: "../features/onboarding"
+      relative: true
+    source: path
+    version: "1.0.0"
   package_config:
     dependency: transitive
     description:

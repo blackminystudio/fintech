@@ -1,19 +1,22 @@
 import 'package:core/core.dart';
 
 import '../../../domain/entities/onboarding_entity.dart';
+import '../onboarding_store_provider.dart';
 import 'onboarding_state.dart';
 
 class OnboardingStore extends StateNotifier<OnboardingState> {
-  OnboardingStore(this.ref) : super(const OnboardingState());
+  OnboardingStore(this.ref) : super(const OnboardingState()) {
+    fetchUserInfo();
+  }
   final Ref ref;
 
-  void updateUserInfo(OnboardingEntity onboardingEntity) {
-    state = state.copyWith(
-      onboardingEntity: onboardingEntity.copyWith(lastUpdated: DateTime.now()),
-    );
+  Future<void> fetchUserInfo() async {
+    state = state.copyWith(status: OnboardingStatus.loading);
+    final result = await ref.read(fetchDataProvider)();
+    _onFetchResult(result);
   }
 
-  void updateCopyUserInfo({
+  Future<void> updateCopyUserInfo({
     String? mobileNumber,
     String? fullName,
     String? city,
@@ -22,7 +25,8 @@ class OnboardingStore extends StateNotifier<OnboardingState> {
     DateTime? dateOfBirth,
     String? monthlyIncome,
     String? employmentStatus,
-  }) {
+    bool toUpdate = false,
+  }) async {
     final onboardingEntity =
         (state.onboardingEntity ?? const OnboardingEntity()).copyWith(
           mobileNumber: mobileNumber,
@@ -36,5 +40,42 @@ class OnboardingStore extends StateNotifier<OnboardingState> {
           lastUpdated: DateTime.now(),
         );
     state = state.copyWith(onboardingEntity: onboardingEntity);
+    if (toUpdate) {
+      await updateUserInfo(onboardingEntity);
+    }
+  }
+
+  Future<void> updateUserInfo(OnboardingEntity entity) async {
+    state = state.copyWith(status: OnboardingStatus.loading);
+    final result = await ref.read(updateDataProvier).call(entity);
+    _onResult(result);
+  }
+
+  void _onFetchResult(Either<AppException, OnboardingEntity> result) {
+    result.fold(
+      (exception) {
+        state = state.copyWith(
+          exception: exception,
+          status: OnboardingStatus.error,
+        );
+      },
+      (entity) {
+        state = state.copyWith(
+          onboardingEntity: entity,
+          status: OnboardingStatus.completed,
+        );
+      },
+    );
+  }
+
+  void _onResult(Either<AppException, Unit> result) {
+    result.fold(
+      (exception) =>
+          state = state.copyWith(
+            exception: exception,
+            status: OnboardingStatus.error,
+          ),
+      (unit) => state = state.copyWith(status: OnboardingStatus.completed),
+    );
   }
 }
