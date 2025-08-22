@@ -8,25 +8,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import '../di/dependencies.dart';
 import '../services/firebase_options.dart';
 
-class AppModules {
-  static Future<void> initialize() async {
-    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    try {
-      // Initialize Firebase
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-      await configureDependencies();
-    } catch (e) {
-      dev.log('Error: $e', name: 'AppModules.initialize');
-    } finally {
-      FlutterNativeSplash.remove();
-      await initLogs();
-    }
-  }
-}
-
 Future<void> initLogs() async {
   if (!getIt.isRegistered<Log>()) {
     dev.log('Log not initialized', name: 'initLogs');
@@ -44,4 +25,24 @@ Future<void> initLogs() async {
     'device = $device,',
     type: LogType.info,
   );
+}
+
+class AppModules {
+  static Future<void> initialize() async {
+    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+    try {
+      // Initialize Firebase
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      await configureDependencies();
+    } catch (e) {
+      const red = '\x1B[31m';
+      dev.log('$red Error: $e', name: 'AppModules.initialize');
+    } finally {
+      FlutterNativeSplash.remove();
+      await initLogs();
+    }
+  }
 }

@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'auth_service.dart';
@@ -10,6 +9,23 @@ class AuthServiceImpl implements AuthService {
 
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
+
+  @override
+  Stream<User?> authStateChanges() => firebaseAuth.authStateChanges();
+
+  @override
+  Future<User?> getCurrentUser() async {
+    final user = firebaseAuth.currentUser;
+    if (user == null) return null;
+    await user.reload();
+    return firebaseAuth.currentUser;
+  }
+
+  @override
+  Future<void> logout() async {
+    await googleSignIn.signOut();
+    await firebaseAuth.signOut();
+  }
 
   @override
   Future<User> signInWithGoogle() async {
@@ -44,21 +60,4 @@ class AuthServiceImpl implements AuthService {
     }
     return user;
   }
-
-  @override
-  Future<User?> getCurrentUser() async {
-    final user = firebaseAuth.currentUser;
-    if (user == null) return null;
-    await user.reload();
-    return firebaseAuth.currentUser;
-  }
-
-  @override
-  Future<void> logout() async {
-    await googleSignIn.signOut();
-    await firebaseAuth.signOut();
-  }
-
-  @override
-  Stream<User?> authStateChanges() => firebaseAuth.authStateChanges();
 }

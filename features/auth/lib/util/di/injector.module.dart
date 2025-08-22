@@ -23,7 +23,6 @@ class AuthPackageModule extends _i526.MicroPackageModule {
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
     final serviceModule = _$ServiceModule();
-    gh.lazySingleton<_i59.FirebaseAuth>(() => serviceModule.firebaseAuth);
     gh.lazySingleton<_i116.GoogleSignIn>(() => serviceModule.googleSignIn);
     gh.lazySingleton<_i681.AuthService>(
       () => _i295.AuthServiceImpl(

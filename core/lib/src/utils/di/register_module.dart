@@ -9,6 +9,8 @@ import '../../log/printer/pretty_printer.dart';
 
 @module
 abstract class RegisterModule {
+  DeviceInfoPlugin get deviceInfo => DeviceInfoPlugin();
+
   Logger get logger => Logger(
     filter: ReleaseLogFilter(
       excludedLevels: {
@@ -18,9 +20,15 @@ abstract class RegisterModule {
     ),
     printer: SimplePrettyPrinter(),
   );
-
   @preResolve
   Future<PackageInfo> get packageInfo => PackageInfo.fromPlatform();
-  DeviceInfoPlugin get deviceInfo => DeviceInfoPlugin();
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
+}
+
+@module
+abstract class ServiceModule {
+  @lazySingleton
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+  @lazySingleton
+  FirebaseFirestore get firebaseFirestore => FirebaseFirestore.instance;
 }
