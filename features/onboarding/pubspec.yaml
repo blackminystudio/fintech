@@ -8,10 +8,14 @@ environment:
   flutter: ">=3.19.0"
 
 dependencies:
+  cloud_firestore: 6.0.0
   core:
     path: ../../core
+  firebase_auth: 6.0.0
   flutter:
     sdk: flutter
+  json_annotation: 4.9.0
+  json_serializable: 6.9.5
   pin_code_fields: 8.0.1
 
   # Internal Packages

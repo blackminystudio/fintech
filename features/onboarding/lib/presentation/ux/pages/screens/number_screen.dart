@@ -29,52 +29,15 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
   late TextEditingController _mobileController;
   bool _showError = false;
   final mobileNumberLength = 10;
-  bool get _isValidNow => _mobileController.text.length == mobileNumberLength;
   late OnboardingStore store;
-
-  @override
-  void initState() {
-    super.initState();
-    _mobileController = TextEditingController();
-    store = ref.read(onboardingStoreProvider.notifier);
-    final mobile =
-        ref.read(onboardingStoreProvider).onboardingEntity?.mobileNumber;
-    if (mobile != null) {
-      _mobileController.text = mobile;
-    }
-  }
-
-  @override
-  void dispose() {
-    _mobileController.dispose();
-    super.dispose();
-  }
-
-  void _onTapVerify() {
-    setState(() {
-      _showError = !_isValidNow;
-    });
-    if (_isValidNow) {
-      widget.onTap.call();
-      store.updateCopyUserInfo(mobileNumber: _mobileController.text);
-    }
-    FocusScope.of(context).unfocus();
-  }
-
-  void _handleTextChange(String value) {
-    if (_isValidNow) {
-      if (_showError) {
-        setState(() {
-          _showError = false;
-        });
-      }
-      // Outside of setstate to avoid rebuild
-      FocusScope.of(context).unfocus();
-    }
-  }
+  bool get _isValidNow => _mobileController.text.length == mobileNumberLength;
 
   @override
   Widget build(BuildContext context) {
+    // final mobile = state.onboardingEntity?.mobileNumber;
+    // if (mobile != null) {
+    //   _mobileController.text = mobile;
+    // }
     final theme = Theme.of(context);
     return Column(
       children: [
@@ -100,6 +63,24 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _mobileController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _mobileController = TextEditingController();
+    store = ref.read(onboardingStoreProvider.notifier);
+    final state = ref.read(onboardingStoreProvider);
+    final mobile = state.onboardingEntity?.mobileNumber;
+    if (mobile != null) {
+      _mobileController.text = mobile;
+    }
   }
 
   List<Widget> _buildErrorText() {
@@ -172,5 +153,28 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
         ),
       ),
     );
+  }
+
+  void _handleTextChange(String value) {
+    if (_isValidNow) {
+      if (_showError) {
+        setState(() {
+          _showError = false;
+        });
+      }
+      // Outside of setstate to avoid rebuild
+      FocusScope.of(context).unfocus();
+    }
+  }
+
+  void _onTapVerify() {
+    setState(() {
+      _showError = !_isValidNow;
+    });
+    if (_isValidNow) {
+      widget.onTap.call();
+      store.updateCopyUserInfo(mobileNumber: _mobileController.text);
+    }
+    FocusScope.of(context).unfocus();
   }
 }

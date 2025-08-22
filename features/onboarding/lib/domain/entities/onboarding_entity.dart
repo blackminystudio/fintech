@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 
 class OnboardingEntity extends Equatable {
   const OnboardingEntity({
+    this.email,
     this.mobileNumber,
     this.fullName,
     this.city,
@@ -14,6 +15,8 @@ class OnboardingEntity extends Equatable {
   });
 
   final String? mobileNumber;
+  @JsonKey(includeToJson: false)
+  final String? email;
   final String? fullName;
   final String? city;
   final String? gender;
@@ -23,11 +26,44 @@ class OnboardingEntity extends Equatable {
   final String? employmentStatus;
   final DateTime? lastUpdated;
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => super.hashCode;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool get isComplete =>
+      mobileNumber != null &&
+      email != null &&
+      fullName != null &&
+      city != null &&
+      gender != null &&
+      maritalStatus != null &&
+      dateOfBirth != null &&
+      monthlyIncome != null &&
+      employmentStatus != null;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  List<Object?> get props => [
+    mobileNumber,
+    fullName,
+    city,
+    email,
+    gender,
+    maritalStatus,
+    dateOfBirth,
+    monthlyIncome,
+    employmentStatus,
+    lastUpdated,
+  ];
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  bool? get stringify => super.stringify;
+
   OnboardingEntity copyWith({
-    String? id,
     String? mobileNumber,
     String? fullName,
     String? city,
+    String? email,
     String? gender,
     String? maritalStatus,
     DateTime? dateOfBirth,
@@ -38,6 +74,7 @@ class OnboardingEntity extends Equatable {
     mobileNumber: mobileNumber ?? this.mobileNumber,
     fullName: fullName ?? this.fullName,
     city: city ?? this.city,
+    email: email ?? this.email,
     gender: gender ?? this.gender,
     maritalStatus: maritalStatus ?? this.maritalStatus,
     dateOfBirth: dateOfBirth ?? this.dateOfBirth,
@@ -45,19 +82,6 @@ class OnboardingEntity extends Equatable {
     employmentStatus: employmentStatus ?? this.employmentStatus,
     lastUpdated: lastUpdated ?? this.lastUpdated,
   );
-
-  @override
-  List<Object?> get props => [
-    mobileNumber,
-    fullName,
-    city,
-    gender,
-    maritalStatus,
-    dateOfBirth,
-    monthlyIncome,
-    employmentStatus,
-    lastUpdated,
-  ];
 
   double getPercentage() {
     final fields = [
@@ -74,14 +98,4 @@ class OnboardingEntity extends Equatable {
     final filled = fields.where((field) => field != null).length;
     return filled / fields.length;
   }
-
-  bool get isComplete =>
-      mobileNumber != null &&
-      fullName != null &&
-      city != null &&
-      gender != null &&
-      maritalStatus != null &&
-      dateOfBirth != null &&
-      monthlyIncome != null &&
-      employmentStatus != null;
 }

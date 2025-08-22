@@ -10,10 +10,10 @@ import 'dependencies.config.dart';
   preferRelativeImports: false,
   asExtension: false,
   externalPackageModulesAfter: [
-    ExternalModule(OnboardingPackageModule),
     ExternalModule(AuthPackageModule),
     ExternalModule(HomePackageModule),
     ExternalModule(CorePackageModule),
+    ExternalModule(OnboardingPackageModule),
   ],
 )
 Future<void> configureDependencies() async => $initGetIt(getIt);
