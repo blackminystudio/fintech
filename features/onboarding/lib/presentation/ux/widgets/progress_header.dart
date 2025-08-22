@@ -66,7 +66,8 @@ class ProgressHeader extends StatelessWidget {
               ),
             ],
           ),
-          // TODO: DS: Add TextButton in design system
+
+          // TODO: DS: Add TextButton in design system / add button sheet
           GestureDetector(
             onTap: onTapSkip,
             child: Text(

@@ -14,6 +14,7 @@ import 'package:core/core.dart' as _i494;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:home/util/di/injector.module.dart' as _i801;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:onboarding/onboarding.dart' as _i706;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 Future<_i174.GetIt> $initGetIt(
@@ -25,5 +26,6 @@ Future<_i174.GetIt> $initGetIt(
   await _i872.AuthPackageModule().init(gh);
   await _i801.HomePackageModule().init(gh);
   await _i494.CorePackageModule().init(gh);
+  await _i706.OnboardingPackageModule().init(gh);
   return getIt;
 }

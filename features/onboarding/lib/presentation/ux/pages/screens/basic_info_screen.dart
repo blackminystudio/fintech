@@ -22,35 +22,6 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
   late OnboardingStore store;
   late TextEditingController _nameController;
 
-  void _onTapconfirm() {
-    FocusScope.of(context).unfocus();
-    final name = _nameController.text.trim();
-    setState(() {
-      if (name.isEmpty) {
-        _errorText = OnboardingConstants.nameEmpty;
-      } else {
-        store.updateCopyUserInfo(fullName: name);
-        widget.onTap.call();
-        _errorText = null;
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    store = ref.read(onboardingStoreProvider.notifier);
-    _nameController = TextEditingController(
-      text: ref.read(onboardingStoreProvider).onboardingEntity?.fullName,
-    );
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -79,6 +50,46 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
       ],
     );
   }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    store = ref.read(onboardingStoreProvider.notifier);
+    _nameController = TextEditingController(
+      text: ref.read(onboardingStoreProvider).onboardingEntity?.fullName,
+    );
+  }
+
+  Padding _buildInfoContent(ThemeData theme) => Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: theme.sizing.s7,
+      vertical: theme.spacing.s16,
+    ),
+    child: Row(
+      children: [
+        Icon(
+          size: theme.sizing.s6,
+          OnboardingConstants.infoIcon,
+          color: theme.colors.accentPurple,
+        ),
+        SizedBox(width: theme.spacing.s12),
+        Flexible(
+          child: Text(
+            OnboardingConstants.basicInfoFooterNote,
+            style: theme.textStyle.bodyXxsmall.copyWith(
+              color: theme.colors.accentPurple,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _buildInfoContentCard() {
     final theme = Theme.of(context);
@@ -113,7 +124,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                 const MinyDivider(),
                 SizedBox(height: theme.sizing.s7),
                 _buildUserInfoCard(
-                  text: '',
+                  text: user.onboardingEntity?.email ?? '',
                   icon: OnboardingConstants.emailIcon,
                   labelText: OnboardingConstants.emailLabel,
                 ),
@@ -201,28 +212,17 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
     );
   }
 
-  Padding _buildInfoContent(ThemeData theme) => Padding(
-    padding: EdgeInsets.symmetric(
-      horizontal: theme.sizing.s7,
-      vertical: theme.spacing.s16,
-    ),
-    child: Row(
-      children: [
-        Icon(
-          size: theme.sizing.s6,
-          OnboardingConstants.infoIcon,
-          color: theme.colors.accentPurple,
-        ),
-        SizedBox(width: theme.spacing.s12),
-        Flexible(
-          child: Text(
-            OnboardingConstants.basicInfoFooterNote,
-            style: theme.textStyle.bodyXxsmall.copyWith(
-              color: theme.colors.accentPurple,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
+  void _onTapconfirm() {
+    FocusScope.of(context).unfocus();
+    final name = _nameController.text.trim();
+    setState(() {
+      if (name.isEmpty) {
+        _errorText = OnboardingConstants.nameEmpty;
+      } else {
+        store.updateCopyUserInfo(fullName: name);
+        widget.onTap.call();
+        _errorText = null;
+      }
+    });
+  }
 }

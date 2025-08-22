@@ -1,0 +1,16 @@
+- ✅ ⁠Fetch Data:
+- ✅ ⁠Optimise update:
+- ✅ Skip: 
+    - ✅ Enable Skip
+    - ✅ Add bottomsheet
+    - ✅ Land on Homepage
+- ⚙️ Authentication
+    - Otp verification
+    - don't back to the OTP or number page
+- unverified number skipped
+- Add city selector (citylist)
+- OnboardingPage : circularprogressindicator
+- BasiInfoPage mail exceed the length
+- Page load based on the data filled
+- Final Confirm: loading & land on homepage 
+- loading is not working if intial route change
