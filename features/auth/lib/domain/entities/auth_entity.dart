@@ -14,6 +14,24 @@ class AuthEntity extends Equatable {
   final DateTime createdAt;
   final DateTime lastLoginAt;
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => super.hashCode;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  List<Object?> get props => [
+    email,
+    createdAt,
+    lastLoginAt,
+    displayName,
+    photoUrl,
+  ];
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  bool? get stringify => super.stringify;
+
   AuthEntity copyWith({
     String? email,
     String? displayName,
@@ -27,13 +45,4 @@ class AuthEntity extends Equatable {
     createdAt: createdAt ?? this.createdAt,
     lastLoginAt: lastLoginAt ?? this.lastLoginAt,
   );
-
-  @override
-  List<Object?> get props => [
-    email,
-    createdAt,
-    lastLoginAt,
-    displayName,
-    photoUrl,
-  ];
 }
