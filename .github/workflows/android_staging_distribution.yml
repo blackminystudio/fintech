@@ -43,7 +43,7 @@ jobs:
         echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
         # 2) Find last counter for THIS version and increment
-        LAST=$(git tag -l "SIT-V${APP_VERSION}-BUILD-*" \
+        LAST=$(git tag -l "SIT-V*-BUILD-*" \
           | sed -E 's/^SIT-V[0-9]+\.[0-9]+\.[0-9]+-BUILD-0*//' \
           | sort -n | tail -1)
         if [ -z "$LAST" ]; then NEXT=1; else NEXT=$((LAST+1)); fi
