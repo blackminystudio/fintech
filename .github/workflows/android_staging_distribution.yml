@@ -33,7 +33,7 @@ jobs:
     - name: Bootstrap workspace (monorepo)
       run: melos bootstrap
 
-    - name: Compute & persist BUILD_NUMBER from tags (SIT-Vx.y.z-BUILD-##)
+    - name: Compute & persist BUILD_NUMBER from tags 
       run: |
         set -e
         git fetch --tags --force
