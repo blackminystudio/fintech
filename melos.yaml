@@ -97,7 +97,7 @@ scripts:
       set -e
       cd app
       flutter pub get
-      flutter build apk
+      flutter build apk --release --build-number ${BUILD_NUMBER:-1}
 
   build:clean:select:
     run: melos exec -- "dart run build_runner clean"
