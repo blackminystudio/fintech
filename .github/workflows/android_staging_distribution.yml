@@ -17,8 +17,21 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.32.0'
+        channel: stable
+        cache: true
 
-    - name: Run tests with coverage
+    - name: Set up Melos
+      run: dart pub global activate melos
+
+    - name: List Cyclic Dependency
+      run: melos list --cycles
+
+    - name: Build APK
       run: melos run apk:build
 
     - name: upload artifact to Firebase App Distribution
