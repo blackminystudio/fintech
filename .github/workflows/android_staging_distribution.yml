@@ -33,17 +33,37 @@ jobs:
     - name: Bootstrap workspace (monorepo)
       run: melos bootstrap
 
-    - name: Compute & persist BUILD_NUMBER from tags
+    - name: Compute & persist BUILD_NUMBER from tags (SIT-Vx.y.z-BUILD-##)
       run: |
         set -e
         git fetch --tags --force
-        LAST=$(git tag -l 'build/*' | sed 's#build/##' | sort -n | tail -1)
+
+        # 1) Read SemVer from pubspec.yaml (e.g. "0.2.0+45" -> "0.2.0")
+        APP_VERSION=$(sed -n 's/^version:[[:space:]]*//p' app/pubspec.yaml | cut -d'+' -f1)
+        echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+
+        # 2) Find last counter for THIS version and increment
+        LAST=$(git tag -l "SIT-V${APP_VERSION}-BUILD-*" \
+          | sed -E 's/^SIT-V[0-9]+\.[0-9]+\.[0-9]+-BUILD-0*//' \
+          | sort -n | tail -1)
         if [ -z "$LAST" ]; then NEXT=1; else NEXT=$((LAST+1)); fi
+        PADDED=$(printf "%02d" "$NEXT")
+
+        # 3) Expose build number (must be integer for Android)
         echo "BUILD_NUMBER=$NEXT" | tee -a $GITHUB_ENV
+
+        # 4) Create/push tag and notes
+        TAG="SIT-V${APP_VERSION}-BUILD-${PADDED}"
+        BRANCH="${GITHUB_REF_NAME}"
+        SHA7=$(git rev-parse --short HEAD)
+        TAG_MSG="$TAG • $BRANCH • $SHA7"
+
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git tag -a "build/$NEXT" -m "SIT build $NEXT"
-        git push origin "build/$NEXT"
+        git tag -a "$TAG" -m "$TAG_MSG"
+        git push origin "$TAG"
+
+        echo "RELEASE_NOTES=$TAG_MSG" >> $GITHUB_ENV
 
     - name: Build APK
       run: melos run apk:build
