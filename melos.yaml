@@ -39,7 +39,6 @@ command:
       widgetbook: 3.15.0
       iconsax: 0.0.8
 
-
       # Design System
       miny_design_system:
         git:
@@ -91,6 +90,14 @@ scripts:
         - "*core*"
       dependsOn:
         - "build_runner"
+
+  apk:build:
+    description: Build APK
+    run: |
+      set -e
+      cd app
+      flutter pub get
+      flutter build apk
 
   build:clean:select:
     run: melos exec -- "dart run build_runner clean"
