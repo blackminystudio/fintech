@@ -30,6 +30,9 @@ jobs:
     - name: Set up Melos
       run: dart pub global activate melos
 
+    - name: Add pub-cache to PATH
+      run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
     - name: Bootstrap workspace (monorepo)
       run: melos bootstrap
 
@@ -57,18 +60,38 @@ jobs:
         BRANCH="${GITHUB_REF_NAME}"
         SHA7=$(git rev-parse --short HEAD)
         TAG_MSG="$TAG • $BRANCH • $SHA7"
-
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git tag -a "$TAG" -m "$TAG_MSG"
-        git push origin "$TAG"
-
+        echo "TAG=$TAG" >> $GITHUB_ENV
         echo "RELEASE_NOTES=$TAG_MSG" >> $GITHUB_ENV
 
+    # ---- Signing (SIT keystore) ----
+    - name: Decode SIT keystore
+      run: |
+        mkdir -p app/android/app
+        echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > app/android/app/keystore.jks
+      env:
+        ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+    - name: Write key.properties
+      run: |
+        mkdir -p app/android
+        cat > app/android/key.properties <<EOF
+        storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+        keyPassword=${{ secrets.KEY_PASSWORD }}
+        keyAlias=${{ secrets.KEY_ALIAS }}
+        storeFile=keystore.jks
+        EOF
+
+    # ---- Build (signed release) ----
     - name: Build APK
       run: melos run apk:build
       env:
         BUILD_NUMBER: ${{ env.BUILD_NUMBER }}
+
+    - name: Verify APK signing & print fingerprints
+      run: |
+        APK=$(ls app/build/app/outputs/flutter-apk/*release*.apk | head -n1)
+        echo "APK: $APK"
+        keytool -printcert -jarfile "$APK" | grep -E 'SHA1|SHA-256' || true
 
     - name: upload artifact to Firebase App Distribution
       uses: emertozd/Firebase-Distribution-Github-Action@v2
@@ -77,3 +100,12 @@ jobs:
         serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
         groups: qa
         file: app/build/app/outputs/flutter-apk/app-release.apk
+        releaseNotes: "$RELEASE_NOTES"
+
+    - name: Create & push tag (only if upload succeeded)
+      if: ${{ success() }}
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -a "$TAG" -m "$RELEASE_NOTES"
+        git push origin "$TAG"

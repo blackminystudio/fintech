@@ -98,6 +98,8 @@ scripts:
       cd app
       flutter pub get
       flutter build apk --release --build-number ${BUILD_NUMBER:-1}
+      # If you use a flavor, use this instead:
+      # flutter build apk --release --flavor staging -t lib/main_staging.dart --build-number ${BUILD_NUMBER:-1}
 
   build:clean:select:
     run: melos exec -- "dart run build_runner clean"

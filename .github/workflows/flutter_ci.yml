@@ -58,6 +58,7 @@ jobs:
 
       - name: Dart Format
         run: dart format . --set-exit-if-changed
+
       - name: Get Affected Packages
         id: affected_packages
         run: |
