@@ -69,7 +69,7 @@ jobs:
 
       - name: Dart Analyze (only affected packages)
         run: |
-          AFFECTED_PACKAGES="${{ steps.affected_packages.outputs.affected_packages }}"
+          AFFECTED_PACKAGES="${{env.affected_packages}}"
           
           if [ "$AFFECTED_PACKAGES" = "NO_CHANGES" ]; then
             echo "No Dart packages affected. Skipping analysis."
