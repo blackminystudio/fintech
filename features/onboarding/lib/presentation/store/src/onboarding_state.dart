@@ -7,24 +7,24 @@ enum OnboardingStatus { loading, completed, error }
 class OnboardingState extends Equatable {
   const OnboardingState({
     this.status = OnboardingStatus.loading,
-    this.onboardingEntity,
+    this.entity,
     this.exception,
   });
 
   final OnboardingStatus status;
-  final OnboardingEntity? onboardingEntity;
+  final OnboardingEntity? entity;
   final AppException? exception;
 
   OnboardingState copyWith({
-    OnboardingEntity? onboardingEntity,
+    OnboardingEntity? entity,
     OnboardingStatus? status,
     AppException? exception,
   }) => OnboardingState(
-    onboardingEntity: onboardingEntity ?? this.onboardingEntity,
+    entity: entity ?? this.entity,
     status: status ?? this.status,
     exception: exception,
   );
 
   @override
-  List<Object?> get props => [onboardingEntity, exception, status];
+  List<Object?> get props => [entity, exception, status];
 }

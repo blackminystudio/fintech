@@ -50,8 +50,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
             children: [
               Consumer(
                 builder: (context, ref, _) {
-                  final info =
-                      ref.watch(onboardingStoreProvider).onboardingEntity;
+                  final info = ref.watch(onboardingStoreProvider).entity;
                   return ProgressHeader(
                     progressValue: info?.getPercentage() ?? 0.0,
                     onTapSkip: () async {

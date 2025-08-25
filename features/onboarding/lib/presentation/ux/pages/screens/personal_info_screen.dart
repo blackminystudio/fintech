@@ -57,7 +57,7 @@ class _PersonalInfoPageState extends ConsumerState<PersonalInfoScreen>
     WidgetsBinding.instance.addObserver(this);
 
     // Store Initialisation
-    final info = ref.read(onboardingStoreProvider).onboardingEntity;
+    final info = ref.read(onboardingStoreProvider).entity;
     store = ref.read(onboardingStoreProvider.notifier);
     selectedCity = info?.city;
     selectedGender = info?.gender;

@@ -27,21 +27,20 @@ class OnboardingStore extends StateNotifier<OnboardingState> {
     String? employmentStatus,
     bool toUpdate = false,
   }) async {
-    final onboardingEntity =
-        (state.onboardingEntity ?? const OnboardingEntity()).copyWith(
-          mobileNumber: mobileNumber,
-          fullName: fullName,
-          city: city,
-          gender: gender,
-          maritalStatus: maritalStatus,
-          dateOfBirth: dateOfBirth,
-          monthlyIncome: monthlyIncome,
-          employmentStatus: employmentStatus,
-          lastUpdated: DateTime.now(),
-        );
-    state = state.copyWith(onboardingEntity: onboardingEntity);
+    final entity = (state.entity ?? const OnboardingEntity()).copyWith(
+      mobileNumber: mobileNumber,
+      fullName: fullName,
+      city: city,
+      gender: gender,
+      maritalStatus: maritalStatus,
+      dateOfBirth: dateOfBirth,
+      monthlyIncome: monthlyIncome,
+      employmentStatus: employmentStatus,
+      lastUpdated: DateTime.now(),
+    );
+    state = state.copyWith(entity: entity);
     if (toUpdate) {
-      await updateUserInfo(onboardingEntity);
+      await updateUserInfo(entity);
     }
   }
 
@@ -61,7 +60,7 @@ class OnboardingStore extends StateNotifier<OnboardingState> {
       },
       (entity) {
         state = state.copyWith(
-          onboardingEntity: entity,
+          entity: entity,
           status: OnboardingStatus.completed,
         );
       },

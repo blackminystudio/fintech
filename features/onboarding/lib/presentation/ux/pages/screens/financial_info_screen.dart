@@ -86,7 +86,7 @@ class _FinancialInfoPageState extends ConsumerState<FinancialInfoScreen> {
   void initState() {
     super.initState();
     store = ref.read(onboardingStoreProvider.notifier);
-    final info = ref.read(onboardingStoreProvider).onboardingEntity;
+    final info = ref.read(onboardingStoreProvider).entity;
     selectedIncome = info?.monthlyIncome;
     selectedEmploymentStatus = info?.employmentStatus;
   }

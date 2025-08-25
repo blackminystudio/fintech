@@ -62,7 +62,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
     super.initState();
     store = ref.read(onboardingStoreProvider.notifier);
     _nameController = TextEditingController(
-      text: ref.read(onboardingStoreProvider).onboardingEntity?.fullName,
+      text: ref.read(onboardingStoreProvider).entity?.fullName,
     );
   }
 
@@ -115,7 +115,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
               children: [
                 _buildUserInfoCard(
                   isActive: true,
-                  text: user.onboardingEntity?.fullName ?? '',
+                  text: user.entity?.fullName ?? '',
                   labelText: OnboardingConstants.fullNameLabel,
                   icon: OnboardingConstants.fullNameIcon,
                   controller: _nameController,
@@ -124,7 +124,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                 const MinyDivider(),
                 SizedBox(height: theme.sizing.s7),
                 _buildUserInfoCard(
-                  text: user.onboardingEntity?.email ?? '',
+                  text: user.entity?.email ?? '',
                   icon: OnboardingConstants.emailIcon,
                   labelText: OnboardingConstants.emailLabel,
                 ),
@@ -132,7 +132,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                 const MinyDivider(),
                 SizedBox(height: theme.sizing.s7),
                 _buildUserInfoCard(
-                  text: user.onboardingEntity?.mobileNumber ?? '',
+                  text: user.entity?.mobileNumber ?? '',
                   labelText: OnboardingConstants.phoneLabel,
                   icon: OnboardingConstants.phoneIcon,
                 ),
