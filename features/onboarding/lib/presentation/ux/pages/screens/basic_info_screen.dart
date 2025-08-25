@@ -124,7 +124,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                 const MinyDivider(),
                 SizedBox(height: theme.sizing.s7),
                 _buildUserInfoCard(
-                  text: user.entity?.email ?? '',
+                  text: _truncateEmail(user.entity?.email ?? ''),
                   icon: OnboardingConstants.emailIcon,
                   labelText: OnboardingConstants.emailLabel,
                 ),
@@ -143,6 +143,17 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
         ],
       ),
     );
+  }
+
+  String _truncateEmail(String email, {int maxLength = 7}) {
+    final parts = email.split('@');
+    final username = parts[0];
+    final domain = parts[1];
+    if (username.length <= maxLength) {
+      return email;
+    }
+    final truncatedUsername = '${username.substring(0, maxLength)}...';
+    return '$truncatedUsername@$domain';
   }
 
   Padding _buildUserInfoCard({

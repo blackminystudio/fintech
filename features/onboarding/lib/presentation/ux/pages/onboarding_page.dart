@@ -54,8 +54,6 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                   return ProgressHeader(
                     progressValue: info?.getPercentage() ?? 0.0,
                     onTapSkip: () async {
-                      final store = ref.read(onboardingStoreProvider.notifier);
-                      await store.updateCopyUserInfo(toUpdate: true);
                       _showSkipConfirmation(context);
                     },
                     onTapBack: goToPreviousPage,
@@ -170,6 +168,10 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                     Expanded(
                       child: MinyButton(
                         onPressed: () async {
+                          final store = ref.read(
+                            onboardingStoreProvider.notifier,
+                          );
+                          await store.updateCopyUserInfo(toUpdate: true);
                           await context.router.replacePath('/home');
                         },
                         label: 'Skip',
