@@ -34,7 +34,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final mobile = state.onboardingEntity?.mobileNumber;
+    // final mobile = state.entity?.mobileNumber;
     // if (mobile != null) {
     //   _mobileController.text = mobile;
     // }
@@ -77,7 +77,7 @@ class _NumberPageState extends ConsumerState<NumberScreen> {
     _mobileController = TextEditingController();
     store = ref.read(onboardingStoreProvider.notifier);
     final state = ref.read(onboardingStoreProvider);
-    final mobile = state.onboardingEntity?.mobileNumber;
+    final mobile = state.entity?.mobileNumber;
     if (mobile != null) {
       _mobileController.text = mobile;
     }

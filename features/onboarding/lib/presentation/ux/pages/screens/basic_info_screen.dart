@@ -62,7 +62,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
     super.initState();
     store = ref.read(onboardingStoreProvider.notifier);
     _nameController = TextEditingController(
-      text: ref.read(onboardingStoreProvider).onboardingEntity?.fullName,
+      text: ref.read(onboardingStoreProvider).entity?.fullName,
     );
   }
 
@@ -115,7 +115,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
               children: [
                 _buildUserInfoCard(
                   isActive: true,
-                  text: user.onboardingEntity?.fullName ?? '',
+                  text: user.entity?.fullName ?? '',
                   labelText: OnboardingConstants.fullNameLabel,
                   icon: OnboardingConstants.fullNameIcon,
                   controller: _nameController,
@@ -124,7 +124,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                 const MinyDivider(),
                 SizedBox(height: theme.sizing.s7),
                 _buildUserInfoCard(
-                  text: user.onboardingEntity?.email ?? '',
+                  text: _truncateEmail(user.entity?.email ?? ''),
                   icon: OnboardingConstants.emailIcon,
                   labelText: OnboardingConstants.emailLabel,
                 ),
@@ -132,7 +132,7 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
                 const MinyDivider(),
                 SizedBox(height: theme.sizing.s7),
                 _buildUserInfoCard(
-                  text: user.onboardingEntity?.mobileNumber ?? '',
+                  text: user.entity?.mobileNumber ?? '',
                   labelText: OnboardingConstants.phoneLabel,
                   icon: OnboardingConstants.phoneIcon,
                 ),
@@ -143,6 +143,17 @@ class _BasicInfoPageState extends ConsumerState<BasicInfoScreen> {
         ],
       ),
     );
+  }
+
+  String _truncateEmail(String email, {int maxLength = 7}) {
+    final parts = email.split('@');
+    final username = parts[0];
+    final domain = parts[1];
+    if (username.length <= maxLength) {
+      return email;
+    }
+    final truncatedUsername = '${username.substring(0, maxLength)}...';
+    return '$truncatedUsername@$domain';
   }
 
   Padding _buildUserInfoCard({

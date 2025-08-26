@@ -25,7 +25,7 @@ class _DobPageState extends ConsumerState<DobScreen> {
   void initState() {
     super.initState();
     store = ref.read(onboardingStoreProvider.notifier);
-    final info = ref.read(onboardingStoreProvider).onboardingEntity;
+    final info = ref.read(onboardingStoreProvider).entity;
     selectedDate = info?.dateOfBirth;
   }
 
